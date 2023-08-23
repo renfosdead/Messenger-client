@@ -18,11 +18,4 @@ const Key = () => {
 
 export default Key;
 
-const StyledKey = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledKey = styled.button``;

@@ -21,11 +21,4 @@ const Sound = () => {
 
 export default Sound;
 
-const StyledSound = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledSound = styled.button``;

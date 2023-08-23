@@ -18,11 +18,4 @@ const Theme = () => {
 
 export default Theme;
 
-const StyledTheme = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledTheme = styled.button``;

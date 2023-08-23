@@ -1,0 +1,17 @@
+{
+  "fontSize": "18px",
+  "fontSizeSM": "16px",
+  "buttonHeight": "35px",
+  "iconSize": "16px",
+  "buttonImageHeight": "22px",
+  "borderColor": "#5c728d",
+  "borderStyle": "1px solid #9badc4",
+  "borderRadius": "3px",
+  "backgroundColor": "#ffffff",
+  "gradientInactiveColor": "#ced9e7",
+  "gradientActiveColor": "b6cbe5",
+  "innerBoxShadow": "inset 2px 2px 2px 0 rgba(0, 0, 0, 0.5)",
+  "paddingSM": "3px",
+  "paddingST": "9px",
+  "paddingLG": "12px"
+}

@@ -18,11 +18,4 @@ const Info = () => {
 
 export default Info;
 
-const StyledInfo = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledInfo = styled.button``;

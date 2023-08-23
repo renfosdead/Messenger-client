@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-export const CLickOutside = ({ className, onClickOutside, children }) => {
+export const ClickOutside = ({ className, onClickOutside, children }) => {
   const wrapperRef = useRef(null);
 
   useEffect(() => {

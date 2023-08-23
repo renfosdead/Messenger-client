@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { CLickOutside } from "./utils/ClickOutside.jsx";
+import { ClickOutside } from "@/utils/ClickOutside.jsx";
 
 const statuses = [
   {
@@ -76,14 +76,14 @@ const Statuses = () => {
   return (
     <StyledStatuses>
       <button onClick={() => setVisible(true)}>
-        <div className="status">
+        <div className="status-btn">
           <img src={status.picture} />
           {status.title}
         </div>
       </button>
       {visible && (
-        <CLickOutside
-          className="statuses"
+        <ClickOutside
+          className="statuses-container dropdown-menu"
           onClickOutside={() => setVisible(false)}
         >
           {statuses.map((stat, i) =>
@@ -100,7 +100,7 @@ const Statuses = () => {
               </div>
             )
           )}
-        </CLickOutside>
+        </ClickOutside>
       )}
     </StyledStatuses>
   );
@@ -112,40 +112,41 @@ const StyledStatuses = styled.div`
   width: 100%;
   position: relative;
   button {
-    .status {
+    width: 100%;
+    font-size: 1.2em;
+    .status-btn {
       display: flex;
+      gap: ${({ theme }) => theme.paddingST};
       align-items: center;
-      font-size: 16px;
-      justify-content: center;
     }
   }
-  .statuses {
+
+  .statuses-container {
     position: absolute;
     right: 0;
-    bottom: 32px;
+    bottom: ${({ theme }) => theme.buttonHeight};
     width: 200px;
-    border: 1px solid #9badc4;
-    border-radius: 3px;
-    padding: 5px 10px;
-    background: #ffffff;
+    background: ${({ theme }) => theme.backgroundColor};
+    padding-top: ${({ theme }) => theme.paddingSM}!important;
+    padding-bottom: ${({ theme }) => theme.paddingSM}!important;
     .divider {
-      background: #5c728d;
+      background: ${({ theme }) => theme.borderColor};
       height: 1px;
       width: 100%;
       margin: 4px 0;
     }
-  }
 
-  .status {
-    display: flex;
-    font-size: 16px;
-    align-items: center;
-    line-height: 1.5;
-    font-size: 1.2rem;
-    img {
-      width: 22px;
-      height: 22px;
-      margin-right: 8px;
+    .status {
+      display: flex;
+      align-items: center;
+      line-height: 1.5;
+      font-size: 1.2em;
+
+      img {
+        width: ${({ theme }) => theme.buttonImageHeight};
+        height: ${({ theme }) => theme.buttonImageHeight};
+        margin-right: ${({ theme }) => theme.paddingST};
+      }
     }
   }
 `;

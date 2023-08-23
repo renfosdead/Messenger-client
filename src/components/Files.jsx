@@ -18,11 +18,4 @@ const Files = () => {
 
 export default Files;
 
-const StyledFiles = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledFiles = styled.button``;

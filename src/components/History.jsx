@@ -18,11 +18,4 @@ const History = () => {
 
 export default History;
 
-const StyledHistory = styled.button`
-  display: flex;
-  align-items: center;
-  width: auto;
-  img {
-    height: 20px;
-  }
-`;
+const StyledHistory = styled.button``;

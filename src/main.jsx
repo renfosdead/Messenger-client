@@ -1,10 +1,13 @@
 import ReactDOM from "react-dom/client";
-import App from "@/App.jsx";
-import FontStyles from "@/fontStyles";
+import App from "@/components/App.jsx";
+import MainStyles from "@/theme/MainStyles";
+import ThemeProvider from "./theme/ThemeProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
-    <FontStyles />
-    <App />
+    <MainStyles />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </>
 );
