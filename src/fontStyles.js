@@ -27,6 +27,16 @@ const FontStyles = createGlobalStyle`
       box-shadow: inset 2px 2px 2px 0 rgba(0,0,0,0.5);
     }
   }
+
+  input {
+    outline: none;
+    font-size: 16px;
+    padding: 3px;
+  }
+
+  label {
+    font-size: 16px;
+  }
 `;
 
 export default FontStyles;

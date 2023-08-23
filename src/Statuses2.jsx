@@ -1,26 +1,61 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { CLickOutside } from "./utils/ClickOutside.jsx";
+import classNames from "classnames";
 
 const statuses = [
-  {
-    title: "Готов общаться",
-    picture: "statuses/free_for_chat.png",
-  },
+  "no",
+  "angry",
+  "duck",
+  "zev",
+  "dr",
+  "pivo",
+  "think",
+  "hotdog",
+  "tv",
+  "geys",
+  "tea",
+  "music",
+  "deal",
+  "cinema",
+  "fun",
+  "phone",
+  "game",
+  "teach",
+
+  "paper",
+  "ill",
+  "zz",
+  "surf",
+  "a",
+  "kaska",
+
+  "machine",
+  "shary",
+  "mobile",
+  "mobile2",
+  "vamp",
+  "toilet",
+
+  "question",
+  "road",
+  "love",
 ];
 
 const Statuses2 = () => {
   const [visible, setVisible] = useState(false);
 
-  const [baloon, setBaloon] = useState(true);
-  const [comment, setComment] = useState(true);
-
-  const [status, setStatus] = useState(statuses[0]);
-
-  const changeStatus = (i) => {
-    setStatus(statuses[i]);
-    setVisible(false);
+  const [baloon, setBaloon] = useState(false);
+  const changeBaloon = (e) => {
+    setBaloon(e.target.checked);
   };
+  const [comment, setComment] = useState("");
+  const changeComment = (e) => {
+    setComment(e.target.value);
+  };
+
+  const [status, setStatus] = useState(0);
+
   return (
     <StyledStatuses2>
       <button onClick={() => setVisible(true)}>
@@ -30,7 +65,7 @@ const Statuses2 = () => {
           </div>
         )}
         <div className="status-2">
-          <img src={"/statuses_2.png"} />
+          <img src={`/statuses2/${statuses[status]}.png`} />
         </div>
         {baloon && (
           <div className="status-2-ball">
@@ -43,20 +78,28 @@ const Statuses2 = () => {
           className="statuses-2"
           onClickOutside={() => setVisible(false)}
         >
-          {statuses.map((stat, i) =>
-            stat.divider ? (
-              <div key={`status${i}`} className="divider" />
-            ) : (
-              <div
-                key={`status${i}`}
-                className="status"
-                onClick={() => changeStatus(i)}
-              >
-                <img src={stat.picture} />
-                {stat.title}
-              </div>
-            )
-          )}
+          <input className="input" value={comment} onChange={changeComment} />
+          <div className="statuses-2__container">
+            {statuses.map((st, i) => {
+              const className = classNames({
+                "status-2__item": true,
+                selected: status === i,
+              });
+              return (
+                <div
+                  className={className}
+                  key={st}
+                  onClick={() => setStatus(i)}
+                >
+                  <img src={`/statuses2/${st}.png`} />
+                </div>
+              );
+            })}
+          </div>
+          <label className="balloon">
+            <input type="checkbox" value={baloon} onChange={changeBaloon} />
+            Шарик дня рождения
+          </label>
         </CLickOutside>
       )}
     </StyledStatuses2>
@@ -99,14 +142,56 @@ const StyledStatuses2 = styled.div`
     position: absolute;
     right: 0;
     top: 20px;
-    width: 200px;
+    width: 247px;
     border: 1px solid #9badc4;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: 8px 10px;
     background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .input {
+      width: calc(100% - 9px);
+      border: 1px solid #9badc4;
+    }
+
+    .statuses-2__container {
+      border: 1px solid #9badc4;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 230px;
+      padding: 6px;
+
+      .status-2__item {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        box-sizing: border-box;
+        img {
+          height: 22px;
+          position: absolute;
+          left: 4px;
+          top: 4px;
+        }
+        &.selected {
+          border: 1px solid #9badc4;
+          background-color: #ced9e7;
+        }
+      }
+    }
   }
 
-  @keyframes example {
+  .balloon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  @keyframes baloon_move {
     from {
       left: 0;
       top: 0;
@@ -124,7 +209,7 @@ const StyledStatuses2 = styled.div`
       position: absolute;
       left: 0;
       top: 0;
-      animation-name: example;
+      animation-name: baloon_move;
       animation-duration: 0.6s;
       animation-iteration-count: infinite;
       animation-direction: alternate;
