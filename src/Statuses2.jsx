@@ -141,7 +141,7 @@ const StyledStatuses2 = styled.div`
   .statuses-2 {
     position: absolute;
     right: 0;
-    top: 20px;
+    bottom: 32px;
     width: 247px;
     border: 1px solid #9badc4;
     border-radius: 3px;
