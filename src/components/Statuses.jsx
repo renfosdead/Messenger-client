@@ -1,84 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside.jsx";
-
-const statuses = [
-  {
-    title: "Готов общаться",
-    picture: "statuses/free_for_chat.png",
-  },
-  {
-    title: "Злой",
-    picture: "statuses/evil.png",
-  },
-  {
-    title: "Депрессия",
-    picture: "statuses/depression.png",
-  },
-  {
-    title: "Дома",
-    picture: "statuses/home.png",
-  },
-  {
-    title: "На работе",
-    picture: "statuses/work.png",
-  },
-  { divider: true },
-
-  {
-    title: "Кушаю",
-    picture: "statuses/lunch.png",
-  },
-  {
-    title: "Отошел",
-    picture: "statuses/away.png",
-  },
-  {
-    title: "Недоступен",
-    picture: "statuses/not_available.png",
-  },
-  {
-    title: "Занят",
-    picture: "statuses/occupied.png",
-  },
-  {
-    title: "Не беспокоить",
-    picture: "statuses/do_not_disturb.png",
-  },
-  { divider: true },
-
-  {
-    title: "В сети",
-    picture: "statuses/online.png",
-  },
-  {
-    title: "Невидимый",
-    picture: "statuses/invisible.png",
-  },
-  {
-    title: "Невидим для всех",
-    picture: "statuses/invisible_all.png",
-  },
-  { divider: true },
-  {
-    title: "Не в сети",
-    picture: "statuses/offline.png",
-  },
-];
+import classNames from "classnames";
+import { statuses } from "../utils/data";
 
 const Statuses = () => {
   const [visible, setVisible] = useState(false);
-  const [status, setStatus] = useState(statuses[0]);
+  const [status, setStatus] = useState(0);
   const changeStatus = (i) => {
-    setStatus(statuses[i]);
+    setStatus(i);
     setVisible(false);
   };
+
+  const className = classNames({
+    enabled: visible,
+    button: true,
+  });
+
   return (
     <StyledStatuses>
-      <button onClick={() => setVisible(true)}>
+      <button onClick={() => setVisible(true)} className={className}>
         <div className="status-btn">
-          <img src={status.picture} />
-          {status.title}
+          <img src={statuses[status].picture} />
+          {statuses[status].title}
         </div>
       </button>
       {visible && (

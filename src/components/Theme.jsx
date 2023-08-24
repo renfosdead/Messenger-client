@@ -8,6 +8,7 @@ const Theme = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledTheme className={className} onClick={() => setEnabled(!enabled)}>

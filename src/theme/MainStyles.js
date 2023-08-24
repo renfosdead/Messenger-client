@@ -13,6 +13,26 @@ const MainStyles = createGlobalStyle`
     height: 100vh;
     font-family: "Nunito"!important;
   }
+
+  textarea {
+    border: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-apperarance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: none;
+    padding: 0px;
+    resize: none;
+    width: 100%;
+    overflow: hidden;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}
 `;
 
 export default MainStyles;

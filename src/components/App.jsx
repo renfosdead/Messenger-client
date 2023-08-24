@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import Statuses from "./Statuses";
 import StatusesCustom from "./StatusesCustom";
@@ -9,6 +7,8 @@ import Files from "./Files";
 import Key from "./Key";
 import Theme from "./Theme";
 import Info from "./Info";
+import MessageTab from "./msg/MessageTab";
+import Text from "./msg/Text";
 
 function App() {
   return (
@@ -21,7 +21,9 @@ function App() {
         <Key />
         <Info />
       </div>
-      <FontAwesomeIcon icon={faEnvelope} />
+
+      <MessageTab />
+      <Text />
 
       <div className="bottom">
         <Statuses />
@@ -48,7 +50,7 @@ const StyledApp = styled.div`
     font-size: ${({ theme }) => theme.fontSize};
   }
 
-  button {
+  .button {
     font-family: "Nunito";
     display: flex;
     align-items: center;
@@ -75,9 +77,22 @@ const StyledApp = styled.div`
     img {
       height: ${({ theme }) => theme.buttonImageHeight};
     }
+
+    &.simple {
+      background: ${({ theme }) => theme.backgroundColor}!important;
+    }
+    &.open-tab {
+      position: absolute;
+      right: 0;
+      top: 3px;
+      border-right: ${({ theme }) => theme.borderStyle}!important;
+      border-bottom: 1px solid ${({ theme }) => theme.backgroundColor}!important;
+      z-index: 3;
+    }
   }
 
-  input {
+  input,
+  textarea {
     font-family: "Nunito";
     outline: none;
     border: ${({ theme }) => theme.borderStyle};

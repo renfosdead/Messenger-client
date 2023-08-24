@@ -2,45 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside.jsx";
 import classNames from "classnames";
-
-const statuses = [
-  "no",
-  "angry",
-  "duck",
-  "zev",
-  "dr",
-  "pivo",
-  "think",
-  "hotdog",
-  "tv",
-  "geys",
-  "tea",
-  "music",
-  "deal",
-  "cinema",
-  "fun",
-  "phone",
-  "game",
-  "teach",
-
-  "paper",
-  "ill",
-  "zz",
-  "surf",
-  "a",
-  "kaska",
-
-  "machine",
-  "shary",
-  "mobile",
-  "mobile2",
-  "vamp",
-  "toilet",
-
-  "question",
-  "road",
-  "love",
-];
+import { statusesCustom } from "@/utils/data";
+import Balloon from "./Baloon";
 
 const CustomStatuses = () => {
   const [visible, setVisible] = useState(false);
@@ -56,22 +19,23 @@ const CustomStatuses = () => {
 
   const [status, setStatus] = useState(0);
 
+  const className = classNames({
+    enabled: visible,
+    button: true,
+  });
+
   return (
     <StyledCustomStatuses>
-      <button onClick={() => setVisible(true)}>
+      <button onClick={() => setVisible(true)} className={className}>
         {comment && (
           <div className="custom-status-btn__comment">
             <img src={"/statuses_custom/comment.png"} />
           </div>
         )}
         <div className="custom-status-btn__picture">
-          <img src={`/statuses_custom/${statuses[status]}.png`} />
+          <img src={`/statuses_custom/${statusesCustom[status]}.png`} />
         </div>
-        {balloon && (
-          <div className="custom-status-btn__balloon">
-            <img src={"/statuses_custom/baloon.png"} />
-          </div>
-        )}
+        {balloon && <Balloon />}
       </button>
 
       {visible && (
@@ -85,7 +49,7 @@ const CustomStatuses = () => {
             onChange={changeComment}
           />
           <div className="custom-status-submenu__container dropdown-menu">
-            {statuses.map((st, i) => {
+            {statusesCustom.map((st, i) => {
               const className = classNames({
                 "custom-status-submenu__item": true,
                 selected: status === i,
@@ -139,23 +103,6 @@ const StyledCustomStatuses = styled.div`
     }
   }
 
-  .custom-status-btn__balloon {
-    position: relative;
-    width: 10px;
-    height: 10px;
-    margin-right: ${({ theme }) => theme.paddingSM};
-    img {
-      position: absolute;
-      height: 16px;
-      left: 0;
-      top: 0;
-      animation-name: balloon_move;
-      animation-duration: 0.6s;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
-    }
-  }
-
   .custom-status-submenu {
     position: absolute;
     right: 0;
@@ -200,17 +147,6 @@ const StyledCustomStatuses = styled.div`
           background-color: ${({ theme }) => theme.gradientInactiveColor};
         }
       }
-    }
-  }
-
-  @keyframes balloon_move {
-    from {
-      left: 0;
-      top: 0;
-    }
-    to {
-      left: 1px;
-      top: -2px;
     }
   }
 `;

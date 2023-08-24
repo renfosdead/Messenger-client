@@ -8,6 +8,7 @@ const Key = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledKey className={className} onClick={() => setEnabled(!enabled)}>

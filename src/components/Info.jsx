@@ -8,6 +8,7 @@ const Info = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledInfo className={className} onClick={() => setEnabled(!enabled)}>

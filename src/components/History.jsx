@@ -8,6 +8,7 @@ const History = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledHistory className={className} onClick={() => setEnabled(!enabled)}>

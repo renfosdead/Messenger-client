@@ -8,6 +8,7 @@ const Files = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledFiles className={className} onClick={() => setEnabled(!enabled)}>

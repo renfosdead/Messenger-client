@@ -11,6 +11,7 @@ const Sound = () => {
   const className = classNames({
     enabled: enabled,
     disabled: !enabled,
+    button: true,
   });
   return (
     <StyledSound className={className} onClick={() => setEnabled(!enabled)}>
