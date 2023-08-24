@@ -16,8 +16,12 @@ const CustomStatuses = () => {
   const changeComment = (e) => {
     setComment(e.target.value);
   };
+  const [additionalComment, setAdditionalComment] = useState("");
+  const changeAdditionalComment = (e) => {
+    setAdditionalComment(e.target.value);
+  };
 
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(-1);
 
   const className = classNames({
     enabled: visible,
@@ -33,7 +37,11 @@ const CustomStatuses = () => {
           </div>
         )}
         <div className="custom-status-btn__picture">
-          <img src={`/statuses_custom/${statusesCustom[status]}.png`} />
+          <img
+            src={`/statuses_custom/${
+              statusesCustom[status] || "no_status"
+            }.png`}
+          />
         </div>
         {balloon && <Balloon />}
       </button>
@@ -43,10 +51,24 @@ const CustomStatuses = () => {
           className="custom-status-submenu dropdown-menu"
           onClickOutside={() => setVisible(false)}
         >
+          <div className="custom-status__comment">
+            <img
+              src={`/statuses_custom/${
+                statusesCustom[status] || "no_status"
+              }.png`}
+            />
+            <input
+              className="custom-status-submenu__input"
+              value={comment}
+              onChange={changeComment}
+              disabled={status === -1}
+            />
+          </div>
           <input
             className="custom-status-submenu__input"
-            value={comment}
-            onChange={changeComment}
+            value={additionalComment}
+            onChange={changeAdditionalComment}
+            disabled={status === -1}
           />
           <div className="custom-status-submenu__container dropdown-menu">
             {statusesCustom.map((st, i) => {
@@ -58,7 +80,7 @@ const CustomStatuses = () => {
                 <div
                   className={className}
                   key={st}
-                  onClick={() => setStatus(i)}
+                  onClick={() => setStatus(i || -1)}
                 >
                   <img src={`/statuses_custom/${st}.png`} />
                 </div>
@@ -86,7 +108,7 @@ const StyledCustomStatuses = styled.div`
       top: 4px;
       left: 4px;
       width: calc(${({ theme }) => theme.buttonImageHeight} - 10px);
-      height: calc(${({ theme }) => theme.buttonImageHeight} - 10px);
+      height: calc(${({ theme }) => theme.buttonImageHeight} - 10px) !important;
       z-index: 1;
     }
   }
@@ -147,6 +169,24 @@ const StyledCustomStatuses = styled.div`
           background-color: ${({ theme }) => theme.gradientInactiveColor};
         }
       }
+    }
+  }
+
+  button {
+    font-size: ${({ theme }) => theme.fontSize};
+    &.simple {
+      border: none !important;
+    }
+  }
+
+  .custom-status__comment {
+    display: flex;
+    gap: ${({ theme }) => theme.paddingST};
+    img {
+      height: ${({ theme }) => theme.buttonImageHeight};
+    }
+    input {
+      width: calc(100% - ${({ theme }) => theme.paddingST});
     }
   }
 `;
