@@ -2,10 +2,9 @@ import styled from "styled-components";
 import { useState } from "react";
 import classNames from "classnames";
 
-const Text = () => {
+const Text = ({ expanded, toggleExpanded }) => {
   const [value, setValue] = useState("");
 
-  const [showText, setShowText] = useState(false);
   const className = classNames({
     button: true,
     simple: true,
@@ -23,15 +22,15 @@ const Text = () => {
           </button>
         </div>
 
-        <button className={className} onClick={() => setShowText(!showText)}>
-          {showText ? (
+        <button className={className} onClick={() => toggleExpanded(!expanded)}>
+          {expanded ? (
             <img src="/icons/close.png" />
           ) : (
             <img src="/icons/message.png" />
           )}
         </button>
       </div>
-      {showText && (
+      {expanded && (
         <>
           <textarea
             value={value}
@@ -39,8 +38,8 @@ const Text = () => {
             rows={12}
           ></textarea>
           <div className="send-btn">
-            <button onClick={() => setShowText(false)} className="button">
-              <img src="/icons/send.png" />
+            <button className="button">
+              <img src="/icons/unread.png" />
               Отправить
             </button>
           </div>
@@ -55,6 +54,7 @@ export default Text;
 const StyledText = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
+  border-top: ${({ theme }) => theme.borderStyle};
   button {
     font-size: ${({ theme }) => theme.fontSize};
     &.simple {

@@ -53,6 +53,7 @@ const CustomStatuses = () => {
         >
           <div className="custom-status__comment">
             <img
+              className="img-icon"
               src={`/statuses_custom/${
                 statusesCustom[status] || "no_status"
               }.png`}
@@ -82,15 +83,23 @@ const CustomStatuses = () => {
                   key={st}
                   onClick={() => setStatus(i || -1)}
                 >
-                  <img src={`/statuses_custom/${st}.png`} />
+                  <img
+                    className="img-icon"
+                    src={`/statuses_custom/${st}.png`}
+                  />
                 </div>
               );
             })}
           </div>
           <label className="custom-status-submenu__balloon-checkbox">
+            {balloon && <Balloon />}
             <input type="checkbox" checked={balloon} onChange={changeBaloon} />
             Шарик дня рождения
           </label>
+          <div className="custom-statuses__confirm">
+            <button onClick={() => setVisible(false)}>ОК</button>
+            <button onClick={() => setVisible(false)}>Отмена</button>
+          </div>
         </ClickOutside>
       )}
     </StyledCustomStatuses>
@@ -112,18 +121,6 @@ const StyledCustomStatuses = styled.div`
       z-index: 1;
     }
   }
-  .custom-status-btn__picture {
-    position: relative;
-    overflow: hidden;
-    width: ${({ theme }) => theme.buttonImageHeight};
-    height: ${({ theme }) => theme.buttonImageHeight};
-    img {
-      position: absolute;
-      z-index: 0;
-      left: 0;
-      height: ${({ theme }) => theme.buttonImageHeight};
-    }
-  }
 
   .custom-status-submenu {
     position: absolute;
@@ -135,15 +132,11 @@ const StyledCustomStatuses = styled.div`
     flex-direction: column;
     gap: ${({ theme }) => theme.paddingST};
 
-    .custom-status-submenu__input {
-      border: fontSizeSM;
-    }
-
     .custom-status-submenu__balloon-checkbox {
       display: flex;
       align-items: center;
       gap: ${({ theme }) => theme.paddingSM};
-      font-size: ${({ theme }) => theme.fontSizeSM};
+      font-size: ${({ theme }) => theme.fontSize};
     }
 
     .custom-status-submenu__container {
@@ -159,7 +152,6 @@ const StyledCustomStatuses = styled.div`
         overflow: hidden;
         box-sizing: border-box;
         img {
-          height: ${({ theme }) => theme.buttonImageHeight};
           position: absolute;
           left: 4px;
           top: 4px;
@@ -168,6 +160,14 @@ const StyledCustomStatuses = styled.div`
           border: ${({ theme }) => theme.borderStyle};
           background-color: ${({ theme }) => theme.gradientInactiveColor};
         }
+      }
+    }
+
+    .custom-statuses__confirm {
+      display: flex;
+      gap: ${({ theme }) => theme.paddingST};
+      button {
+        width: 100%;
       }
     }
   }
@@ -182,9 +182,6 @@ const StyledCustomStatuses = styled.div`
   .custom-status__comment {
     display: flex;
     gap: ${({ theme }) => theme.paddingST};
-    img {
-      height: ${({ theme }) => theme.buttonImageHeight};
-    }
     input {
       width: calc(100% - ${({ theme }) => theme.paddingST});
     }

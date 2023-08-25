@@ -39,7 +39,7 @@ const Statuses = () => {
                 className="status"
                 onClick={() => changeStatus(i)}
               >
-                <img src={stat.picture} />
+                <img className="img-icon" src={stat.picture} />
                 {stat.title}
               </div>
             )
@@ -87,8 +87,6 @@ const StyledStatuses = styled.div`
       font-size: 1.2em;
 
       img {
-        width: ${({ theme }) => theme.buttonImageHeight};
-        height: ${({ theme }) => theme.buttonImageHeight};
         margin-right: ${({ theme }) => theme.paddingST};
       }
     }

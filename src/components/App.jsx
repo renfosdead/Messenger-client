@@ -8,7 +8,6 @@ import Key from "./Key";
 import Theme from "./Theme";
 import Info from "./Info";
 import MessageTab from "./msg/MessageTab";
-import Text from "./msg/Text";
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
       </div>
 
       <MessageTab />
-      <Text />
 
       <div className="bottom">
         <Statuses />
@@ -110,5 +108,9 @@ const StyledApp = styled.div`
     border: ${({ theme }) => theme.borderStyle};
     border-radius: ${({ theme }) => theme.borderRadius};
     padding: ${({ theme }) => theme.paddingST};
+  }
+
+  .img-icon {
+    height: ${({ theme }) => theme.buttonImageHeight};
   }
 `;
