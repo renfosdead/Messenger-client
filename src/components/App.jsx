@@ -34,10 +34,10 @@ function App() {
 export default App;
 
 const StyledApp = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: ${({ theme }) => theme.buttonHeight} 1fr ${({ theme }) =>
+      theme.buttonHeight};
   height: 100vh;
-  justify-content: space-between;
   .top,
   .bottom {
     display: flex;

@@ -69,7 +69,7 @@ const StyledStatuses = styled.div`
     position: absolute;
     right: 0;
     bottom: ${({ theme }) => theme.buttonHeight};
-    width: 200px;
+    width: 220px;
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingSM}!important;
     padding-bottom: ${({ theme }) => theme.paddingSM}!important;
@@ -83,7 +83,7 @@ const StyledStatuses = styled.div`
     .status {
       display: flex;
       align-items: center;
-      line-height: 1.5;
+      line-height: calc(${({ theme }) => theme.fontSize} * 1.7);
       font-size: 1.2em;
 
       img {

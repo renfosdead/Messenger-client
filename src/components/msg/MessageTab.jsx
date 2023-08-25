@@ -24,13 +24,18 @@ export default MessageTab;
 
 const StyledMessageTab = styled.div`
   position: relative;
-  height: calc(100vh - 2 * ${({ theme }) => theme.buttonHeight} - 2px);
+  height: calc(100vh - 3 * ${({ theme }) => theme.buttonHeight} - 2px);
   border: ${({ theme }) => theme.borderStyle};
   border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.fontSize};
   display: grid;
   grid-template-rows: 1fr calc(${({ theme }) => theme.buttonHeight} + 2px);
+  margin-top: ${({ theme }) => theme.buttonHeight};
   &.chat-expanded {
-    grid-template-rows: 1fr 338px;
+    grid-template-rows: 1fr calc(
+        13 * ${({ theme }) => theme.fontSize} + 2 *
+          ${({ theme }) => theme.buttonHeight} + 4 *
+          ${({ theme }) => theme.paddingST}
+      );
   }
 `;

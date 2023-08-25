@@ -26,6 +26,7 @@ const CustomStatuses = () => {
   const className = classNames({
     enabled: visible,
     button: true,
+    "status-toggler-btn": true,
   });
 
   return (
@@ -111,14 +112,21 @@ export default CustomStatuses;
 const StyledCustomStatuses = styled.div`
   position: relative;
   .custom-status-btn__comment {
-    width: calc(${({ theme }) => theme.buttonImageHeight} - 10px);
+    width: calc(${({ theme }) => theme.buttonImageHeight} / 2);
     img {
       position: absolute;
       top: 4px;
       left: 4px;
-      width: calc(${({ theme }) => theme.buttonImageHeight} - 10px);
-      height: calc(${({ theme }) => theme.buttonImageHeight} - 10px) !important;
+      width: calc(${({ theme }) => theme.buttonImageHeight} / 2);
+      height: calc(${({ theme }) => theme.buttonImageHeight} / 2) !important;
       z-index: 1;
+    }
+  }
+
+  .status-toggler-btn {
+    > div {
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -126,7 +134,7 @@ const StyledCustomStatuses = styled.div`
     position: absolute;
     right: 0;
     bottom: ${({ theme }) => theme.buttonHeight};
-    width: 240px;
+    width: 260px;
     background: ${({ theme }) => theme.backgroundColor};
     display: flex;
     flex-direction: column;
@@ -147,8 +155,8 @@ const StyledCustomStatuses = styled.div`
 
       .custom-status-submenu__item {
         position: relative;
-        width: 32px;
-        height: 32px;
+        width: calc(${({ theme }) => theme.buttonImageHeight} + 10px);
+        height: calc(${({ theme }) => theme.buttonImageHeight} + 10px);
         overflow: hidden;
         box-sizing: border-box;
         img {

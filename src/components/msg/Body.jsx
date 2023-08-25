@@ -134,30 +134,34 @@ const MessageBody = ({ expanded }) => {
   };
 
   return (
-    <StyledMessageBody ref={bodyRef}>
-      {messages.map((mes) => (
-        <div key={mes.id}>
-          {mes.type === "status" ? (
-            <div className={`message-title ${mes.status}`}>
-              <img
-                className="img-icon"
-                src={`/statuses_custom/${statusesCustom[mes.pic]}.png`}
-              />
-              <div>{mes.text}</div>
-              <div>{mes.additionalText}</div>
-            </div>
-          ) : (
-            <>
+    <StyledMessageBody>
+      <div ref={bodyRef}>
+        {messages.map((mes) => (
+          <div key={mes.id}>
+            {mes.type === "status" ? (
               <div className={`message-title ${mes.status}`}>
-                <img className="img-icon" src={`/icons/${mes.status}.png`} />
-                <div className={mes.status}>{`${mes.user} (${mes.date})`}</div>
+                <img
+                  className="img-icon"
+                  src={`/statuses_custom/${statusesCustom[mes.pic]}.png`}
+                />
+                <div>{mes.text}</div>
+                <div>{mes.additionalText}</div>
               </div>
-              <div>{mes.text}</div>
-              <div>{mes.additionalText}</div>
-            </>
-          )}
-        </div>
-      ))}
+            ) : (
+              <>
+                <div className={`message-title ${mes.status}`}>
+                  <img className="img-icon" src={`/icons/${mes.status}.png`} />
+                  <div
+                    className={mes.status}
+                  >{`${mes.user} (${mes.date})`}</div>
+                </div>
+                <div>{mes.text}</div>
+                <div>{mes.additionalText}</div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
     </StyledMessageBody>
   );
 };
@@ -167,8 +171,16 @@ export default MessageBody;
 const StyledMessageBody = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
-  overflow-y: auto;
-  padding: ${({ theme }) => theme.paddingST};
+  overflow: hidden;
+  position: relative;
+  > div {
+    position: absolute;
+    left: ${({ theme }) => theme.paddingST};
+    right: ${({ theme }) => theme.paddingST};
+    top: ${({ theme }) => theme.paddingST};
+    bottom: ${({ theme }) => theme.paddingST};
+    overflow-y: auto;
+  }
   .message-title {
     display: flex;
     gap: ${({ theme }) => theme.paddingST};

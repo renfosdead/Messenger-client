@@ -20,7 +20,7 @@ const Header = () => {
         {!enabled && <img src={`statuses_custom/${statusesCustom[5]}.png`} />}
         <Balloon />
 
-        <div className="username">Username Username Username</div>
+        <div className="username">Username Username</div>
       </div>
       {enabled && (
         <div className="status-text">
@@ -38,20 +38,17 @@ export default Header;
 
 const StyledHeader = styled.div`
   position: absolute;
-  right: -1px !important;
-  width: calc(
-    6 * ${({ theme }) => theme.buttonHeight} - 4 *
-      ${({ theme }) => theme.paddingST}
-  );
+  left: -1px !important;
+  right: auto !important;
   top: calc(-${({ theme }) => theme.buttonHeight} - 1px) !important;
   justify-content: start !important;
   padding-left: ${({ theme }) => theme.paddingST}!important;
   padding-right: ${({ theme }) => theme.paddingST}!important;
   background: ${({ theme }) => theme.backgroundColor}!important;
+  z-index: 3;
 
   .status-row {
     display: flex;
-    width: 100%;
     align-items: center;
     height: ${({ theme }) => theme.buttonHeight};
     gap: ${({ theme }) => theme.paddingSM}!important;
