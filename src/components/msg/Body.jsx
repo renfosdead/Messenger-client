@@ -176,7 +176,7 @@ const StyledMessageBody = styled.div`
   > div {
     position: absolute;
     left: ${({ theme }) => theme.paddingST};
-    right: ${({ theme }) => theme.paddingST};
+    right: ${({ theme }) => theme.paddingSM};
     top: ${({ theme }) => theme.paddingST};
     bottom: ${({ theme }) => theme.paddingST};
     overflow-y: auto;
