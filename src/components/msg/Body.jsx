@@ -151,9 +151,9 @@ const MessageBody = ({ expanded }) => {
               <>
                 <div className={`message-title ${mes.status}`}>
                   <img className="img-icon" src={`/icons/${mes.status}.png`} />
-                  <div
-                    className={mes.status}
-                  >{`${mes.user} (${mes.date})`}</div>
+                  <div className={mes.status}>
+                    {mes.user} <span>{`(${mes.date})`}</span>
+                  </div>
                 </div>
                 <div>{mes.text}</div>
                 <div>{mes.additionalText}</div>
@@ -186,11 +186,14 @@ const StyledMessageBody = styled.div`
     gap: ${({ theme }) => theme.paddingST};
     font-size: ${({ theme }) => theme.fontSizeSM};
     align-items: baseline;
-    padding-top: ${({ theme }) => theme.paddingST};
+    padding-top: ${({ theme }) => theme.paddingSM};
     padding-bottom: ${({ theme }) => theme.paddingSM};
 
     > div:first-of-type {
       font-weight: bold;
+      > span {
+        font-size: ${({ theme }) => theme.fontSizeXS};
+      }
     }
 
     &.in {
