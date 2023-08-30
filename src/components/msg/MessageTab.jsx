@@ -5,7 +5,7 @@ import Text from "./Text";
 import { useState } from "react";
 import classNames from "classnames";
 
-const MessageTab = () => {
+const MessageTab = ({ isActive, onClickTab, right, userId }) => {
   const [showText, setShowText] = useState(false);
 
   const className = classNames({
@@ -13,7 +13,12 @@ const MessageTab = () => {
   });
   return (
     <StyledMessageTab className={className}>
-      <Header />
+      <Header
+        isActive={isActive}
+        onClickTab={onClickTab}
+        right={right}
+        userId={userId}
+      />
       <Body expanded={showText} />
       <Text expanded={showText} toggleExpanded={setShowText} />
     </StyledMessageTab>
@@ -30,7 +35,6 @@ const StyledMessageTab = styled.div`
   font-size: ${({ theme }) => theme.fontSize};
   display: grid;
   grid-template-rows: 1fr calc(${({ theme }) => theme.buttonHeight} + 2px);
-  margin-top: ${({ theme }) => theme.buttonHeight};
   &.chat-expanded {
     grid-template-rows: 1fr calc(
         13 * ${({ theme }) => theme.fontSize} + 2 *

@@ -5,17 +5,34 @@ import Balloon from "@/components/Baloon";
 import classnames from "classnames";
 import { useState } from "react";
 
-const Header = () => {
+const Header = ({ isActive, onClickTab, right, userId }) => {
   const [enabled, setEnabled] = useState(false);
 
   const className = classnames({
     button: true,
     enabled,
     "open-tab": !enabled,
+    right: right,
+    inactive: !isActive,
   });
 
+  const onClick = () => {
+    isActive ? setEnabled(!enabled) : onClickTab();
+  };
+
+  if (!userId) {
+    return (
+      <StyledHeader className={className} onClick={onClick}>
+        <div className="status-row">
+          <img src={`/icons/message.png`} />
+          <div className="username">Notes</div>
+        </div>
+      </StyledHeader>
+    );
+  }
+
   return (
-    <StyledHeader className={className} onClick={() => setEnabled(!enabled)}>
+    <StyledHeader className={className} onClick={onClick}>
       <div className="status-row">
         <img className="status" src={statuses[0].picture} />
         {!enabled && <img src={`statuses_custom/${statusesCustom[5]}.png`} />}
@@ -47,6 +64,7 @@ const StyledHeader = styled.div`
   padding-right: ${({ theme }) => theme.paddingST}!important;
   background: ${({ theme }) => theme.backgroundColor}!important;
   z-index: 3;
+  min-width: 50%;
 
   .status-row {
     display: flex;
@@ -71,6 +89,22 @@ const StyledHeader = styled.div`
       gap: ${({ theme }) => theme.paddingSM}!important;
       padding-top: ${({ theme }) => theme.paddingSM};
       padding-bottom: ${({ theme }) => theme.paddingSM};
+    }
+  }
+
+  &.inactive {
+    background: linear-gradient(
+      ${({ theme }) => theme.backgroundColor} 40%,
+      ${({ theme }) => theme.gradientInactiveColor} 55%,
+      ${({ theme }) => theme.gradientInactiveColor}
+    ) !important;
+  }
+
+  &.right {
+    right: -1px !important;
+    left: auto !important;
+    &.inactive {
+      justify-content: end !important;
     }
   }
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import statusesCustom from "shared/src/custom_statuses";
 import { useEffect, useRef } from "react";
+import Message from "./Message";
 
 const MessageBody = ({ expanded }) => {
   const messages = [
@@ -137,29 +137,7 @@ const MessageBody = ({ expanded }) => {
     <StyledMessageBody>
       <div ref={bodyRef}>
         {messages.map((mes) => (
-          <div key={mes.id}>
-            {mes.type === "status" ? (
-              <div className={`message-title ${mes.status}`}>
-                <img
-                  className="img-icon"
-                  src={`/statuses_custom/${statusesCustom[mes.pic]}.png`}
-                />
-                <div>{mes.text}</div>
-                <div>{mes.additionalText}</div>
-              </div>
-            ) : (
-              <>
-                <div className={`message-title ${mes.status}`}>
-                  <img className="img-icon" src={`/icons/${mes.status}.png`} />
-                  <div className={mes.status}>
-                    {mes.user} <span>{`(${mes.date})`}</span>
-                  </div>
-                </div>
-                <div>{mes.text}</div>
-                <div>{mes.additionalText}</div>
-              </>
-            )}
-          </div>
+          <Message key={mes.id} data={mes} />
         ))}
       </div>
     </StyledMessageBody>
@@ -180,29 +158,5 @@ const StyledMessageBody = styled.div`
     top: ${({ theme }) => theme.paddingST};
     bottom: ${({ theme }) => theme.paddingST};
     overflow-y: auto;
-  }
-  .message-title {
-    display: flex;
-    gap: ${({ theme }) => theme.paddingST};
-    font-size: ${({ theme }) => theme.fontSizeSM};
-    align-items: baseline;
-    padding-top: ${({ theme }) => theme.paddingSM};
-    padding-bottom: ${({ theme }) => theme.paddingSM};
-
-    > div:first-of-type {
-      font-weight: bold;
-      > span {
-        font-size: ${({ theme }) => theme.fontSizeXS};
-      }
-    }
-
-    &.in {
-      color: ${({ theme }) => theme.inColor};
-    }
-    &.out,
-    &.read,
-    &.unread {
-      color: ${({ theme }) => theme.outColor};
-    }
   }
 `;

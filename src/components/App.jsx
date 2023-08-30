@@ -7,8 +7,9 @@ import Files from "./Files";
 import Key from "./Key";
 import Theme from "./Theme";
 import Info from "./Info";
-import MessageTab from "./msg/MessageTab";
 import { useEvents } from "../hooks/useEvents";
+import MessageTabs from "./msg/MessageTabs";
+import Refresh from "./Refresh.jsx";
 
 function App() {
   const { events } = useEvents();
@@ -16,15 +17,17 @@ function App() {
   return (
     <StyledApp>
       <div className="top">
-        <Sound />
-        <History />
-        <Files />
-        <Theme />
-        <Key />
-        <Info />
+        <div className="top-left">
+          <Sound />
+          <History />
+          <Files />
+          <Theme />
+          <Key />
+          <Info />
+        </div>
+        <Refresh />
       </div>
-
-      <MessageTab />
+      <MessageTabs />
 
       <div className="bottom">
         <Statuses />
@@ -43,6 +46,11 @@ const StyledApp = styled.div`
   height: 100vh;
   .top,
   .bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .top-left {
     display: flex;
   }
 
