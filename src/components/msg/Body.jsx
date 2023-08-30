@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { statusesCustom } from "@/utils/data";
+import statusesCustom from "shared/src/custom_statuses";
 import { useEffect, useRef } from "react";
 
 const MessageBody = ({ expanded }) => {

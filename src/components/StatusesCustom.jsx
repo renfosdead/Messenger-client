@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside.jsx";
 import classNames from "classnames";
-import { statusesCustom } from "@/utils/data";
+import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "./Baloon";
 
 const CustomStatuses = () => {

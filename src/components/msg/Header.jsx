@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { statuses, statusesCustom } from "@/utils/data";
+import { statuses } from "@/utils/data";
+import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "@/components/Baloon";
 import classnames from "classnames";
 import { useState } from "react";
