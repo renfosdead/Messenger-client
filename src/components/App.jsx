@@ -8,8 +8,11 @@ import Key from "./Key";
 import Theme from "./Theme";
 import Info from "./Info";
 import MessageTab from "./msg/MessageTab";
+import { useEvents } from "../hooks/useEvents";
 
 function App() {
+  const { events } = useEvents();
+
   return (
     <StyledApp>
       <div className="top">
