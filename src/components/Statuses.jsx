@@ -73,6 +73,7 @@ const StyledStatuses = styled.div`
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingSM}!important;
     padding-bottom: ${({ theme }) => theme.paddingSM}!important;
+    z-index: 5;
     .divider {
       background: ${({ theme }) => theme.borderColor};
       height: 1px;

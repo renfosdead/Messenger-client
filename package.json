@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "./build-mobile.sh",
+    "build:prepare-cordova": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -17,7 +18,7 @@
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "shared": "file:../messenger-types",
+    "shared": "/home/pfrus/projects/pets/qip/messenger/messenger-types",
     "styled-components": "^6.0.5"
   },
   "devDependencies": {

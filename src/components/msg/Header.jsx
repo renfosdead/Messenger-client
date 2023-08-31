@@ -104,7 +104,10 @@ const StyledHeader = styled.div`
     right: -1px !important;
     left: auto !important;
     &.inactive {
-      justify-content: end !important;
+      justify-content: flex-end !important;
+      .status-row {
+        justify-content: flex-end;
+      }
     }
   }
 `;

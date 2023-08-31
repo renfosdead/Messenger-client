@@ -139,6 +139,7 @@ const StyledCustomStatuses = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.paddingST};
+    z-index: 5;
 
     .custom-status-submenu__balloon-checkbox {
       display: flex;
