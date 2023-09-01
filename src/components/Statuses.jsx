@@ -2,14 +2,19 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside.jsx";
 import classNames from "classnames";
-import { statuses } from "../utils/data";
+import { statuses, statusesDescription } from "../utils/data";
+import store from "../utils/store";
 
-const Statuses = () => {
+const Statuses = ({ onChangeStatus }) => {
   const [visible, setVisible] = useState(false);
-  const [status, setStatus] = useState(0);
-  const changeStatus = (i) => {
-    setStatus(i);
+
+  const status = store.status.get() || "offline";
+
+  const [statusState, setStatusState] = useState(status);
+  const changeStatus = (key) => {
+    setStatusState(key);
     setVisible(false);
+    onChangeStatus(key);
   };
 
   const className = classNames({
@@ -21,8 +26,8 @@ const Statuses = () => {
     <StyledStatuses>
       <button onClick={() => setVisible(true)} className={className}>
         <div className="status-btn">
-          <img src={statuses[status].picture} />
-          {statuses[status].title}
+          <img src={statusesDescription[statusState].picture} />
+          {statusesDescription[statusState].title}
         </div>
       </button>
       {visible && (
@@ -37,7 +42,7 @@ const Statuses = () => {
               <div
                 key={`status${i}`}
                 className="status"
-                onClick={() => changeStatus(i)}
+                onClick={() => changeStatus(stat.key)}
               >
                 <img className="img-icon" src={stat.picture} />
                 {stat.title}

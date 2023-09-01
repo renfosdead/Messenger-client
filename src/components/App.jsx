@@ -11,8 +11,34 @@ import { useEvents } from "../hooks/useEvents";
 import MessageTabs from "./msg/MessageTabs";
 import Refresh from "./Refresh.jsx";
 
+import store from "@/utils/store";
+import UserApi from "@/api/user";
+
 function App() {
   const { events } = useEvents();
+
+  const onChangeStatus = async (status) => {
+    const statusOld = store.status.get();
+    if (store.status.get() !== status) {
+      if (!statusOld || statusOld === "offline") {
+        const result = await UserApi.login({
+          name: store.name.get() || "Name",
+          status,
+          customStatus: {},
+        });
+        if (result?.data) {
+          store.userId.set(result?.data?.userId);
+          store.chatId.set(result?.data?.chatId);
+        }
+      }
+
+      if (status === "offline") {
+        await UserApi.logout();
+      }
+
+      store.status.set(status);
+    }
+  };
 
   return (
     <StyledApp>
@@ -30,7 +56,7 @@ function App() {
       <MessageTabs />
 
       <div className="bottom">
-        <Statuses />
+        <Statuses onChangeStatus={onChangeStatus} />
         <StatusesCustom />
       </div>
     </StyledApp>
