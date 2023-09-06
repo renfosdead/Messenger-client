@@ -10,35 +10,12 @@ import Info from "./Info";
 import { useEvents } from "../hooks/useEvents";
 import MessageTabs from "./msg/MessageTabs";
 import Refresh from "./Refresh.jsx";
-
-import store from "@/utils/store";
-import UserApi from "@/api/user";
+import store from "../utils/store";
+import RemoveEvents from "./RemoveEvents";
 
 function App() {
-  const { events } = useEvents();
-
-  const onChangeStatus = async (status) => {
-    const statusOld = store.status.get();
-    if (store.status.get() !== status) {
-      if (!statusOld || statusOld === "offline") {
-        const result = await UserApi.login({
-          name: store.name.get() || "Name",
-          status,
-          customStatus: {},
-        });
-        if (result?.data) {
-          store.userId.set(result?.data?.userId);
-          store.chatId.set(result?.data?.chatId);
-        }
-      }
-
-      if (status === "offline") {
-        await UserApi.logout();
-      }
-
-      store.status.set(status);
-    }
-  };
+  const { events, loadEvents } = useEvents();
+  const removeEvents = store.events.remove;
 
   return (
     <StyledApp>
@@ -51,12 +28,15 @@ function App() {
           <Key />
           <Info />
         </div>
-        <Refresh />
+        <div className="top-right">
+          <RemoveEvents onClick={removeEvents} />
+          <Refresh onClick={loadEvents} />
+        </div>
       </div>
-      <MessageTabs />
+      <MessageTabs events={events} />
 
       <div className="bottom">
-        <Statuses onChangeStatus={onChangeStatus} />
+        <Statuses />
         <StatusesCustom />
       </div>
     </StyledApp>
@@ -76,7 +56,8 @@ const StyledApp = styled.div`
     justify-content: space-between;
   }
 
-  .top-left {
+  .top-left,
+  .top-right {
     display: flex;
   }
 

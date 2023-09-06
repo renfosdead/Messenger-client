@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { statuses } from "@/utils/data";
 import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "@/components/Baloon";
 import classnames from "classnames";
 import { useState } from "react";
+import { statusesDescription } from "@/utils/data";
 
-const Header = ({ isActive, onClickTab, right, userId }) => {
+const Header = ({ isActive, onClickTab, right, userId, status }) => {
   const [enabled, setEnabled] = useState(false);
 
   const className = classnames({
@@ -34,7 +34,7 @@ const Header = ({ isActive, onClickTab, right, userId }) => {
   return (
     <StyledHeader className={className} onClick={onClick}>
       <div className="status-row">
-        <img className="status" src={statuses[0].picture} />
+        <img className="status" src={statusesDescription[status].picture} />
         {!enabled && <img src={`statuses_custom/${statusesCustom[5]}.png`} />}
         <Balloon />
 

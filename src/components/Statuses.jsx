@@ -2,10 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside.jsx";
 import classNames from "classnames";
-import { statuses, statusesDescription } from "../utils/data";
-import store from "../utils/store";
+import { statuses, statusesDescription } from "@/utils/data";
+import store from "@/utils/store";
+import UserApi from "@/api/user";
 
-const Statuses = ({ onChangeStatus }) => {
+const Statuses = () => {
   const [visible, setVisible] = useState(false);
 
   const status = store.status.get() || "offline";
@@ -21,6 +22,43 @@ const Statuses = ({ onChangeStatus }) => {
     enabled: visible,
     button: true,
   });
+
+  const loginUser = async (status) => {
+    const result = await UserApi.login({
+      name: store.name.get() || "Name",
+      status,
+      customStatus: {},
+    });
+    if (result?.data) {
+      store.userId.set(result?.data?.userId);
+      store.chatId.set(result?.data?.chatId);
+    }
+  };
+
+  const onChangeStatus = async (status) => {
+    const statusOld = store.status.get();
+    if (store.status.get() !== status) {
+      const changeType =
+        !statusOld || statusOld === "offline"
+          ? "login"
+          : status === "offline"
+          ? "logout"
+          : "change";
+
+      switch (changeType) {
+        case "login":
+          loginUser(status);
+          break;
+        case "offline":
+          UserApi.logout();
+          break;
+        default:
+          UserApi.changeStatus(status);
+      }
+
+      store.status.set(status);
+    }
+  };
 
   return (
     <StyledStatuses>

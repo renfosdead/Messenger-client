@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EventsApi from "@/api/events";
+import store from "../utils/store";
 
 export const useEvents = () => {
   const [data, setData] = useState([]);
   const loadEvents = async () => {
-    const result = await EventsApi.get();
-    setData(result.data);
+    const { data } = await EventsApi.get();
+    if (!data.error) {
+      setData(data);
+      store.events.set(data);
+    }
   };
-  useEffect(() => {
-    loadEvents();
-  }, []);
 
-  return { events: data };
+  return { events: data, loadEvents };
 };

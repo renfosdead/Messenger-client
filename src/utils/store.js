@@ -63,4 +63,22 @@ export default {
       window.localStorage.removeItem("customStatus");
     },
   },
+
+  events: {
+    get() {
+      const events = window.localStorage.getItem("events");
+      if (events) {
+        return JSON.parse(events);
+      } else {
+        return [];
+      }
+    },
+    set(value) {
+      const evts = [...this.get(), ...value];
+      window.localStorage.setItem("events", JSON.stringify(evts));
+    },
+    remove() {
+      window.localStorage.removeItem("events");
+    },
+  },
 };

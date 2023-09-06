@@ -1,17 +1,12 @@
 import classNames from "classnames";
-import { useState } from "react";
 import styled from "styled-components";
 
-const Refresh = () => {
-  const [enabled, setEnabled] = useState(false);
-
+const Refresh = ({ onClick }) => {
   const className = classNames({
-    enabled: enabled,
-    disabled: !enabled,
     button: true,
   });
   return (
-    <StyledRefresh className={className} onClick={() => setEnabled(!enabled)}>
+    <StyledRefresh className={className} onClick={onClick}>
       <img src={"/icons/refresh.png"} />
     </StyledRefresh>
   );

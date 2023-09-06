@@ -4,13 +4,17 @@ import Body from "./Body";
 import Text from "./Text";
 import { useState } from "react";
 import classNames from "classnames";
+import { useStatus } from "../../hooks/useStatus";
 
-const MessageTab = ({ isActive, onClickTab, right, userId }) => {
+const MessageTab = ({ isActive, onClickTab, right, userId, events }) => {
   const [showText, setShowText] = useState(false);
 
   const className = classNames({
     "chat-expanded": showText,
   });
+
+  const status = useStatus(userId, events);
+
   return (
     <StyledMessageTab className={className}>
       <Header
@@ -18,6 +22,7 @@ const MessageTab = ({ isActive, onClickTab, right, userId }) => {
         onClickTab={onClickTab}
         right={right}
         userId={userId}
+        status={status}
       />
       <Body expanded={showText} />
       <Text expanded={showText} toggleExpanded={setShowText} />

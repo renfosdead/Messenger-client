@@ -7,4 +7,7 @@ export default {
   logout() {
     return axiosInstance.get("/user/logout");
   },
+  changeStatus(status) {
+    return axiosInstance.post("/user/change_status", { status });
+  },
 };
