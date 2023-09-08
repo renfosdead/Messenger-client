@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import classNames from "classnames";
 import EVENT_TYPES from "shared/src/event_types";
+import store from "@/utils/store";
 
 const Message = ({ data }) => {
   const [touchStart, setTouchStart] = useState(0);
@@ -14,6 +15,8 @@ const Message = ({ data }) => {
   const onTouchMove = (e) => {
     setTouchEnd(e.targetTouches[0].clientX);
   };
+
+  const userId = store.userId.get();
 
   const onTouchEnd = () => {
     // if (touchStart - touchEnd > 150) {
@@ -28,6 +31,9 @@ const Message = ({ data }) => {
   };
 
   const getMessageStatus = () => {
+    if (data.userId === userId) {
+      return "out";
+    }
     return "in";
   };
 
@@ -60,6 +66,7 @@ const Message = ({ data }) => {
     "with-left-panel": showLeftPanel,
   });
 
+  const messageStatus = getMessageStatus();
   return (
     <StyledMessage
       onTouchStart={onTouchStart}
@@ -70,16 +77,15 @@ const Message = ({ data }) => {
       {showLeftPanel && (
         <img className="img-icon btn-remove" src="/icons/remove.png" />
       )}
-      <div className={`message-title ${data.status}`}>
+      <div className={`message-title ${messageStatus}`}>
         <div>
-          <img className="img-icon" src={`/icons/${data.status}.png`} />
-          <div className={data.status}>
-            {data.user} <span>{`(${data.date})`}</span>
+          <img className="img-icon" src={`/icons/${messageStatus}.png`} />
+          <div className={messageStatus}>
+            {data.userId} <span>{`(${data.date || ""})`}</span>
           </div>
         </div>
       </div>
-      <div>{`${data.text} `}</div>
-      <div>{data.additionalText}</div>
+      <div>{`${data.message} `}</div>
     </StyledMessage>
   );
 };

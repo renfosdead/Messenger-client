@@ -12,7 +12,7 @@ export const useCustomStatus = (userId, events) => {
   const loadFromEvents = async () => {
     const evts = store.events.get();
     const statusEvents = evts.filter(
-      (e) => e.type === EVENT_TYPES.changeCustomStatus
+      (e) => e.type === EVENT_TYPES.changeCustomStatus && e.userId !== userId
     );
     const lastStatus = statusEvents[statusEvents.length - 1];
     if (lastStatus) {

@@ -6,12 +6,15 @@ export const useMessages = (events, chatId) => {
   const [data, setData] = useState([]);
   const loadFromEvents = async () => {
     const evts = store.events.get();
-    const statusEvents = evts.filter(
-      (e) => e.type === EVENT_TYPES.changeCustomStatus && e.chatId === chatId
+    const messageEvents = evts.filter(
+      (e) =>
+        (e.type === EVENT_TYPES.changeCustomStatus ||
+          e.type === EVENT_TYPES.sendMessage) &&
+        e.chatId === chatId
     );
-    const lastStatus = statusEvents[statusEvents.length - 1];
-    if (lastStatus && !data.find((e) => e.id === lastStatus.id)) {
-      setData([...data, lastStatus]);
+    const lastEvent = messageEvents[messageEvents.length - 1];
+    if (lastEvent && !data.find((e) => e.id === lastEvent.id)) {
+      setData([...data, lastEvent]);
     }
   };
 

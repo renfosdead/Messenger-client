@@ -64,7 +64,7 @@ export default ClearCaches;
 const StyledClearCaches = styled.div`
   display: flex;
   align-items: center;
-  z-index: 4;
+  z-index: 6;
   .dropdown-menu {
     position: absolute;
     right: ${({ theme }) => theme.buttonHeight};

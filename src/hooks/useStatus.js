@@ -7,7 +7,7 @@ export const useStatus = (userId, events) => {
   const loadStatusFromEvents = async () => {
     const evts = store.events.get();
     const statusEvents = evts.filter(
-      (e) => e.type === EVENT_TYPES.changeStatus
+      (e) => e.type === EVENT_TYPES.changeStatus && e.userId !== userId
     );
     const lastStatus = statusEvents[statusEvents.length - 1];
     if (lastStatus) {

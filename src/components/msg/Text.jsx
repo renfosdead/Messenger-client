@@ -1,16 +1,24 @@
 import styled from "styled-components";
 import { useState } from "react";
 import classNames from "classnames";
+import UserApi from "@/api/user";
 
-const Text = ({ expanded, toggleExpanded }) => {
+const Text = ({ expanded, toggleExpanded, rows, userId, chatId }) => {
   const [value, setValue] = useState("");
+
+  const onSubmit = async () => {
+    const result = await UserApi.sendMessage(value);
+    if (result.data) {
+      setValue("");
+    }
+  };
 
   const className = classNames({
     button: true,
     simple: true,
   });
   return (
-    <StyledText>
+    <StyledText className="styled-text-component">
       <div className="text-controls">
         <div>
           <button className="button simple">
@@ -35,10 +43,10 @@ const Text = ({ expanded, toggleExpanded }) => {
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            rows={12}
+            rows={rows}
           ></textarea>
           <div className="send-btn">
-            <button className="button">
+            <button className="button" onClick={onSubmit}>
               <img src="/icons/unread.png" />
               Отправить
             </button>
@@ -55,6 +63,7 @@ const StyledText = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
   border-top: ${({ theme }) => theme.borderStyle};
+  background: ${({ theme }) => theme.backgroundColor};
   button {
     font-size: ${({ theme }) => theme.fontSize};
     &.simple {

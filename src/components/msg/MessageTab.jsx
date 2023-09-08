@@ -8,6 +8,8 @@ import { useStatus } from "@/hooks/useStatus";
 import { useCustomStatus } from "@/hooks/useCustomStatus";
 import { useMessages } from "@/hooks/useMessages";
 
+const rows = 4;
+
 const MessageTab = ({
   isActive,
   onClickTab,
@@ -37,8 +39,14 @@ const MessageTab = ({
         status={status}
         customStatus={customStatus}
       />
-      <Body name={name} expanded={showText} data={data} chatId={chatId} />
-      <Text expanded={showText} toggleExpanded={setShowText} />
+      <Body expanded={showText} data={data} chatId={chatId} />
+      <Text
+        expanded={showText}
+        toggleExpanded={setShowText}
+        rows={rows}
+        userId={userId}
+        chatId={chatId}
+      />
     </StyledMessageTab>
   );
 };
@@ -55,13 +63,14 @@ const StyledMessageTab = styled.div`
   grid-template-rows: 1fr calc(${({ theme }) => theme.buttonHeight} + 2px);
   &.chat-expanded {
     grid-template-rows: 1fr calc(
-        13 * ${({ theme }) => theme.fontSize} + 2 *
+        ${rows} * ${({ theme }) => theme.fontSize} + 2 *
           ${({ theme }) => theme.buttonHeight} + 4 *
           ${({ theme }) => theme.paddingST}
       );
   }
   &.active {
-    .styled-message-body {
+    .styled-message-body,
+    .styled-text-component {
       z-index: 5;
     }
   }

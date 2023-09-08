@@ -32,8 +32,8 @@ function App() {
           <Info />
         </div>
         <div className="top-right">
-          <ClearCaches />
-          {statusState !== "offline" && <Refresh onClick={loadEvents} />}
+          <ClearCaches />{" "}
+          <Refresh onClick={loadEvents} disabled={statusState === "offline"} />
         </div>
       </div>
       <MessageTabs events={events} />
@@ -130,6 +130,7 @@ const StyledApp = styled.div`
     border: ${({ theme }) => theme.borderStyle};
     border-radius: ${({ theme }) => theme.borderRadius};
     padding: ${({ theme }) => theme.paddingST};
+    z-index: 6;
   }
 
   .img-icon {
