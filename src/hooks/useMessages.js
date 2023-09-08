@@ -12,10 +12,7 @@ export const useMessages = (events, chatId) => {
           e.type === EVENT_TYPES.sendMessage) &&
         e.chatId === chatId
     );
-    const lastEvent = messageEvents[messageEvents.length - 1];
-    if (lastEvent && !data.find((e) => e.id === lastEvent.id)) {
-      setData([...data, lastEvent]);
-    }
+    setData([...data, ...messageEvents]);
   };
 
   useEffect(() => {

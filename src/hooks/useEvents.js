@@ -5,10 +5,10 @@ import store from "../utils/store";
 export const useEvents = () => {
   const [data, setData] = useState([]);
   const loadEvents = async () => {
-    const { data } = await EventsApi.get();
-    if (!data.error) {
-      setData(data);
-      store.events.set(data);
+    const events = await EventsApi.get();
+    if (!events.data.error) {
+      setData([...data, events.data]);
+      store.events.set(events.data);
     }
   };
 
