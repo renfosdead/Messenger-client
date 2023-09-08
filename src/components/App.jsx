@@ -11,11 +11,14 @@ import { useEvents } from "../hooks/useEvents";
 import MessageTabs from "./msg/MessageTabs";
 import Refresh from "./Refresh.jsx";
 import store from "../utils/store";
-import RemoveEvents from "./RemoveEvents";
+import ClearCaches from "./ClearCaches";
+import { useState } from "react";
 
 function App() {
   const { events, loadEvents } = useEvents();
-  const removeEvents = store.events.remove;
+
+  const status = store.status.get() || "offline";
+  const [statusState, setStatusState] = useState(status);
 
   return (
     <StyledApp>
@@ -29,14 +32,14 @@ function App() {
           <Info />
         </div>
         <div className="top-right">
-          <RemoveEvents onClick={removeEvents} />
-          <Refresh onClick={loadEvents} />
+          <ClearCaches />
+          {statusState !== "offline" && <Refresh onClick={loadEvents} />}
         </div>
       </div>
       <MessageTabs events={events} />
 
       <div className="bottom">
-        <Statuses />
+        <Statuses value={statusState} onChange={setStatusState} />
         <StatusesCustom />
       </div>
     </StyledApp>
@@ -59,6 +62,7 @@ const StyledApp = styled.div`
   .top-left,
   .top-right {
     display: flex;
+    flex-direction: row;
   }
 
   body {

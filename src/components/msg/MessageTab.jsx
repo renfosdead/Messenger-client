@@ -4,17 +4,29 @@ import Body from "./Body";
 import Text from "./Text";
 import { useState } from "react";
 import classNames from "classnames";
-import { useStatus } from "../../hooks/useStatus";
+import { useStatus } from "@/hooks/useStatus";
+import { useCustomStatus } from "@/hooks/useCustomStatus";
+import { useMessages } from "@/hooks/useMessages";
 
-const MessageTab = ({ isActive, onClickTab, right, userId, events }) => {
+const MessageTab = ({
+  isActive,
+  onClickTab,
+  right,
+  userId,
+  chatId,
+  events,
+}) => {
   const [showText, setShowText] = useState(false);
 
   const className = classNames({
     "chat-expanded": showText,
+    active: isActive,
   });
 
   const status = useStatus(userId, events);
+  const customStatus = useCustomStatus(userId, events);
 
+  const { data } = useMessages(events, chatId);
   return (
     <StyledMessageTab className={className}>
       <Header
@@ -23,8 +35,9 @@ const MessageTab = ({ isActive, onClickTab, right, userId, events }) => {
         right={right}
         userId={userId}
         status={status}
+        customStatus={customStatus}
       />
-      <Body expanded={showText} />
+      <Body name={name} expanded={showText} data={data} chatId={chatId} />
       <Text expanded={showText} toggleExpanded={setShowText} />
     </StyledMessageTab>
   );
@@ -46,5 +59,10 @@ const StyledMessageTab = styled.div`
           ${({ theme }) => theme.buttonHeight} + 4 *
           ${({ theme }) => theme.paddingST}
       );
+  }
+  &.active {
+    .styled-message-body {
+      z-index: 5;
+    }
   }
 `;

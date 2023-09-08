@@ -1,11 +1,17 @@
 import styled from "styled-components";
-import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "@/components/Baloon";
 import classnames from "classnames";
 import { useState } from "react";
 import { statusesDescription } from "@/utils/data";
 
-const Header = ({ isActive, onClickTab, right, userId, status }) => {
+const Header = ({
+  isActive,
+  onClickTab,
+  right,
+  userId,
+  status,
+  customStatus,
+}) => {
   const [enabled, setEnabled] = useState(false);
 
   const className = classnames({
@@ -35,17 +41,20 @@ const Header = ({ isActive, onClickTab, right, userId, status }) => {
     <StyledHeader className={className} onClick={onClick}>
       <div className="status-row">
         <img className="status" src={statusesDescription[status].picture} />
-        {!enabled && <img src={`statuses_custom/${statusesCustom[5]}.png`} />}
-        <Balloon />
+        {!enabled && customStatus.status && (
+          <img src={`statuses_custom/${customStatus.status}.png`} />
+        )}
+        {customStatus.balloon && <Balloon />}
 
         <div className="username">Username Username</div>
       </div>
       {enabled && (
         <div className="status-text">
-          <img src={`statuses_custom/${statusesCustom[5]}.png`} />
-          STatus test STatus test STatus test STatus test STatus test STatus
-          test STatus test STatus test STatus test STatus test STatus test
-          STatus test STatus test STatus test STatus test{" "}
+          {customStatus.status && (
+            <img src={`statuses_custom/${customStatus.status}.png`} />
+          )}
+          <div className="status-text__title">{customStatus.title}</div>
+          {customStatus.subtitle}
         </div>
       )}
     </StyledHeader>
@@ -84,11 +93,19 @@ const StyledHeader = styled.div`
     flex-wrap: wrap;
     height: auto !important;
     border-bottom: ${({ theme }) => theme.borderStyle}!important;
+    .status-row {
+      width: 100%;
+    }
     .status-text {
       display: flex;
       gap: ${({ theme }) => theme.paddingSM}!important;
       padding-top: ${({ theme }) => theme.paddingSM};
       padding-bottom: ${({ theme }) => theme.paddingSM};
+      align-items: center;
+      flex-wrap: wrap;
+      .status-text__title {
+        font-weight: bold;
+      }
     }
   }
 

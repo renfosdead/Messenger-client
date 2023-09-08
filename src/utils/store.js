@@ -64,6 +64,30 @@ export default {
     },
   },
 
+  chat: {
+    get() {
+      const chat = window.localStorage.getItem("chat");
+      if (chat) {
+        return JSON.parse(chat);
+      } else {
+        return [];
+      }
+    },
+    set(value) {
+      window.localStorage.setItem("chat", JSON.stringify(value));
+    },
+    add(value) {
+      const oldVals = this.get();
+      if (oldVals.find((e) => e.id === value.id)) {
+        return;
+      }
+      window.localStorage.setItem("chat", JSON.stringify([...oldVals, value]));
+    },
+    remove() {
+      window.localStorage.removeItem("chat");
+    },
+  },
+
   events: {
     get() {
       const events = window.localStorage.getItem("events");

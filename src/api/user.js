@@ -10,4 +10,7 @@ export default {
   changeStatus(status) {
     return axiosInstance.post("/user/change_status", { status });
   },
+  changeCustomStatus(customStatus) {
+    return axiosInstance.post("/user/change_custom_status", { customStatus });
+  },
 };

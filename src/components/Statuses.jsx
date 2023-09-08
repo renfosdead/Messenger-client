@@ -6,14 +6,11 @@ import { statuses, statusesDescription } from "@/utils/data";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
 
-const Statuses = () => {
+const Statuses = ({ value, onChange }) => {
   const [visible, setVisible] = useState(false);
 
-  const status = store.status.get() || "offline";
-
-  const [statusState, setStatusState] = useState(status);
   const changeStatus = (key) => {
-    setStatusState(key);
+    onChange(key);
     setVisible(false);
     onChangeStatus(key);
   };
@@ -64,8 +61,8 @@ const Statuses = () => {
     <StyledStatuses>
       <button onClick={() => setVisible(true)} className={className}>
         <div className="status-btn">
-          <img src={statusesDescription[statusState].picture} />
-          {statusesDescription[statusState].title}
+          <img src={statusesDescription[value].picture} />
+          {statusesDescription[value].title}
         </div>
       </button>
       {visible && (

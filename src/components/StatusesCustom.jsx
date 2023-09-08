@@ -4,6 +4,8 @@ import { ClickOutside } from "@/utils/ClickOutside.jsx";
 import classNames from "classnames";
 import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "./Baloon";
+import UserApi from "@/api/user";
+import store from "@/utils/store";
 
 const CustomStatuses = () => {
   const [visible, setVisible] = useState(false);
@@ -28,6 +30,20 @@ const CustomStatuses = () => {
     button: true,
     "status-toggler-btn": true,
   });
+
+  const onSubmit = async () => {
+    const customStatus = {
+      status: status !== -1 ? statusesCustom[status] : undefined,
+      balloon,
+      title: comment,
+      subtitle: additionalComment,
+    };
+    const result = await UserApi.changeCustomStatus(customStatus);
+    if (result?.data) {
+      store.customStatus.set(customStatus);
+      setVisible(false);
+    }
+  };
 
   return (
     <StyledCustomStatuses>
@@ -98,7 +114,7 @@ const CustomStatuses = () => {
             Шарик дня рождения
           </label>
           <div className="custom-statuses__confirm">
-            <button onClick={() => setVisible(false)}>ОК</button>
+            <button onClick={onSubmit}>ОК</button>
             <button onClick={() => setVisible(false)}>Отмена</button>
           </div>
         </ClickOutside>

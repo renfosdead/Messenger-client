@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MessageTab from "./MessageTab";
 import styled from "styled-components";
+import store from "../../utils/store";
 
 const MessageTabs = ({ events }) => {
   const [activeTab, setActiveTab] = useState("chat");
@@ -9,11 +10,15 @@ const MessageTabs = ({ events }) => {
     setActiveTab(key);
   };
 
+  const chatId = store.chatId.get();
+  const userId = store.userId.get();
+
   return (
     <StyledMessageTabs>
       <div className={activeTab === "chat" ? "active" : "disabled"}>
         <MessageTab
-          userId={"userId"}
+          userId={userId}
+          chatId={chatId}
           isActive={activeTab === "chat"}
           onClickTab={() => changeActiveTab("chat")}
           events={events}

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import statusesCustom from "shared/src/custom_statuses";
 import styled from "styled-components";
 import classNames from "classnames";
+import EVENT_TYPES from "shared/src/event_types";
 
 const Message = ({ data }) => {
   const [touchStart, setTouchStart] = useState(0);
@@ -27,19 +27,29 @@ const Message = ({ data }) => {
     }
   };
 
+  const getMessageStatus = () => {
+    return "in";
+  };
+
   const [showLeftPanel, setShowLeftPanel] = useState(false);
 
-  if (data.type === "status") {
+  if (data.type === EVENT_TYPES.changeCustomStatus) {
+    const payload = data.customStatus;
+
+    if (!payload.status) {
+      return null;
+    }
+
     return (
       <StyledMessage>
-        <div className={`message-title ${data.status}`}>
+        <div className={`message-title status in`}>
           <div>
             <img
               className="img-icon"
-              src={`/statuses_custom/${statusesCustom[data.pic]}.png`}
+              src={`/statuses_custom/${payload.status}.png`}
             />
-            <div>{data.text}</div>
-            <div>{data.additionalText}</div>
+            <div className="status-title">{`${payload.title} `}</div>
+            <div>{payload.subtitle}</div>
           </div>
         </div>
       </StyledMessage>
@@ -68,7 +78,7 @@ const Message = ({ data }) => {
           </div>
         </div>
       </div>
-      <div>{data.text}</div>
+      <div>{`${data.text} `}</div>
       <div>{data.additionalText}</div>
     </StyledMessage>
   );
@@ -104,6 +114,27 @@ const StyledMessage = styled.div`
     &.read,
     &.unread {
       color: ${({ theme }) => theme.outColor};
+    }
+
+    &.status {
+      > div:first-of-type {
+        display: inline-block;
+        float: left;
+        font-weight: normal;
+        font-size: ${({ theme }) => theme.fontSizeXS};
+
+        > div,
+        img {
+          display: inline;
+        }
+        .status-title {
+          font-weight: bold;
+        }
+        img {
+          height: ${({ theme }) => theme.fontSize};
+          margin-right: ${({ theme }) => theme.paddingSM};
+        }
+      }
     }
   }
 
