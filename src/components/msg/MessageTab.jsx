@@ -18,9 +18,9 @@ const MessageTab = ({
   userId,
   chatId,
   events,
+  refresh,
 }) => {
   const [showText, setShowText] = useState(false);
-
   const className = classNames({
     "chat-expanded": showText,
     active: isActive,
@@ -42,13 +42,20 @@ const MessageTab = ({
         customStatus={customStatus}
         name={name}
       />
-      <Body expanded={showText} data={data} chatId={chatId} userName={name} />
+      <Body
+        expanded={showText}
+        data={data}
+        chatId={chatId}
+        userName={name}
+        events={events}
+      />
       <Text
         expanded={showText}
         toggleExpanded={setShowText}
         rows={rows}
         userId={userId}
         chatId={chatId}
+        refresh={refresh}
       />
     </StyledMessageTab>
   );

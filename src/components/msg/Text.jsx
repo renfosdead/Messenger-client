@@ -2,14 +2,34 @@ import styled from "styled-components";
 import { useState } from "react";
 import classNames from "classnames";
 import UserApi from "@/api/user";
+import store from "@/utils/store";
+import EVENT_TYPES from "shared/src/event_types";
 
-const Text = ({ expanded, toggleExpanded, rows, userId, chatId }) => {
+const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
   const [value, setValue] = useState("");
 
   const onSubmit = async () => {
-    const result = await UserApi.sendMessage(value);
-    if (result.data) {
-      setValue("");
+    if (value) {
+      if (userId) {
+        const result = await UserApi.sendMessage(value);
+        if (result.data) {
+          setValue("");
+          refresh();
+        }
+      } else {
+        store.events.set([
+          {
+            id: `${Math.random()}`,
+            type: EVENT_TYPES.sendMessage,
+            date: Date.now(),
+            userId: "",
+            chatId: "notes",
+            message: value,
+          },
+        ]);
+        setValue("");
+        refresh();
+      }
     }
   };
 

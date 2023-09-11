@@ -40,7 +40,7 @@ function App() {
           />
         </div>
       </div>
-      <MessageTabs events={events} />
+      <MessageTabs events={events} refresh={loadEvents} />
 
       <div className="bottom">
         <Statuses value={statusState} onChange={setStatusState} />

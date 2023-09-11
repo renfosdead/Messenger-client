@@ -2,62 +2,12 @@ import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import Message from "./Message";
 
-const MessageBody = ({ expanded, data, userName }) => {
-  // const messages = [
-  //   {
-  //     id: "11",
-  //     status: "read",
-  //     user: "username_me",
-  //     date: "10:59:58 16.06.2014",
-  //     text: "Rororo fjfjjk fjkdjf jkfdjfk jfdkjk  Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk ",
-  //   },
-  //   {
-  //     id: "12",
-  //     status: "unread",
-  //     user: "username_me",
-  //     date: "11:03:44 16.06.2014",
-  //     text: "Rororo fjfjjk fjkdjf jkfdjfk jfdkjk  Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk ",
-  //   },
-  //   {
-  //     id: "13",
-  //     status: "in",
-  //     user: "username_you",
-  //     date: "11:44:44 16.06.2014",
-  //     text: "Rororo fjfjjk fjkdjf jkfdjfk jfdkjk  Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk ",
-  //   },
-
-  //   {
-  //     id: "15",
-  //     status: "out",
-  //     type: "status",
-  //     pic: 5,
-  //     text: "Nee )",
-  //     additionalText: "Puk puk puk",
-  //   },
-
-  //   {
-  //     id: "18",
-  //     status: "in",
-  //     user: "username_you",
-  //     date: "11:44:44 16.06.2014",
-  //     text: "Rororo fjfjjk fjkdjf jkfdjfk jfdkjk  Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk Rororo fjfjjk fjkdjf jkfdjfk jfdkjk ",
-  //   },
-
-  //   {
-  //     id: "20",
-  //     status: "out",
-  //     type: "status",
-  //     pic: 5,
-  //     text: "Nee )",
-  //     additionalText: "Puk puk puk",
-  //   },
-  // ];
-
+const MessageBody = ({ expanded, data, userName, events }) => {
   const bodyRef = useRef(null);
 
   useEffect(() => {
     scrollToBottom();
-  }, [expanded]);
+  }, [expanded, events]);
 
   useEffect(() => {
     scrollToBottom();
@@ -65,7 +15,9 @@ const MessageBody = ({ expanded, data, userName }) => {
 
   const scrollToBottom = () => {
     if (bodyRef.current) {
-      bodyRef.current.scrollTo(0, bodyRef.current.scrollHeight);
+      setTimeout(() => {
+        bodyRef.current.scrollTo(0, bodyRef.current.scrollHeight);
+      }, 100);
     }
   };
 

@@ -21,7 +21,6 @@ const ClearCaches = () => {
   const removeEvents = store.events.remove;
 
   const messagesSize = getSize(localStorage.chat);
-  const removeChat = store.chat.remove;
 
   return (
     <StyledClearCaches>
@@ -47,11 +46,6 @@ const ClearCaches = () => {
           <div className="settings_row">
             <div>Chat history</div>
             {messagesSize ? messagesSize.toFixed(1) + " KB" : "0 KB"}
-            {messagesSize ? (
-              <button className="button" onClick={removeChat}>
-                <img src={"/icons/remove.png"} />
-              </button>
-            ) : null}
           </div>
         </ClickOutside>
       )}
