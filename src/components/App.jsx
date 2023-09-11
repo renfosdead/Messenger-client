@@ -22,6 +22,7 @@ function App() {
 
   return (
     <StyledApp>
+      <div id="popup-container"></div>
       <div className="top">
         <div className="top-left">
           <Sound />
@@ -57,6 +58,14 @@ const StyledApp = styled.div`
   grid-template-rows: ${({ theme }) => theme.buttonHeight} 1fr ${({ theme }) =>
       theme.buttonHeight};
   height: 100vh;
+
+  #popup-container {
+    position: fixed;
+    width: 0px;
+    height: 0px;
+    z-index: 15;
+  }
+
   .top,
   .bottom {
     display: flex;
