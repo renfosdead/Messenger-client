@@ -7,8 +7,16 @@ export const useEvents = () => {
   const loadEvents = async () => {
     const events = await EventsApi.get();
     if (!events.data.error) {
-      setData([...data, events.data]);
-      store.events.set(events.data);
+      const existed = data.map((e) => e.id);
+      const payload = [];
+      events.data.forEach((evt) => {
+        if (!existed.includes(evt.id)) {
+          payload.push(evt);
+        }
+      });
+
+      setData([...data, ...payload]);
+      store.events.set(payload);
     }
   };
 

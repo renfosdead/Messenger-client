@@ -11,6 +11,7 @@ const Header = ({
   userId,
   status,
   customStatus,
+  name,
 }) => {
   const [enabled, setEnabled] = useState(false);
 
@@ -46,7 +47,7 @@ const Header = ({
         )}
         {customStatus.balloon && <Balloon />}
 
-        <div className="username">Username Username</div>
+        <div className="username">{name || "-"}</div>
       </div>
       {enabled && (
         <div className="status-text">

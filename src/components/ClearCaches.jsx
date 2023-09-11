@@ -65,11 +65,12 @@ const StyledClearCaches = styled.div`
   display: flex;
   align-items: center;
   z-index: 6;
+  position: relative;
   .dropdown-menu {
     position: absolute;
-    right: ${({ theme }) => theme.buttonHeight};
+    width: 300px;
+    right: 0;
     top: calc(${({ theme }) => theme.buttonHeight} - 1px);
-    left: 0;
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingLG}!important;
     padding-bottom: ${({ theme }) => theme.paddingLG}!important;

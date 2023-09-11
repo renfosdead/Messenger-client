@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { useStatus } from "@/hooks/useStatus";
 import { useCustomStatus } from "@/hooks/useCustomStatus";
 import { useMessages } from "@/hooks/useMessages";
+import { useName } from "../../hooks/useName";
 
 const rows = 4;
 
@@ -27,6 +28,7 @@ const MessageTab = ({
 
   const status = useStatus(userId, events);
   const customStatus = useCustomStatus(userId, events);
+  const name = useName(userId, events);
 
   const { data } = useMessages(events, chatId);
   return (
@@ -38,8 +40,9 @@ const MessageTab = ({
         userId={userId}
         status={status}
         customStatus={customStatus}
+        name={name}
       />
-      <Body expanded={showText} data={data} chatId={chatId} />
+      <Body expanded={showText} data={data} chatId={chatId} userName={name} />
       <Text
         expanded={showText}
         toggleExpanded={setShowText}

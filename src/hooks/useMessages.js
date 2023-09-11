@@ -12,7 +12,7 @@ export const useMessages = (events, chatId) => {
           e.type === EVENT_TYPES.sendMessage) &&
         e.chatId === chatId
     );
-    setData([...data, ...messageEvents]);
+    setData([...messageEvents]);
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import EVENT_TYPES from "shared/src/event_types";
 import store from "@/utils/store";
 
-const Message = ({ data }) => {
+const Message = ({ data, userName }) => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
@@ -35,6 +35,13 @@ const Message = ({ data }) => {
       return "out";
     }
     return "in";
+  };
+
+  const getMessageTitle = () => {
+    if (data.userId === userId) {
+      return store.name.get();
+    }
+    return userName;
   };
 
   const [showLeftPanel, setShowLeftPanel] = useState(false);
@@ -81,7 +88,7 @@ const Message = ({ data }) => {
         <div>
           <img className="img-icon" src={`/icons/${messageStatus}.png`} />
           <div className={messageStatus}>
-            {data.userId} <span>{`(${data.date || ""})`}</span>
+            {getMessageTitle()} <span>{`(${data.date || ""})`}</span>
           </div>
         </div>
       </div>
