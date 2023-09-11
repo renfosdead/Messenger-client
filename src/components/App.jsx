@@ -15,7 +15,7 @@ import ClearCaches from "./ClearCaches";
 import { useState } from "react";
 
 function App() {
-  const { events, loadEvents } = useEvents();
+  const { events, isLoading, loadEvents } = useEvents();
 
   const status = store.status.get() || "offline";
   const [statusState, setStatusState] = useState(status);
@@ -33,7 +33,11 @@ function App() {
         </div>
         <div className="top-right">
           <ClearCaches />{" "}
-          <Refresh onClick={loadEvents} disabled={statusState === "offline"} />
+          <Refresh
+            onClick={loadEvents}
+            disabled={statusState === "offline"}
+            isLoading={isLoading}
+          />
         </div>
       </div>
       <MessageTabs events={events} />

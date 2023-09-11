@@ -3,6 +3,7 @@ import styled from "styled-components";
 import classNames from "classnames";
 import EVENT_TYPES from "shared/src/event_types";
 import store from "@/utils/store";
+import { getDateFormatted } from "@/utils/date_time";
 
 const Message = ({ data, userName }) => {
   const [touchStart, setTouchStart] = useState(0);
@@ -88,7 +89,8 @@ const Message = ({ data, userName }) => {
         <div>
           <img className="img-icon" src={`/icons/${messageStatus}.png`} />
           <div className={messageStatus}>
-            {getMessageTitle()} <span>{`(${data.date || ""})`}</span>
+            {getMessageTitle()}{" "}
+            <span>{`(${getDateFormatted(data.date)})`}</span>
           </div>
         </div>
       </div>
