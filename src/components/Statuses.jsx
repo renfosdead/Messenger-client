@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { statuses, statusesDescription } from "@/utils/data";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
+import { isOffline } from "../utils/data";
 
 const Statuses = ({ value, onChange }) => {
   const [visible, setVisible] = useState(false);
@@ -50,7 +51,9 @@ const Statuses = ({ value, onChange }) => {
           UserApi.logout();
           break;
         default:
-          UserApi.changeStatus(status);
+          if (!isOffline()) {
+            UserApi.changeStatus(status);
+          }
       }
 
       store.status.set(status);

@@ -1,3 +1,5 @@
+import store from "./store";
+
 export const statusesDescription = {
   ready: {
     key: "ready",
@@ -90,3 +92,7 @@ export const statuses = [
   { divider: true },
   statusesDescription.offline,
 ];
+
+export const isOffline = () => {
+  return store.status.get() === "offline";
+};

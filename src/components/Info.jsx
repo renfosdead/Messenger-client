@@ -4,16 +4,22 @@ import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
+import { isOffline } from "../utils/data";
 
 const Info = () => {
   const [enabled, setEnabled] = useState(false);
   const [value, setValue] = useState("");
 
   const saveValue = async () => {
-    const result = await UserApi.changeName(value);
-    if (result.data) {
+    if (isOffline()) {
       store.name.set(value);
       setEnabled(false);
+    } else {
+      const result = await UserApi.changeName(value);
+      if (result.data) {
+        store.name.set(value);
+        setEnabled(false);
+      }
     }
   };
 

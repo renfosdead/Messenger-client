@@ -4,6 +4,7 @@ import classNames from "classnames";
 import UserApi from "@/api/user";
 import store from "@/utils/store";
 import EVENT_TYPES from "shared/src/event_types";
+import { isOffline } from "../../utils/data";
 
 const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
   const [value, setValue] = useState("");
@@ -11,10 +12,12 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
   const onSubmit = async () => {
     if (value) {
       if (userId) {
-        const result = await UserApi.sendMessage(value);
-        if (result.data) {
-          setValue("");
-          refresh();
+        if (!isOffline()) {
+          const result = await UserApi.sendMessage(value);
+          if (result.data) {
+            setValue("");
+            refresh();
+          }
         }
       } else {
         store.events.set([

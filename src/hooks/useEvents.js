@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import EventsApi from "@/api/events";
 import store from "../utils/store";
 import moment from "moment";
+import { isOffline } from "../utils/data";
 
 const TIMEOUT_BIG = 3 * 60 * 1000;
 const TIMEOUT_SMALL = 30 * 1000;
@@ -23,17 +24,19 @@ export const useEvents = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const loadEvents = async () => {
-    setIsLoading(true);
-    const events = await EventsApi.get();
-    if (!events.data.error) {
-      if (events.data.length) {
-        saveNewData(events.data);
-        reduceRefreshTimeToMin();
-      } else {
-        addRefreshTime();
+    if (!isOffline()) {
+      setIsLoading(true);
+      const events = await EventsApi.get();
+      if (!events.data.error) {
+        if (events.data.length) {
+          saveNewData(events.data);
+          reduceRefreshTimeToMin();
+        } else {
+          addRefreshTime();
+        }
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {

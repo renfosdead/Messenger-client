@@ -6,6 +6,7 @@ import statusesCustom from "shared/src/custom_statuses";
 import Balloon from "./Baloon";
 import UserApi from "@/api/user";
 import store from "@/utils/store";
+import { isOffline } from "../utils/data";
 
 const CustomStatuses = () => {
   const [visible, setVisible] = useState(false);
@@ -38,10 +39,16 @@ const CustomStatuses = () => {
       title: comment,
       subtitle: additionalComment,
     };
-    const result = await UserApi.changeCustomStatus(customStatus);
-    if (result?.data) {
+
+    if (isOffline()) {
       store.customStatus.set(customStatus);
       setVisible(false);
+    } else {
+      const result = await UserApi.changeCustomStatus(customStatus);
+      if (result?.data) {
+        store.customStatus.set(customStatus);
+        setVisible(false);
+      }
     }
   };
 
