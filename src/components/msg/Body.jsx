@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 
 const MessageBody = ({ expanded, data, userName, events }) => {
@@ -7,7 +7,15 @@ const MessageBody = ({ expanded, data, userName, events }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [expanded, events]);
+  }, [expanded]);
+
+  const [prevDataLength, setPrevDataLength] = useState(0);
+  useEffect(() => {
+    if (data.length !== prevDataLength) {
+      scrollToBottom();
+    }
+    setPrevDataLength(data.length);
+  }, [data]);
 
   useEffect(() => {
     scrollToBottom();

@@ -107,7 +107,7 @@ const StyledMessage = styled.div`
     justify-content: space-between;
 
     gap: ${({ theme }) => theme.paddingST};
-    font-size: ${({ theme }) => theme.fontSizeSM};
+    font-size: ${({ theme }) => theme.fontSizeXS};
     align-items: baseline;
     padding-top: ${({ theme }) => theme.paddingSM};
     padding-bottom: ${({ theme }) => theme.paddingSM};
@@ -118,7 +118,7 @@ const StyledMessage = styled.div`
       font-weight: bold;
       gap: ${({ theme }) => theme.paddingSM};
       span {
-        font-size: ${({ theme }) => theme.fontSizeXS};
+        font-size: calc(${({ theme }) => theme.fontSizeXS} - 2px);
       }
     }
 
