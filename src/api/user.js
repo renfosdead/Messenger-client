@@ -16,7 +16,4 @@ export default {
   changeCustomStatus(customStatus) {
     return axiosInstance.post("/user/change_custom_status", { customStatus });
   },
-  sendMessage(message) {
-    return axiosInstance.post("/user/message", { message });
-  },
 };

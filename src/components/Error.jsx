@@ -3,7 +3,24 @@ import styled from "styled-components";
 const ErrorComponent = ({ err, onClose }) => {
   setTimeout(() => {
     onClose();
-  }, 2500);
+  }, 4000);
+
+  if (typeof err === "string") {
+    return (
+      <StyledErrorComponent>
+        <div>
+          <div className="error-title">
+            Handled Error
+            <button onClick={onClose}>
+              <div>X</div>
+            </button>
+          </div>
+          <div className="error-text">{err}</div>
+        </div>
+      </StyledErrorComponent>
+    );
+  }
+
   return (
     <StyledErrorComponent>
       <div>
@@ -26,9 +43,9 @@ export default ErrorComponent;
 const StyledErrorComponent = styled.div`
   position: fixed;
   left: calc(50% - 100px);
-  bottom: 300px;
+  bottom: 40px;
   animation-name: DropOut;
-  animation-duration: 2.5s;
+  animation-duration: 4s;
   width: 200px;
   border: 1px solid #fd6557;
   background-image: url("/other/error.png");
@@ -55,12 +72,10 @@ const StyledErrorComponent = styled.div`
 
   @keyframes DropOut {
     from {
-      bottom: 0px;
       opacity: 1;
       display: block;
     }
     to {
-      bottom: 200px;
       opacity: 0;
       display: none;
     }

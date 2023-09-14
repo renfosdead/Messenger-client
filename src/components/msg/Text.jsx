@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import classNames from "classnames";
-import UserApi from "@/api/user";
+import EventsApi from "@/api/events";
 import store from "@/utils/store";
 import EVENT_TYPES from "shared/src/event_types";
 import { isOffline } from "../../utils/data";
@@ -13,7 +13,7 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
     if (value) {
       if (userId) {
         if (!isOffline()) {
-          const result = await UserApi.sendMessage(value);
+          const result = await EventsApi.sendMessage(value);
           if (result.data) {
             setValue("");
             refresh();
