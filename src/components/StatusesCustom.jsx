@@ -8,7 +8,7 @@ import UserApi from "@/api/user";
 import store from "@/utils/store";
 import { isOffline } from "../utils/data";
 
-const CustomStatuses = () => {
+const CustomStatuses = ({ refresh }) => {
   const [visible, setVisible] = useState(false);
 
   const [balloon, setBalloon] = useState(false);
@@ -48,6 +48,7 @@ const CustomStatuses = () => {
       if (result?.data) {
         store.customStatus.set(customStatus);
         setVisible(false);
+        refresh();
       }
     }
   };

@@ -7,7 +7,7 @@ import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
 
-const Statuses = ({ value, onChange }) => {
+const Statuses = ({ value, onChange, refresh }) => {
   const [visible, setVisible] = useState(false);
 
   const changeStatus = (key) => {
@@ -25,11 +25,12 @@ const Statuses = ({ value, onChange }) => {
     const result = await UserApi.login({
       name: store.name.get() || "Name",
       status,
-      customStatus: {},
+      customStatus: store.customStatus.get() || {},
     });
     if (result?.data) {
       store.userId.set(result?.data?.userId);
       store.chatId.set(result?.data?.chatId);
+      refresh();
     }
   };
 
@@ -47,7 +48,7 @@ const Statuses = ({ value, onChange }) => {
         case "login":
           loginUser(status);
           break;
-        case "offline":
+        case "logout":
           UserApi.logout();
           break;
         default:

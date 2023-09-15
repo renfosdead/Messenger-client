@@ -17,7 +17,7 @@ const MessageTabs = ({ events, refresh }) => {
     <StyledMessageTabs>
       <div className={activeTab === "chat" ? "active" : "disabled"}>
         <MessageTab
-          userId={userId}
+          userId={userId || "-"}
           chatId={chatId}
           isActive={activeTab === "chat"}
           onClickTab={() => changeActiveTab("chat")}

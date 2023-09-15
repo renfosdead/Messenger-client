@@ -33,6 +33,9 @@ const Message = ({ data, userName }) => {
 
   const getMessageStatus = () => {
     if (data.userId === userId) {
+      if (data.addresses === null) {
+        return "read";
+      }
       return "out";
     }
     return "in";
@@ -56,7 +59,7 @@ const Message = ({ data, userName }) => {
 
     return (
       <StyledMessage>
-        <div className={`message-title status in`}>
+        <div className={`message-title status ${getMessageStatus()}`}>
           <div>
             <img
               className="img-icon"

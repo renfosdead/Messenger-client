@@ -30,10 +30,10 @@ function App() {
           <Files />
           <Theme />
           <Key />
-          <Info />
+          <Info refresh={loadEvents} />
         </div>
         <div className="top-right">
-          <ClearCaches />{" "}
+          <ClearCaches />
           <Refresh
             onClick={loadEvents}
             disabled={statusState === "offline"}
@@ -44,8 +44,12 @@ function App() {
       <MessageTabs events={events} refresh={loadEvents} />
 
       <div className="bottom">
-        <Statuses value={statusState} onChange={setStatusState} />
-        <StatusesCustom />
+        <Statuses
+          value={statusState}
+          onChange={setStatusState}
+          refresh={loadEvents}
+        />
+        <StatusesCustom refresh={loadEvents} />
       </div>
     </StyledApp>
   );

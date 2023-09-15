@@ -1,41 +1,37 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EventsApi from "@/api/events";
 import store from "../utils/store";
-import moment from "moment";
 import { isOffline } from "../utils/data";
 
 const TIMEOUT_BIG = 3 * 60 * 1000;
-const TIMEOUT_SMALL = 30 * 1000;
-const TIMEOUT_DIFF = 10 * 1000;
+const TIMEOUT_SMALL = 15 * 1000;
+const TIMEOUT_DIFF = 5 * 1000;
 
 export const useEvents = () => {
   const [data, setData] = useState([]);
   const saveNewData = (newData = []) => {
-    const existed = data.map((e) => e.id);
-    const payload = [];
-    newData.forEach((evt) => {
-      if (!existed.includes(evt.id)) {
-        payload.push(evt);
-      }
-    });
-    setData([...data, ...payload]);
-    store.events.set(payload);
+    store.events.add(newData);
+    setData(store.events.get());
   };
 
   const [isLoading, setIsLoading] = useState(false);
   const loadEvents = async () => {
     if (!isOffline()) {
       setIsLoading(true);
-      const events = await EventsApi.get();
-      if (!events.data.error) {
-        if (events.data.length) {
+      try {
+        const events = await EventsApi.get();
+        if (!events.data.error) {
           saveNewData(events.data);
-          reduceRefreshTimeToMin();
-        } else {
-          addRefreshTime();
+
+          if (events.data.length) {
+            reduceRefreshTimeToMin();
+          } else {
+            addRefreshTime();
+          }
         }
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     }
   };
 
@@ -64,22 +60,22 @@ export const useEvents = () => {
 
   const [timer, setTimer] = useState(null);
   const clearTimer = () => {
+    console.log("clear timer:", timer);
     if (timer) {
       clearInterval(timer);
       setTimer(null);
     }
   };
 
-  const callback = useCallback(() => {
-    console.log("callback", moment().format("HH:MM:ss"));
-    loadEvents();
-  }, [data]);
-
   const refreshTimer = (localTime) => {
     clearTimer();
-
-    setTimer(setInterval(callback, localTime));
+    setTimer(setInterval(loadEvents, localTime));
   };
 
-  return { events: data, isLoading, loadEvents };
+  const loadEventsManually = () => {
+    reduceRefreshTimeToMin();
+    loadEvents();
+  };
+
+  return { events: data, isLoading, loadEvents: loadEventsManually };
 };

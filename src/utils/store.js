@@ -1,3 +1,5 @@
+import { mergeEvents } from "./data";
+
 export default {
   userId: {
     get() {
@@ -75,6 +77,10 @@ export default {
     },
     set(value) {
       const evts = [...this.get(), ...value];
+      window.localStorage.setItem("events", JSON.stringify(evts));
+    },
+    add(value) {
+      const evts = mergeEvents(this.get(), value);
       window.localStorage.setItem("events", JSON.stringify(evts));
     },
     remove() {

@@ -94,5 +94,32 @@ export const statuses = [
 ];
 
 export const isOffline = () => {
-  return store.status.get() === "offline";
+  const status = store.status.get();
+  return status === "offline" || !status;
+};
+
+export const mergeEvents = (oldData, newData) => {
+  let payload = [];
+
+  oldData.forEach((oldEvt) => {
+    const sameNewEvtIndex = newData.findIndex(
+      (newEvt) => newEvt.id === oldEvt.id
+    );
+    if (sameNewEvtIndex !== -1) {
+      payload.push(newData[sameNewEvtIndex]);
+      newData = [
+        ...newData.slice(0, sameNewEvtIndex),
+        ...newData.slice(sameNewEvtIndex + 1),
+      ];
+    } else {
+      payload.push({
+        ...oldEvt,
+        addresses: null,
+      });
+    }
+  });
+
+  payload = [...payload, ...newData];
+
+  return payload;
 };

@@ -6,7 +6,7 @@ import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
 
-const Info = () => {
+const Info = ({ refresh }) => {
   const [enabled, setEnabled] = useState(false);
   const [value, setValue] = useState("");
 
@@ -19,6 +19,7 @@ const Info = () => {
       if (result.data) {
         store.name.set(value);
         setEnabled(false);
+        refresh();
       }
     }
   };
