@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const TouchProvider = ({
   className,
   onSwipeLeft = () => {},
   onSwipeRight = () => {},
   onSwipeTop = () => {},
+  activeZone,
   onSwipeBottom = () => {},
   children,
 }) => {
+  const divRef = useRef(null);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchStartY, setTouchStartY] = useState(0);
 
@@ -27,8 +29,8 @@ const TouchProvider = ({
   const onTouchEnd = () => {
     const isLeftSwipe = touchStartX - touchEndX > 150;
     const isRightSwipe = touchStartX - touchEndX < -150;
-    const isTopSwipe = touchStartY - touchEndY < -150;
-    const isBottomSwipe = touchStartY - touchEndY > 150;
+    const isTopSwipe = touchStartY - touchEndY > 150;
+    const isBottomSwipe = touchStartY - touchEndY < -150;
 
     if (isLeftSwipe) {
       onSwipeLeft();
@@ -37,7 +39,10 @@ const TouchProvider = ({
       onSwipeRight();
     }
     if (isTopSwipe) {
-      onSwipeTop();
+      const containerHeight = divRef.current.clientHeight;
+      if (!activeZone || touchStartY > containerHeight - activeZone) {
+        onSwipeTop();
+      }
     }
     if (isBottomSwipe) {
       onSwipeBottom();
@@ -46,6 +51,7 @@ const TouchProvider = ({
 
   return (
     <div
+      ref={divRef}
       className={className}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import TouchProvider from "../../utils/TouchProvider";
 
 const MessageBody = ({ expanded, data, userName, events, refresh }) => {
   const bodyRef = useRef(null);
@@ -30,7 +31,11 @@ const MessageBody = ({ expanded, data, userName, events, refresh }) => {
   };
 
   return (
-    <StyledMessageBody className="styled-message-body">
+    <StyledMessageBody
+      className="styled-message-body"
+      onSwipeTop={refresh}
+      activeZone={100}
+    >
       <div ref={bodyRef}>
         {data.map((mes) => (
           <Message
@@ -47,7 +52,7 @@ const MessageBody = ({ expanded, data, userName, events, refresh }) => {
 
 export default MessageBody;
 
-const StyledMessageBody = styled.div`
+const StyledMessageBody = styled(TouchProvider)`
   position: relative;
   background: ${({ theme }) => theme.backgroundColor};
   font-size: ${({ theme }) => theme.fontSize};
