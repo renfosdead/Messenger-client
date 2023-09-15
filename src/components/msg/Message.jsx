@@ -91,7 +91,7 @@ const Message = ({ data, userName, refresh }) => {
           </div>
         </div>
       </div>
-      <div>{`${data.message} `}</div>
+      <div className="message-text">{`${data.message}`}</div>
     </StyledMessage>
   );
 };
@@ -150,6 +150,9 @@ const StyledMessage = styled(TouchProvider)`
     }
   }
 
+  .message-text {
+    white-space: break-spaces;
+  }
   &.with-left-panel {
     padding-left: calc(${({ theme }) => theme.paddingLG} * 4);
     position: relative;
