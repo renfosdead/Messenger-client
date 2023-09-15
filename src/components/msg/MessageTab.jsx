@@ -48,6 +48,7 @@ const MessageTab = ({
         chatId={chatId}
         userName={name}
         events={events}
+        refresh={refresh}
       />
       <Text
         expanded={showText}

@@ -83,6 +83,10 @@ export default {
       const evts = mergeEvents(this.get(), value);
       window.localStorage.setItem("events", JSON.stringify(evts));
     },
+    removeMessage(id) {
+      const evts = [...this.get()].filter((evt) => evt.id !== id);
+      window.localStorage.setItem("events", JSON.stringify(evts));
+    },
     remove() {
       window.localStorage.removeItem("events");
     },

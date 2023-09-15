@@ -4,31 +4,22 @@ import classNames from "classnames";
 import EVENT_TYPES from "shared/src/event_types";
 import store from "@/utils/store";
 import { getDateFormatted } from "@/utils/date_time";
+import TouchProvider from "../../utils/TouchProvider";
 
-const Message = ({ data, userName }) => {
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-
-  const onTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+const Message = ({ data, userName, refresh }) => {
   const userId = store.userId.get();
 
-  const onTouchEnd = () => {
-    // if (touchStart - touchEnd > 150) {
-    //   //  left swipe
-    // }
+  const onSwipeRight = () => {
+    setShowLeftPanel(true);
+  };
 
-    if (touchStart - touchEnd < -150 && !showLeftPanel) {
-      setShowLeftPanel(true);
-    } else {
-      setShowLeftPanel(false);
-    }
+  const onSwipeLeft = () => {
+    setShowLeftPanel(false);
+  };
+
+  const removeMessage = () => {
+    store.events.removeMessage(data.id);
+    refresh();
   };
 
   const getMessageStatus = () => {
@@ -80,13 +71,16 @@ const Message = ({ data, userName }) => {
   const messageStatus = getMessageStatus();
   return (
     <StyledMessage
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
+      onSwipeRight={onSwipeRight}
+      onSwipeLeft={onSwipeLeft}
       className={className}
     >
       {showLeftPanel && (
-        <img className="img-icon btn-remove" src="/icons/remove.png" />
+        <img
+          className="img-icon btn-remove"
+          src="/icons/remove.png"
+          onClick={removeMessage}
+        />
       )}
       <div className={`message-title ${messageStatus}`}>
         <div>
@@ -104,7 +98,7 @@ const Message = ({ data, userName }) => {
 
 export default Message;
 
-const StyledMessage = styled.div`
+const StyledMessage = styled(TouchProvider)`
   .message-title {
     display: flex;
     justify-content: space-between;

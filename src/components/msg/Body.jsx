@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 
-const MessageBody = ({ expanded, data, userName, events }) => {
+const MessageBody = ({ expanded, data, userName, events, refresh }) => {
   const bodyRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +33,12 @@ const MessageBody = ({ expanded, data, userName, events }) => {
     <StyledMessageBody className="styled-message-body">
       <div ref={bodyRef}>
         {data.map((mes) => (
-          <Message key={mes.id} data={mes} userName={userName} />
+          <Message
+            key={mes.id}
+            data={mes}
+            userName={userName}
+            refresh={refresh}
+          />
         ))}
       </div>
     </StyledMessageBody>
