@@ -8,6 +8,7 @@ import { useStatus } from "@/hooks/useStatus";
 import { useCustomStatus } from "@/hooks/useCustomStatus";
 import { useMessages } from "@/hooks/useMessages";
 import { useName } from "../../hooks/useName";
+import { useKeyboard } from "../../hooks/useKeyboard";
 
 const rows = 4;
 
@@ -20,9 +21,12 @@ const MessageTab = ({
   events,
   refresh,
 }) => {
+  const { isKeyboardOpen } = useKeyboard();
+
   const [showText, setShowText] = useState(false);
   const className = classNames({
     "chat-expanded": showText,
+    "with-keyboard": isKeyboardOpen,
     active: isActive,
   });
 
@@ -49,6 +53,7 @@ const MessageTab = ({
         userName={name}
         events={events}
         refresh={refresh}
+        isKeyboardOpen={isKeyboardOpen}
       />
       <Text
         expanded={showText}
@@ -57,6 +62,7 @@ const MessageTab = ({
         userId={userId}
         chatId={chatId}
         refresh={refresh}
+        isKeyboardOpen={isKeyboardOpen}
       />
     </StyledMessageTab>
   );
@@ -75,9 +81,16 @@ const StyledMessageTab = styled.div`
   &.chat-expanded {
     grid-template-rows: 1fr calc(
         ${rows} * ${({ theme }) => theme.fontSize} + 2 *
-          ${({ theme }) => theme.buttonHeight} + 4 *
-          ${({ theme }) => theme.paddingST}
+          ${({ theme }) => theme.buttonHeight} + 6 *
+          ${({ theme }) => theme.paddingSM} + ${({ theme }) => theme.paddingST}
       );
+
+    &.with-keyboard {
+      grid-template-rows: 1fr calc(
+          ${rows} * ${({ theme }) => theme.fontSize} +
+            ${({ theme }) => theme.paddingLG}
+        );
+    }
   }
   &.active {
     .styled-message-body,

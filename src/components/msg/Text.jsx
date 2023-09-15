@@ -6,7 +6,15 @@ import store from "@/utils/store";
 import EVENT_TYPES from "shared/src/event_types";
 import { isOffline } from "../../utils/data";
 
-const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
+const Text = ({
+  expanded,
+  toggleExpanded,
+  isKeyboardOpen,
+  rows,
+  userId,
+  chatId,
+  refresh,
+}) => {
   const [value, setValue] = useState("");
 
   const onSubmit = async () => {
@@ -35,13 +43,16 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
       }
     }
   };
-
   const className = classNames({
+    "styled-text-component": true,
+    "with-keyboard": isKeyboardOpen,
+  });
+  const buttonClassName = classNames({
     button: true,
     simple: true,
   });
   return (
-    <StyledText className="styled-text-component">
+    <StyledText className={className}>
       <div className="text-controls">
         <div>
           <button className="button simple">
@@ -53,7 +64,10 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
           </button>
         </div>
 
-        <button className={className} onClick={() => toggleExpanded(!expanded)}>
+        <button
+          className={buttonClassName}
+          onClick={() => toggleExpanded(!expanded)}
+        >
           {expanded ? (
             <img src="/icons/close.png" />
           ) : (
@@ -62,7 +76,7 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
         </button>
       </div>
       {expanded && (
-        <>
+        <div className="send-text">
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -71,10 +85,10 @@ const Text = ({ expanded, toggleExpanded, rows, userId, chatId, refresh }) => {
           <div className="send-btn">
             <button className="button" onClick={onSubmit}>
               <img src="/icons/unread.png" />
-              Отправить
+              {isKeyboardOpen ? "" : "Отправить"}
             </button>
           </div>
-        </>
+        </div>
       )}
     </StyledText>
   );
@@ -107,14 +121,40 @@ const StyledText = styled.div`
       display: flex;
     }
   }
+  .send-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: ${({ theme }) => theme.paddingST};
+  }
   .send-btn {
     display: flex;
-    justify-content: end;
-    padding: ${({ theme }) => theme.paddingST};
-    padding-top: 3px;
+    justify-content: flex-end;
+    padding: 0;
     button {
       img {
         margin-right: ${({ theme }) => theme.paddingST};
+      }
+    }
+  }
+
+  &.with-keyboard {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .send-text {
+      flex-direction: row;
+      gap: 0;
+      .send-btn {
+        padding: 0;
+        button {
+          height: auto;
+          img {
+            margin-right: 0;
+          }
+        }
       }
     }
   }
