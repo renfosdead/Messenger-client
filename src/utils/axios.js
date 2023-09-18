@@ -10,13 +10,8 @@ const options = {
 const axiosInstance = axios.create(options);
 
 axiosInstance.interceptors.request.use((config) => {
-  const userId = store.userId.get();
-  const chatId = store.chatId.get();
-
   config.headers = config.headers || {};
-  config.headers.userId = userId;
-  config.headers.chatId = chatId;
-
+  config.headers.Authorization = store.token.get();
   return config;
 });
 

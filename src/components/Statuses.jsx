@@ -30,6 +30,7 @@ const Statuses = ({ value, onChange, refresh }) => {
     if (result?.data) {
       store.userId.set(result?.data?.userId);
       store.chatId.set(result?.data?.chatId);
+      store.token.set(result?.data?.token);
       refresh();
     }
   };

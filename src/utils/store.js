@@ -25,6 +25,18 @@ export default {
     },
   },
 
+  token: {
+    get() {
+      return window.localStorage.getItem("token") || "";
+    },
+    set(value) {
+      window.localStorage.setItem("token", value);
+    },
+    remove() {
+      window.localStorage.removeItem("token");
+    },
+  },
+
   name: {
     get() {
       return window.localStorage.getItem("name") || "";
