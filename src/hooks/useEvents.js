@@ -32,6 +32,8 @@ export const useEvents = () => {
       } finally {
         setIsLoading(false);
       }
+    } else {
+      setData(store.events.get());
     }
   };
 
