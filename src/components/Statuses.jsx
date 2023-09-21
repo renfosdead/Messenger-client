@@ -31,7 +31,9 @@ const Statuses = ({ value, onChange, refresh }) => {
       store.userId.set(result?.data?.userId);
       store.chatId.set(result?.data?.chatId);
       store.token.set(result?.data?.token);
-      refresh();
+      setTimeout(() => {
+        refresh();
+      }, 300);
     }
   };
 
