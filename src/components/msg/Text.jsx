@@ -45,7 +45,7 @@ const Text = ({
   };
   const className = classNames({
     "styled-text-component": true,
-    "with-keyboard": isKeyboardOpen,
+    "with-keyboard": isKeyboardOpen && expanded,
   });
   const buttonClassName = classNames({
     button: true,

@@ -7,8 +7,11 @@ import Balloon from "./Baloon";
 import UserApi from "@/api/user";
 import store from "@/utils/store";
 import { isOffline } from "../utils/data";
+import { useKeyboard } from "../hooks/useKeyboard";
 
 const CustomStatuses = ({ refresh }) => {
+  const { isKeyboardOpen } = useKeyboard();
+
   const [visible, setVisible] = useState(false);
 
   const [balloon, setBalloon] = useState(false);
@@ -30,6 +33,12 @@ const CustomStatuses = ({ refresh }) => {
     enabled: visible,
     button: true,
     "status-toggler-btn": true,
+  });
+
+  const containerClassName = classNames({
+    "custom-status-submenu": true,
+    "dropdown-menu": true,
+    "with-keyboard": isKeyboardOpen,
   });
 
   const onSubmit = async () => {
@@ -73,7 +82,7 @@ const CustomStatuses = ({ refresh }) => {
 
       {visible && (
         <ClickOutside
-          className="custom-status-submenu dropdown-menu"
+          className={containerClassName}
           onClickOutside={() => setVisible(false)}
         >
           <div className="custom-status__comment">
@@ -164,6 +173,9 @@ const StyledCustomStatuses = styled.div`
     flex-direction: column;
     gap: ${({ theme }) => theme.paddingST};
     z-index: 5;
+    &.with-keyboard {
+      bottom: 0;
+    }
 
     .custom-status-submenu__balloon-checkbox {
       display: flex;
@@ -176,7 +188,7 @@ const StyledCustomStatuses = styled.div`
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      height: 230px;
+      height: 222px;
 
       .custom-status-submenu__item {
         position: relative;
