@@ -1,11 +1,12 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import store from "@/utils/store";
 import { ClickOutside } from "@/utils/ClickOutside";
 
 const ClearCaches = () => {
   const [enabled, setEnabled] = useState(false);
+  const [size, setSize] = useState(0);
 
   const className = classNames({
     enabled: enabled,
@@ -13,14 +14,19 @@ const ClearCaches = () => {
     button: true,
   });
 
+  useEffect(() => {
+    const evtSize = getSize(localStorage.events);
+    setSize(evtSize);
+  }, [enabled]);
+
   const getSize = (data) => {
     return data ? (data.length * 16) / (8 * 1024) : 0;
   };
 
-  const evtSize = getSize(localStorage.events);
-  const removeEvents = store.events.remove;
-
-  const messagesSize = getSize(localStorage.chat);
+  const removeEvents = () => {
+    store.events.remove();
+    setSize(0);
+  };
 
   return (
     <StyledClearCaches>
@@ -35,17 +41,12 @@ const ClearCaches = () => {
         >
           <div className="settings_row">
             <div>Events cache</div>
-            {evtSize ? evtSize.toFixed(1) + " KB" : "0 KB"}
-            {evtSize ? (
+            {size ? size.toFixed(1) + " KB" : "0 KB"}
+            {size ? (
               <button className="button" onClick={removeEvents}>
                 <img src={"/icons/remove.png"} />
               </button>
             ) : null}
-          </div>
-
-          <div className="settings_row">
-            <div>Chat history</div>
-            {messagesSize ? messagesSize.toFixed(1) + " KB" : "0 KB"}
           </div>
         </ClickOutside>
       )}
