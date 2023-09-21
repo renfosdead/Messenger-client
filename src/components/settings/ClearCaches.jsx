@@ -31,7 +31,7 @@ const ClearCaches = () => {
   return (
     <StyledClearCaches>
       <button className={className} onClick={() => setEnabled(!enabled)}>
-        <img src={"/icons/settings.png"} />
+        <img src={"/icons/remove.png"} />
       </button>
 
       {enabled && (
@@ -44,7 +44,7 @@ const ClearCaches = () => {
             {size ? size.toFixed(1) + " KB" : "0 KB"}
             {size ? (
               <button className="button" onClick={removeEvents}>
-                <img src={"/icons/remove.png"} />
+                Clear
               </button>
             ) : null}
           </div>
@@ -63,16 +63,16 @@ const StyledClearCaches = styled.div`
   position: relative;
   .dropdown-menu {
     position: absolute;
-    width: 300px;
-    right: 0;
-    top: calc(${({ theme }) => theme.buttonHeight} - 1px);
+    right: ${({ theme }) => theme.buttonHeight};
+    top: 0;
     background: ${({ theme }) => theme.backgroundColor};
-    padding-top: ${({ theme }) => theme.paddingLG}!important;
-    padding-bottom: ${({ theme }) => theme.paddingLG}!important;
+    padding: ${({ theme }) => theme.paddingLG}!important;
     .settings_row {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
+      white-space: nowrap;
+      gap: ${({ theme }) => theme.paddingLG};
       font-size: ${({ theme }) => theme.fontSize};
       padding: ${({ theme }) => theme.paddingSM} 0;
       > div {

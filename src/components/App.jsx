@@ -1,18 +1,12 @@
 import styled from "styled-components";
 import Statuses from "./Statuses";
 import StatusesCustom from "./StatusesCustom";
-import Sound from "./Sound";
-import History from "./History";
-import Files from "./Files";
-import Key from "./Key";
-import Theme from "./Theme";
-import Info from "./Info";
 import { useEvents } from "../hooks/useEvents";
 import MessageTabs from "./msg/MessageTabs";
 import Refresh from "./Refresh.jsx";
 import store from "../utils/store";
-import ClearCaches from "./ClearCaches";
 import { useState } from "react";
+import Settings from "./settings/Settings";
 
 function App() {
   const { events, isLoading, loadEvents } = useEvents();
@@ -24,22 +18,12 @@ function App() {
     <StyledApp>
       <div id="popup-container"></div>
       <div className="top">
-        <div className="top-left">
-          <Sound />
-          <History />
-          <Files />
-          <Theme />
-          <Key />
-          <Info refresh={loadEvents} />
-        </div>
-        <div className="top-right">
-          <ClearCaches />
-          <Refresh
-            onClick={loadEvents}
-            disabled={statusState === "offline"}
-            isLoading={isLoading}
-          />
-        </div>
+        <Refresh
+          onClick={loadEvents}
+          disabled={statusState === "offline"}
+          isLoading={isLoading}
+        />
+        <Settings refresh={loadEvents} />
       </div>
       <MessageTabs events={events} refresh={loadEvents} />
 
@@ -59,8 +43,7 @@ export default App;
 
 const StyledApp = styled.div`
   display: grid;
-  grid-template-rows: ${({ theme }) => theme.buttonHeight} 1fr ${({ theme }) =>
-      theme.buttonHeight};
+  grid-template-rows: 1fr ${({ theme }) => theme.buttonHeight};
   height: 100vh;
 
   #popup-container {
@@ -68,6 +51,14 @@ const StyledApp = styled.div`
     width: 0px;
     height: 0px;
     z-index: 15;
+  }
+
+  .top {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 6;
+    background: ${({ theme }) => theme.backgroundColor};
   }
 
   .top,

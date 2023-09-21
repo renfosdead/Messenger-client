@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
-import { isOffline } from "../utils/data";
+import { isOffline } from "@/utils/data";
 
 const Info = ({ refresh }) => {
   const [enabled, setEnabled] = useState(false);
@@ -64,8 +64,8 @@ const StyledInfo = styled.div`
   .dropdown-menu {
     position: absolute;
     width: 200px;
-    right: 0;
-    top: calc(${({ theme }) => theme.buttonHeight} - 1px);
+    right: ${({ theme }) => theme.buttonHeight};
+    top: 0;
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingLG}!important;
     padding-bottom: ${({ theme }) => theme.paddingLG}!important;

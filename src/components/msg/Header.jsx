@@ -119,7 +119,9 @@ const StyledHeader = styled.div`
   }
 
   &.right {
-    right: -1px !important;
+    right: calc(
+      ${({ theme }) => theme.buttonHeight} * 2 + 2px - 1px
+    ) !important;
     left: auto !important;
     &.inactive {
       justify-content: flex-end !important;

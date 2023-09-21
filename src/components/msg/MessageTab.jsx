@@ -72,7 +72,7 @@ export default MessageTab;
 
 const StyledMessageTab = styled.div`
   position: relative;
-  height: calc(100vh - 3 * ${({ theme }) => theme.buttonHeight} - 2px);
+  height: calc(100vh - 2 * ${({ theme }) => theme.buttonHeight} - 2px);
   border: ${({ theme }) => theme.borderStyle};
   border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.fontSize};
