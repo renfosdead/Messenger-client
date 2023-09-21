@@ -11,7 +11,18 @@ const axiosInstance = axios.create(options);
 
 axiosInstance.interceptors.request.use((config) => {
   config.headers = config.headers || {};
-  config.headers.Authorization = store.token.get();
+  const headers = {
+    Authorization: store.token.get(),
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+    Expires: "0",
+    cache: "no-store",
+  };
+
+  config.headers = {
+    ...config.headers,
+    ...headers,
+  };
   return config;
 });
 
