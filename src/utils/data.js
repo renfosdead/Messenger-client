@@ -106,16 +106,16 @@ export const mergeEvents = (oldData, newData) => {
       (newEvt) => newEvt.id === oldEvt.id
     );
     if (sameNewEvtIndex !== -1) {
-      payload.push(newData[sameNewEvtIndex]);
+      payload.push({
+        ...oldEvt,
+        addresses: newData[sameNewEvtIndex].addresses,
+      });
       newData = [
         ...newData.slice(0, sameNewEvtIndex),
         ...newData.slice(sameNewEvtIndex + 1),
       ];
     } else {
-      payload.push({
-        ...oldEvt,
-        addresses: null,
-      });
+      payload.push({ ...oldEvt, addresses: null });
     }
   });
 

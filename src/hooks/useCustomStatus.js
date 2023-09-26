@@ -14,7 +14,7 @@ export const useCustomStatus = (userId, events) => {
     const statusEvents = evts.filter(
       (e) => e.type === EVENT_TYPES.changeCustomStatus && e.userId !== userId
     );
-    const lastStatus = statusEvents[statusEvents.length - 1];
+    const lastStatus = statusEvents[statusEvents.length - 1]?.body;
     if (lastStatus) {
       setData(lastStatus.customStatus);
     }

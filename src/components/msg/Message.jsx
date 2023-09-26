@@ -42,7 +42,7 @@ const Message = ({ data, userName, refresh }) => {
   const [showLeftPanel, setShowLeftPanel] = useState(false);
 
   if (data.type === EVENT_TYPES.changeCustomStatus) {
-    const payload = data.customStatus;
+    const payload = data.body.customStatus;
 
     if (!payload.status) {
       return null;
@@ -91,7 +91,7 @@ const Message = ({ data, userName, refresh }) => {
           </div>
         </div>
       </div>
-      <div className="message-text">{`${data.message}`}</div>
+      <div className="message-text">{`${data.body.message}`}</div>
     </StyledMessage>
   );
 };

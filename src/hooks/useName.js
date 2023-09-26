@@ -9,7 +9,7 @@ export const useName = (userId, events) => {
     const filterEvents = evts.filter(
       (e) => e.type === EVENT_TYPES.changeName && e.userId !== userId
     );
-    const lastEvt = filterEvents[filterEvents.length - 1];
+    const lastEvt = filterEvents[filterEvents.length - 1]?.body;
     if (lastEvt) {
       setData(lastEvt.name);
     }

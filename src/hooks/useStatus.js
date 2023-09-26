@@ -9,7 +9,7 @@ export const useStatus = (userId, events) => {
     const statusEvents = evts.filter(
       (e) => e.type === EVENT_TYPES.changeStatus && e.userId !== userId
     );
-    const lastStatus = statusEvents[statusEvents.length - 1];
+    const lastStatus = statusEvents[statusEvents.length - 1]?.body;
     if (lastStatus) {
       setData(lastStatus.status);
     }
