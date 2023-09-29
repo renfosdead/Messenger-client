@@ -35,7 +35,7 @@ const Text = ({
             date: Date.now(),
             userId: "",
             chatId: "notes",
-            message: value,
+            body: { message: value },
           },
         ]);
         setValue("");
