@@ -6,6 +6,7 @@ import { statuses, statusesDescription } from "@/utils/data";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
+import { getDeviceToken } from "../utils/OneSignal";
 
 const Statuses = ({ value, onChange, refresh }) => {
   const [visible, setVisible] = useState(false);
@@ -26,6 +27,7 @@ const Statuses = ({ value, onChange, refresh }) => {
       name: store.name.get() || "Name",
       status,
       customStatus: store.customStatus.get() || {},
+      deviceToken: getDeviceToken(),
     });
     if (result?.data) {
       store.userId.set(result?.data?.userId);
