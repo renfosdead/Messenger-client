@@ -6,7 +6,7 @@ import { statuses, statusesDescription } from "@/utils/data";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
-import { getDeviceSubscription } from "../utils/OneSignal";
+import { getDeviceSubscription, login, logout } from "../utils/OneSignal";
 
 const Statuses = ({ value, onChange, refresh }) => {
   const [visible, setVisible] = useState(false);
@@ -36,6 +36,8 @@ const Statuses = ({ value, onChange, refresh }) => {
       setTimeout(() => {
         refresh();
       }, 300);
+
+      login(result?.data?.userId);
     }
   };
 
@@ -55,6 +57,7 @@ const Statuses = ({ value, onChange, refresh }) => {
           break;
         case "logout":
           UserApi.logout();
+          logout();
           break;
         default:
           if (!isOffline()) {

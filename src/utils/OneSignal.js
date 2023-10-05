@@ -28,3 +28,15 @@ export const getDeviceSubscription = () => {
   }
   return "";
 };
+
+export const login = (userId) => {
+  if (window?.plugins?.OneSignal) {
+    window.plugins.OneSignal.login(userId);
+  }
+};
+
+export const logout = () => {
+  if (window?.plugins?.OneSignal) {
+    window.plugins.OneSignal.logout();
+  }
+};
