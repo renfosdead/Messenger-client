@@ -22,10 +22,9 @@ export const OneSignalInit = async () => {
   }
 };
 
-export const getDeviceToken = () => {
+export const getDeviceSubscription = () => {
   if (window?.plugins?.OneSignal) {
-    const deviceState = window.plugins.OneSignal.User.pushSubscription;
-    return deviceState.token;
+    return window.plugins.OneSignal.User.pushSubscription.id;
   }
   return "";
 };
