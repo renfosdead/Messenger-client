@@ -19,12 +19,21 @@ export const OneSignalInit = async () => {
         console.log("User accepted notifications: " + accepted);
       }
     );
+
+    window.plugins.OneSignal.Notifications.addEventListener(
+      "foregroundWillDisplay",
+      preventPushesWhenAppOpen
+    );
   }
 };
 
-export const getDeviceSubscription = () => {
+const preventPushesWhenAppOpen = (event) => {
+  event.preventDefault();
+};
+
+export const getDeviceToken = () => {
   if (window?.plugins?.OneSignal) {
-    return window.plugins.OneSignal.User.pushSubscription.id;
+    return window.plugins.OneSignal.User.pushSubscription.token;
   }
   return "";
 };

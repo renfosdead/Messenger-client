@@ -6,7 +6,7 @@ import { statuses, statusesDescription } from "@/utils/data";
 import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
-import { getDeviceSubscription, login, logout } from "../utils/OneSignal";
+import { getDeviceToken, login, logout } from "../utils/OneSignal";
 
 const Statuses = ({ value, onChange, refresh }) => {
   const [visible, setVisible] = useState(false);
@@ -27,17 +27,16 @@ const Statuses = ({ value, onChange, refresh }) => {
       name: store.name.get() || "Name",
       status,
       customStatus: store.customStatus.get() || {},
-      deviceSubscription: getDeviceSubscription(),
+      deviceToken: getDeviceToken(),
     });
     if (result?.data) {
+      login(result?.data?.userId);
       store.userId.set(result?.data?.userId);
       store.chatId.set(result?.data?.chatId);
       store.token.set(result?.data?.token);
       setTimeout(() => {
         refresh();
       }, 300);
-
-      login(result?.data?.userId);
     }
   };
 
