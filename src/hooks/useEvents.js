@@ -9,16 +9,16 @@ const TIMEOUT_SMALL = 15 * 1000;
 const TIMEOUT_DIFF = 5 * 1000;
 
 export const useEvents = () => {
-  const { playSound } = useSounds();
+  // const { playSound } = useSounds();
 
   const [data, setData] = useState([]);
   const saveNewData = (newData = []) => {
-    const oldData = store.events.get();
+    // const oldData = store.events.get();
     store.events.add(newData);
     setData(store.events.get());
-    if (isNewMessage(oldData, store.events.get())) {
-      playSound("GetMsg");
-    }
+    // if (isNewMessage(oldData, store.events.get())) {
+    // playSound("GetMsg");
+    // }
   };
 
   const [isLoading, setIsLoading] = useState(false);
