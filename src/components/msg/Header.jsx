@@ -27,7 +27,11 @@ const Header = ({
   });
 
   const onClick = () => {
-    isActive ? setEnabled(!enabled) : onClickTab();
+    if (isActive && userId) {
+      setEnabled(!enabled);
+    } else {
+      onClickTab();
+    }
   };
 
   useEffect(() => {
@@ -100,10 +104,14 @@ const StyledHeader = styled.div`
   }
 
   &.enabled {
-    width: calc(100% - 2 * ${({ theme }) => theme.paddingST});
+    width: calc(
+      100% - 2 * ${({ theme }) => theme.paddingST} - 2 *
+        ${({ theme }) => theme.buttonHeight}
+    );
     flex-wrap: wrap;
     height: auto !important;
     border-bottom: ${({ theme }) => theme.borderStyle}!important;
+    z-index: 6;
     .status-row {
       width: 100%;
     }
