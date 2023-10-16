@@ -1,9 +1,10 @@
 import { ThemeProvider as ThemeProviderStyled } from "styled-components";
-import config from "./config.json";
+import { useTheme } from "../hooks/useTheme";
 
 const ThemeProvider = ({ children }) => {
+  const { themeState } = useTheme();
   const theme = {
-    ...config,
+    ...themeState,
   };
   return <ThemeProviderStyled theme={theme}>{children}</ThemeProviderStyled>;
 };

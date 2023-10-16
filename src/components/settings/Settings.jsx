@@ -5,7 +5,7 @@ import { ClickOutside } from "@/utils/ClickOutside";
 import ClearCaches from "./ClearCaches";
 import Sound from "./Sound";
 import Files from "./Files";
-import Theme from "./Theme";
+import Theme from "./theme/Theme";
 import Key from "./Key";
 import Info from "./Info";
 import History from "./History";

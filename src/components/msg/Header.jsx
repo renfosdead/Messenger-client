@@ -46,7 +46,7 @@ const Header = ({
       <StyledHeader className={className} onClick={onClick}>
         <div className="status-row">
           <img src={`/icons/message.png`} />
-          <div className="username">Notes</div>
+          <div className="username">Заметки</div>
         </div>
       </StyledHeader>
     );

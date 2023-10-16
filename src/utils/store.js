@@ -115,4 +115,21 @@ export default {
       window.localStorage.removeItem("sound");
     },
   },
+
+  theme: {
+    get() {
+      const theme = window.localStorage.getItem("theme");
+      if (theme) {
+        return JSON.parse(theme);
+      } else {
+        return null;
+      }
+    },
+    set(value) {
+      window.localStorage.setItem("theme", JSON.stringify(value));
+    },
+    remove() {
+      window.localStorage.removeItem("theme");
+    },
+  },
 };
