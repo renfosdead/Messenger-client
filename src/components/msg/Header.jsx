@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Balloon from "@/components/Baloon";
 import classnames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { statusesDescription } from "@/utils/data";
+import { useSounds } from "../../hooks/useSounds";
 
 const Header = ({
   isActive,
@@ -14,6 +15,8 @@ const Header = ({
   name,
 }) => {
   const [enabled, setEnabled] = useState(false);
+  const [oldStatus, setOldStatus] = useState("offline");
+  const { playSound } = useSounds();
 
   const className = classnames({
     button: true,
@@ -26,6 +29,13 @@ const Header = ({
   const onClick = () => {
     isActive ? setEnabled(!enabled) : onClickTab();
   };
+
+  useEffect(() => {
+    if (oldStatus === "offline" && status !== "offline") {
+      playSound("UserIn");
+    }
+    setOldStatus(status);
+  }, [status]);
 
   if (!userId) {
     return (

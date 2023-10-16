@@ -103,4 +103,16 @@ export default {
       window.localStorage.removeItem("events");
     },
   },
+
+  sound: {
+    get() {
+      return window.localStorage.getItem("sound") || "";
+    },
+    set(value) {
+      window.localStorage.setItem("sound", value);
+    },
+    remove() {
+      window.localStorage.removeItem("sound");
+    },
+  },
 };

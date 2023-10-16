@@ -1,9 +1,17 @@
 import classNames from "classnames";
 import { useState } from "react";
 import styled from "styled-components";
+import { useSounds } from "../../hooks/useSounds";
 
 const Sound = () => {
-  const [enabled, setEnabled] = useState(true);
+  const { getSoundEnabled, changeSoundEnabled } = useSounds();
+  const [enabled, setEnabled] = useState(getSoundEnabled());
+
+  const changeEnabled = () => {
+    setEnabled(!enabled);
+    changeSoundEnabled(!enabled);
+  };
+
   const soundIcon = enabled
     ? "/icons/sound_enabled.png"
     : "/icons/sound_disabled.png";
@@ -14,7 +22,7 @@ const Sound = () => {
     button: true,
   });
   return (
-    <StyledSound className={className} onClick={() => setEnabled(!enabled)}>
+    <StyledSound className={className} onClick={changeEnabled}>
       <img src={soundIcon} />
     </StyledSound>
   );

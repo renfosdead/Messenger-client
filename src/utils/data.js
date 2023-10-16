@@ -1,3 +1,4 @@
+import EVENT_TYPES from "shared/src/event_types";
 import store from "./store";
 
 export const statusesDescription = {
@@ -122,4 +123,19 @@ export const mergeEvents = (oldData, newData) => {
   payload = [...payload, ...newData];
 
   return payload;
+};
+
+const getMessages = (data) => {
+  const result = data.filter(
+    (item) =>
+      item.type === EVENT_TYPES.sendMessage &&
+      item.userId !== store.userId.get()
+  );
+  return result;
+};
+
+export const isNewMessage = (oldData, newData) => {
+  const oldMessages = getMessages(oldData);
+  const newMessages = getMessages(newData);
+  return oldMessages.length !== newMessages.length;
 };

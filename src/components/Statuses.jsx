@@ -7,10 +7,11 @@ import store from "@/utils/store";
 import UserApi from "@/api/user";
 import { isOffline } from "../utils/data";
 import { getDeviceToken, login, logout } from "../utils/OneSignal";
+import { useSounds } from "../hooks/useSounds";
 
 const Statuses = ({ value, onChange, refresh }) => {
   const [visible, setVisible] = useState(false);
-
+  const { playSound } = useSounds();
   const changeStatus = (key) => {
     onChange(key);
     setVisible(false);
@@ -30,6 +31,7 @@ const Statuses = ({ value, onChange, refresh }) => {
       deviceToken: getDeviceToken(),
     });
     if (result?.data) {
+      playSound("Startup");
       login(result?.data?.userId);
       store.userId.set(result?.data?.userId);
       store.chatId.set(result?.data?.chatId);

@@ -5,6 +5,7 @@ import EventsApi from "@/api/events";
 import store from "@/utils/store";
 import EVENT_TYPES from "shared/src/event_types";
 import { isOffline } from "../../utils/data";
+import { useSounds } from "../../hooks/useSounds";
 
 const Text = ({
   expanded,
@@ -16,6 +17,7 @@ const Text = ({
   refresh,
 }) => {
   const [value, setValue] = useState("");
+  const { playSound } = useSounds();
 
   const onSubmit = async () => {
     if (value) {
@@ -23,6 +25,7 @@ const Text = ({
         if (!isOffline()) {
           const result = await EventsApi.sendMessage(value);
           if (result.data) {
+            playSound("SendMsg");
             setValue("");
             refresh();
           }
@@ -38,6 +41,7 @@ const Text = ({
             body: { message: value },
           },
         ]);
+        playSound("SendMsg");
         setValue("");
         refresh();
       }
