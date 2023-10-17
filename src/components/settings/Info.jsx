@@ -48,8 +48,12 @@ const Info = ({ refresh }) => {
         >
           <input value={value} onChange={(e) => setValue(e.target.value)} />
           <div className="username__confirm">
-            <button onClick={() => setEnabled(false)}>Cancel</button>
-            <button onClick={saveValue}>OK</button>
+            <button className="flat-btn" onClick={() => setEnabled(false)}>
+              Cancel
+            </button>
+            <button className="flat-btn" onClick={saveValue}>
+              OK
+            </button>
           </div>
         </ClickOutside>
       )}
@@ -64,7 +68,9 @@ const StyledInfo = styled.div`
   .dropdown-menu {
     position: absolute;
     width: 200px;
-    right: ${({ theme }) => theme.buttonHeight};
+    right: calc(
+      ${({ theme }) => theme.buttonHeight} + ${({ theme }) => theme.borderWidth}
+    );
     top: 0;
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingLG}!important;

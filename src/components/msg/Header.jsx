@@ -82,7 +82,9 @@ const StyledHeader = styled.div`
   position: absolute;
   left: -1px !important;
   right: auto !important;
-  top: calc(-${({ theme }) => theme.buttonHeight} - 1px) !important;
+  top: calc(
+    -${({ theme }) => theme.buttonHeight} - ${({ theme }) => theme.borderWidth}
+  ) !important;
   justify-content: start !important;
   padding-left: ${({ theme }) => theme.paddingST}!important;
   padding-right: ${({ theme }) => theme.paddingST}!important;
@@ -100,6 +102,7 @@ const StyledHeader = styled.div`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: ${({ theme }) => theme.textColor};
     }
   }
 
@@ -114,6 +117,9 @@ const StyledHeader = styled.div`
     z-index: 6;
     .status-row {
       width: 100%;
+      .username {
+        color: ${({ theme }) => theme.textColor};
+      }
     }
     .status-text {
       display: flex;
@@ -134,6 +140,9 @@ const StyledHeader = styled.div`
       ${({ theme }) => theme.gradientInactiveColor} 55%,
       ${({ theme }) => theme.gradientInactiveColor}
     ) !important;
+    .username {
+      color: ${({ theme }) => theme.activeColor};
+    }
   }
 
   &.right {

@@ -31,8 +31,12 @@ const ColorField = ({ label, name, value, data, onChange }) => {
         <div className="picker-picker">
           <HexColorPicker color={pickerValue} onChange={setPickerValue} />
           <div className="picker-btns">
-            <button onClick={skipColor}>Отмена</button>
-            <button onClick={changeColor}>OK</button>
+            <button className="flat-btn" onClick={skipColor}>
+              Отмена
+            </button>
+            <button className="flat-btn" onClick={changeColor}>
+              OK
+            </button>
           </div>
         </div>
       )}
@@ -55,13 +59,16 @@ const StyledColor = styled.div`
     width: ${({ theme }) => theme.buttonImageHeight};
     height: ${({ theme }) => theme.buttonImageHeight};
     border-radius: ${({ theme }) => theme.borderRadius};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
   }
 
   .picker-picker {
     position: absolute;
     padding: ${({ theme }) => theme.paddingST};
     background: ${({ theme }) => theme.backgroundColor};
-    border: ${({ theme }) => theme.borderStyle};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     z-index: 7;
   }

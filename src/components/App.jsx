@@ -45,6 +45,8 @@ const StyledApp = styled.div`
   display: grid;
   grid-template-rows: 1fr ${({ theme }) => theme.buttonHeight};
   height: 100vh;
+  background-color: ${({ theme }) => theme.backgroundColor};
+  color: ${({ theme }) => theme.textColor};
 
   #popup-container {
     position: fixed;
@@ -58,7 +60,7 @@ const StyledApp = styled.div`
     right: 0;
     top: 0;
     z-index: 6;
-    background: ${({ theme }) => theme.backgroundColor};
+    background: transparent;
   }
 
   .top,
@@ -84,13 +86,16 @@ const StyledApp = styled.div`
     align-items: center;
     justify-content: center;
     height: ${({ theme }) => theme.buttonHeight};
-    border: ${({ theme }) => theme.borderStyle};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     background: linear-gradient(
       ${({ theme }) => theme.backgroundColor} 40%,
       ${({ theme }) => theme.gradientInactiveColor} 55%,
       ${({ theme }) => theme.gradientInactiveColor}
     );
+    color: ${({ theme }) => theme.activeColor};
+
     &:hover {
       background: linear-gradient(
         ${({ theme }) => theme.backgroundColor},
@@ -100,7 +105,10 @@ const StyledApp = styled.div`
     &:active,
     &.enabled {
       background: ${({ theme }) => theme.gradientActiveColor};
-      box-shadow: ${({ theme }) => theme.innerBoxShadow};
+      box-shadow: inset ${({ theme }) => theme.shadowWidth}
+        ${({ theme }) => theme.shadowWidth} ${({ theme }) => theme.shadowWidth}
+        0 ${({ theme }) => theme.shadowColor};
+      color: ${({ theme }) => theme.textColor};
     }
     img {
       height: ${({ theme }) => theme.buttonImageHeight};
@@ -113,20 +121,32 @@ const StyledApp = styled.div`
       position: absolute;
       right: 0;
       top: 3px;
-      border-right: ${({ theme }) => theme.borderStyle}!important;
+      border-right: ${({ theme }) => theme.borderWidth} solid
+        ${({ theme }) => theme.borderColor}!important;
       border-bottom: 1px solid ${({ theme }) => theme.backgroundColor}!important;
       z-index: 3;
     }
+  }
+
+  .flat-btn {
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
+    border-radius: ${({ theme }) => theme.borderRadius};
+    background: ${({ theme }) => theme.gradientActiveColor};
+    color: ${({ theme }) => theme.activeColor};
   }
 
   input,
   textarea {
     font-family: "Nunito";
     outline: none;
-    border: ${({ theme }) => theme.borderStyle};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     font-size: ${({ theme }) => theme.fontSizeSM};
     padding: 0 ${({ theme }) => theme.paddingST};
+    background: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => theme.textColor};
   }
 
   label {
@@ -135,7 +155,8 @@ const StyledApp = styled.div`
   }
 
   .dropdown-menu {
-    border: ${({ theme }) => theme.borderStyle};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     padding: ${({ theme }) => theme.paddingST};
     z-index: 6;
@@ -143,5 +164,52 @@ const StyledApp = styled.div`
 
   .img-icon {
     height: ${({ theme }) => theme.buttonImageHeight};
+  }
+
+  .checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .checkbox + label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: ${({ theme }) => theme.fontSizeSM};
+      height: ${({ theme }) => theme.fontSizeSM};
+      flex-shrink: 0;
+      flex-grow: 0;
+      border: ${({ theme }) => theme.borderWidth} solid
+        ${({ theme }) => theme.borderColor};
+      border-radius: ${({ theme }) => theme.borderRadius};
+      margin-right: ${({ theme }) => theme.paddingST};
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 50% 50%;
+    }
+  }
+
+  .checkbox:not(:disabled):not(:checked) + label:hover::before {
+    border-color: ${({ theme }) => theme.borderColor};
+  }
+
+  .checkbox:not(:disabled):active + label::before {
+    background-color: ${({ theme }) => theme.backgroundColor};
+    border-color: ${({ theme }) => theme.borderColor};
+  }
+
+  .checkbox:focus:not(:checked) + label::before {
+    border-color: ${({ theme }) => theme.borderColor};
+  }
+
+  .checkbox:checked + label::before {
+    border-color: ${({ theme }) => theme.borderColor};
+    background-color: ${({ theme }) => theme.backgroundColor};
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
   }
 `;

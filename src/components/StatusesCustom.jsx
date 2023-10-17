@@ -125,14 +125,27 @@ const CustomStatuses = ({ refresh }) => {
               );
             })}
           </div>
-          <label className="custom-status-submenu__balloon-checkbox">
+          <div className="custom-status-submenu__balloon-checkbox">
             {balloon && <Balloon />}
-            <input type="checkbox" checked={balloon} onChange={changeBaloon} />
-            Шарик дня рождения
-          </label>
+            <div>
+              <input
+                className="checkbox"
+                type="checkbox"
+                id="ball"
+                name="ball"
+                checked={balloon}
+                onChange={changeBaloon}
+              />
+              <label htmlFor="ball"> Шарик дня рождения</label>
+            </div>
+          </div>
           <div className="custom-statuses__confirm">
-            <button onClick={onSubmit}>ОК</button>
-            <button onClick={() => setVisible(false)}>Отмена</button>
+            <button className="flat-btn" onClick={onSubmit}>
+              ОК
+            </button>
+            <button className="flat-btn" onClick={() => setVisible(false)}>
+              Отмена
+            </button>
           </div>
         </ClickOutside>
       )}
@@ -148,8 +161,8 @@ const StyledCustomStatuses = styled.div`
     width: calc(${({ theme }) => theme.buttonImageHeight} / 2);
     img {
       position: absolute;
-      top: 4px;
-      left: 4px;
+      top: calc(3px + ${({ theme }) => theme.borderWidth});
+      left: calc(3px + ${({ theme }) => theme.borderWidth});
       width: calc(${({ theme }) => theme.buttonImageHeight} / 2);
       height: calc(${({ theme }) => theme.buttonImageHeight} / 2) !important;
       z-index: 1;
@@ -167,7 +180,14 @@ const StyledCustomStatuses = styled.div`
     position: absolute;
     right: 0;
     bottom: ${({ theme }) => theme.buttonHeight};
-    width: 260px;
+    width: calc(
+      7 *
+        (
+          ${({ theme }) => theme.buttonImageHeight} + 2 *
+            ${({ theme }) => theme.borderWidth} + 2 *
+            ${({ theme }) => theme.paddingSM}
+        ) + 4 * ${({ theme }) => theme.borderWidth}
+    );
     background: ${({ theme }) => theme.backgroundColor};
     display: flex;
     flex-direction: column;
@@ -189,21 +209,43 @@ const StyledCustomStatuses = styled.div`
       flex-direction: column;
       flex-wrap: wrap;
       height: 222px;
-
+      gap: ${({ theme }) => theme.paddingSM};
       .custom-status-submenu__item {
         position: relative;
-        width: calc(${({ theme }) => theme.buttonImageHeight} + 10px);
-        height: calc(${({ theme }) => theme.buttonImageHeight} + 10px);
+        width: calc(
+          ${({ theme }) => theme.buttonImageHeight} + 2 *
+            ${({ theme }) => theme.borderWidth} +
+            ${({ theme }) => theme.paddingSM}
+        );
+        height: calc(
+          ${({ theme }) => theme.buttonImageHeight} + 2 *
+            ${({ theme }) => theme.borderWidth} +
+            ${({ theme }) => theme.paddingSM}
+        );
         overflow: hidden;
         box-sizing: border-box;
+        padding: ${({ theme }) => theme.paddingSM};
+
         img {
           position: absolute;
-          left: 4px;
-          top: 4px;
+          left: calc(
+            ${({ theme }) => theme.borderWidth} +
+              ${({ theme }) => theme.paddingSM}
+          );
+          top: calc(
+            ${({ theme }) => theme.borderWidth} +
+              ${({ theme }) => theme.paddingSM}
+          );
         }
         &.selected {
-          border: ${({ theme }) => theme.borderStyle};
+          border: ${({ theme }) => theme.borderWidth} solid
+            ${({ theme }) => theme.borderColor};
+          border-radius: ${({ theme }) => theme.borderRadius};
           background-color: ${({ theme }) => theme.gradientInactiveColor};
+          img {
+            left: ${({ theme }) => theme.paddingSM};
+            top: ${({ theme }) => theme.paddingSM};
+          }
         }
       }
     }

@@ -110,11 +110,12 @@ const StyledStatuses = styled.div`
   position: relative;
   button {
     width: 100%;
-    font-size: 1.2em;
+    font-size: ${({ theme }) => theme.fontSize};
     .status-btn {
       display: flex;
       gap: ${({ theme }) => theme.paddingST};
       align-items: center;
+      color: ${({ theme }) => theme.activeColor};
     }
   }
 
@@ -138,7 +139,7 @@ const StyledStatuses = styled.div`
       display: flex;
       align-items: center;
       line-height: calc(${({ theme }) => theme.fontSize} * 1.7);
-      font-size: 1.2em;
+      font-size: ${({ theme }) => theme.fontSize};
 
       img {
         margin-right: ${({ theme }) => theme.paddingST};

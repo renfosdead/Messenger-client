@@ -72,23 +72,32 @@ export default MessageTab;
 
 const StyledMessageTab = styled.div`
   position: relative;
-  height: calc(100vh - 2 * ${({ theme }) => theme.buttonHeight} - 2px);
-  border: ${({ theme }) => theme.borderStyle};
+  height: calc(
+    100vh - 2 * ${({ theme }) => theme.buttonHeight} - 2 *
+      ${({ theme }) => theme.borderWidth}
+  );
+  border: ${({ theme }) => theme.borderWidth} solid
+    ${({ theme }) => theme.borderColor};
   border-radius: ${({ theme }) => theme.borderRadius};
   font-size: ${({ theme }) => theme.fontSize};
   display: grid;
-  grid-template-rows: 1fr calc(${({ theme }) => theme.buttonHeight} + 2px);
+  grid-template-rows: 1fr calc(
+      ${({ theme }) => theme.buttonHeight} + ${({ theme }) => theme.borderWidth}
+    );
   &.chat-expanded {
     grid-template-rows: 1fr calc(
         ${rows} * ${({ theme }) => theme.fontSize} + 2 *
-          ${({ theme }) => theme.buttonHeight} + 6 *
-          ${({ theme }) => theme.paddingSM} + ${({ theme }) => theme.paddingST}
+          ${({ theme }) => theme.buttonHeight} + 7 *
+          ${({ theme }) => theme.paddingSM} + 3 *
+          ${({ theme }) => theme.paddingST} + 7 *
+          ${({ theme }) => theme.borderWidth}
       );
 
     &.with-keyboard {
       grid-template-rows: 1fr calc(
-          ${rows} * ${({ theme }) => theme.fontSize} +
-            ${({ theme }) => theme.paddingLG}
+          ${rows} * ${({ theme }) => theme.fontSize} + 2 *
+            ${({ theme }) => theme.paddingLG} + 4 *
+            ${({ theme }) => theme.borderWidth}
         );
     }
   }

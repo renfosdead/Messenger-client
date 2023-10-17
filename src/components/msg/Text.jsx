@@ -103,7 +103,8 @@ export default Text;
 const StyledText = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
-  border-top: ${({ theme }) => theme.borderStyle};
+  border-top: ${({ theme }) => theme.borderWidth} solid
+    ${({ theme }) => theme.borderColor};
   background: ${({ theme }) => theme.backgroundColor};
   button {
     font-size: ${({ theme }) => theme.fontSize};
@@ -112,9 +113,13 @@ const StyledText = styled.div`
     }
   }
   textarea {
-    width: calc(100% - 4 * ${({ theme }) => theme.paddingSM} - 4px);
+    width: calc(
+      100% - 2 * ${({ theme }) => theme.paddingST} - 2 *
+        ${({ theme }) => theme.borderWidth}
+    );
     resize: none;
     font-size: ${({ theme }) => theme.fontSize}!important;
+    line-height: 1.5;
   }
   .text-controls {
     display: flex;
@@ -136,6 +141,7 @@ const StyledText = styled.div`
     justify-content: flex-end;
     padding: 0;
     button {
+      color: ${({ theme }) => theme.activeColor};
       img {
         margin-right: ${({ theme }) => theme.paddingST};
       }

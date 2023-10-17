@@ -20,61 +20,6 @@ const Theme = () => {
 
   const { themeState, changeTheme, saveTheme, resetTheme } = useTheme();
 
-  const getBorderWidth = () => {
-    const borderStyle = themeState.borderStyle.split(" ");
-    return borderStyle[0];
-  };
-
-  const changeBorderWidth = (value) => {
-    const borderStyle = themeState.borderStyle.split(" ");
-    const payload = {
-      borderStyle: `${value.borderWidth} ${borderStyle[1]} ${borderStyle[2]}`,
-    };
-    changeTheme(payload);
-  };
-
-  const getBorderColor = () => {
-    const borderStyle = themeState.borderStyle.split(" ");
-    return borderStyle[2];
-  };
-
-  const changeBorderColor = (value) => {
-    const borderStyle = themeState.borderStyle.split(" ");
-    const payload = {
-      borderStyle: `${borderStyle[0]} ${borderStyle[1]} ${value.borderColor}`,
-    };
-    changeTheme(payload);
-  };
-
-  const getShadowColor = () => {
-    const shadowStyle = themeState.innerBoxShadow.split(" ");
-    return shadowStyle.slice(5).join(" ");
-  };
-
-  const changeShadowColor = (value) => {
-    const shadowStyle = themeState.innerBoxShadow.split(" ");
-    const payload = {
-      innerBoxShadow:
-        shadowStyle.slice(0, 5).join(" ") + value.innerBoxShadowColor,
-    };
-    changeTheme(payload);
-  };
-
-  const getShadowSize = () => {
-    const shadowStyle = themeState.innerBoxShadow.split(" ");
-    return shadowStyle[1];
-  };
-
-  const changeShadowSize = (value) => {
-    const shadowStyle = themeState.innerBoxShadow.split(" ");
-    const size = value.innerBoxShadowSize + " ";
-    const payload = {
-      innerBoxShadow:
-        shadowStyle[0] + " " + size + size + size + 0 + getShadowColor(),
-    };
-    changeTheme(payload);
-  };
-
   const [isPreview, setIsPreview] = useState(false);
   const showTheme = () => {
     setIsPreview(true);
@@ -100,8 +45,12 @@ const Theme = () => {
           onClickOutside={() => setEnabled(false)}
         >
           <div className="theme__confirm">
-            <button onClick={resetTheme}>Сброс</button>
-            <button onClick={showTheme}>Смотреть</button>
+            <button className="flat-btn" onClick={resetTheme}>
+              Сброс
+            </button>
+            <button className="flat-btn" onClick={showTheme}>
+              Смотреть
+            </button>
           </div>
 
           <ExpandableGroup
@@ -190,6 +139,12 @@ const Theme = () => {
             />
             <ColorField
               onChange={changeTheme}
+              label="Текст"
+              name="textColor"
+              data={themeState}
+            />
+            <ColorField
+              onChange={changeTheme}
               label="Неактивные элементы"
               name="gradientInactiveColor"
               data={themeState}
@@ -198,6 +153,12 @@ const Theme = () => {
               onChange={changeTheme}
               label="Активные элементы"
               name="gradientActiveColor"
+              data={themeState}
+            />
+            <ColorField
+              onChange={changeTheme}
+              label="Текст кнопок"
+              name="activeColor"
               data={themeState}
             />
             <ColorField
@@ -221,16 +182,16 @@ const Theme = () => {
             setExpanded={setExpanded}
           >
             <ColorField
-              onChange={changeBorderColor}
+              onChange={changeTheme}
               label="Цвет"
               name="borderColor"
-              value={getBorderColor()}
+              data={themeState}
             />
             <SliderField
-              onChange={changeBorderWidth}
+              onChange={changeTheme}
               label="Толщина"
-              name="borderWitdh"
-              value={getBorderWidth()}
+              name="borderWidth"
+              data={themeState}
             />
             <SliderField
               onChange={changeTheme}
@@ -247,22 +208,25 @@ const Theme = () => {
             setExpanded={setExpanded}
           >
             <ColorField
-              onChange={changeShadowColor}
+              onChange={changeTheme}
               label="Цвет"
-              name="innerBoxShadowColor"
-              value={getShadowColor()}
+              name="shadowColor"
+              data={themeState}
             />
             <SliderField
-              onChange={changeShadowSize}
+              onChange={changeTheme}
               label="Размер"
-              name="innerBoxShadowSize"
-              value={getShadowSize()}
+              name="shadowWidth"
+              data={themeState}
             />
           </ExpandableGroup>
 
           <div className="theme__confirm">
-            <button onClick={() => setEnabled(false)}>Отмена</button>
+            <button className="flat-btn" onClick={() => setEnabled(false)}>
+              Отмена
+            </button>
             <button
+              className="flat-btn"
               onClick={() => {
                 saveTheme();
                 setEnabled(false);
@@ -283,7 +247,9 @@ const StyledTheme = styled.div`
   position: relative;
   .dropdown-menu {
     position: absolute;
-    right: ${({ theme }) => theme.buttonHeight};
+    right: calc(
+      ${({ theme }) => theme.buttonHeight} + ${({ theme }) => theme.borderWidth}
+    );
     top: 0;
     background: ${({ theme }) => theme.backgroundColor};
     padding-top: ${({ theme }) => theme.paddingLG}!important;

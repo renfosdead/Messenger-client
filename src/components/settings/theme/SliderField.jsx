@@ -63,6 +63,7 @@ const StyledSlider = styled.div`
       ${({ theme }) => theme.gradientActiveColor}
     );
     cursor: pointer;
-    border: ${({ theme }) => theme.borderStyle};
+    border: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
   }
 `;

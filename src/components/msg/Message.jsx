@@ -152,6 +152,7 @@ const StyledMessage = styled(TouchProvider)`
 
   .message-text {
     white-space: break-spaces;
+    word-break: break-word;
   }
   &.with-left-panel {
     padding-left: calc(${({ theme }) => theme.paddingLG} * 4);
