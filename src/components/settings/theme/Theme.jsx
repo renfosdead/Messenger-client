@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside";
 import SliderField from "./SliderField";
 import ColorField from "./ColorField";
-import { useTheme } from "@/hooks/useTheme";
 import ExpandableGroup from "./ExpandableGroup";
 
-const Theme = () => {
+const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
   const [enabled, setEnabled] = useState(false);
 
   const [expandedGroup, setExpanded] = useState(0);
@@ -17,8 +16,6 @@ const Theme = () => {
     disabled: !enabled,
     button: true,
   });
-
-  const { themeState, changeTheme, saveTheme, resetTheme } = useTheme();
 
   const [isPreview, setIsPreview] = useState(false);
   const showTheme = () => {

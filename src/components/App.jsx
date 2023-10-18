@@ -7,35 +7,44 @@ import Refresh from "./Refresh.jsx";
 import store from "../utils/store";
 import { useState } from "react";
 import Settings from "./settings/Settings";
+import MainStyles from "@/theme/MainStyles";
+import ThemeProvider from "@/theme/ThemeProvider";
+import { useTheme } from "@/hooks/useTheme";
 
 function App() {
   const { events, isLoading, loadEvents } = useEvents();
 
   const status = store.status.get() || "offline";
   const [statusState, setStatusState] = useState(status);
+  const theme = useTheme();
 
   return (
-    <StyledApp>
-      <div id="popup-container"></div>
-      <div className="top">
-        <Refresh
-          onClick={loadEvents}
-          disabled={statusState === "offline"}
-          isLoading={isLoading}
-        />
-        <Settings refresh={loadEvents} />
-      </div>
-      <MessageTabs events={events} refresh={loadEvents} />
+    <>
+      <MainStyles />
+      <ThemeProvider theme={theme.themeState}>
+        <StyledApp>
+          <div id="popup-container"></div>
+          <div className="top">
+            <Refresh
+              onClick={loadEvents}
+              disabled={statusState === "offline"}
+              isLoading={isLoading}
+            />
+            <Settings refresh={loadEvents} theme={theme} />
+          </div>
+          <MessageTabs events={events} refresh={loadEvents} />
 
-      <div className="bottom">
-        <Statuses
-          value={statusState}
-          onChange={setStatusState}
-          refresh={loadEvents}
-        />
-        <StatusesCustom refresh={loadEvents} />
-      </div>
-    </StyledApp>
+          <div className="bottom">
+            <Statuses
+              value={statusState}
+              onChange={setStatusState}
+              refresh={loadEvents}
+            />
+            <StatusesCustom refresh={loadEvents} />
+          </div>
+        </StyledApp>
+      </ThemeProvider>
+    </>
   );
 }
 

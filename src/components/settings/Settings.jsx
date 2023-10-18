@@ -10,7 +10,7 @@ import Key from "./Key";
 import Info from "./Info";
 import History from "./History";
 
-const Settings = ({ refresh }) => {
+const Settings = ({ refresh, theme }) => {
   const [enabled, setEnabled] = useState(false);
 
   const className = classNames({
@@ -34,7 +34,7 @@ const Settings = ({ refresh }) => {
           <Info refresh={refresh} />
           <History />
           <Files />
-          <Theme />
+          <Theme {...theme} />
           <Key />
           <ClearCaches />
         </ClickOutside>

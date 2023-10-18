@@ -10,7 +10,7 @@ export const useTheme = () => {
     if (themeStore) {
       setThemeState(themeStore);
     } else {
-      resetTheme();
+      setThemeState(ThemeConfig);
     }
   };
 
