@@ -1,11 +1,17 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import EventsApi from "@/api/events";
 import store from "@/utils/store";
 import EVENT_TYPES from "shared/src/event_types";
-import { isOffline } from "../../utils/data";
+import {
+  QUOTE_STRING,
+  getQuote,
+  getValueWithoutQuote,
+  isOffline,
+} from "../../utils/data";
 import { useSounds } from "../../hooks/useSounds";
+import Quote from "./Quote";
 
 const Text = ({
   expanded,
@@ -15,8 +21,10 @@ const Text = ({
   userId,
   chatId,
   refresh,
+  value = "",
+  setValue,
 }) => {
-  const [value, setValue] = useState("");
+  const textAreaRef = useRef();
   const { playSound } = useSounds();
 
   const onSubmit = async () => {
@@ -47,16 +55,48 @@ const Text = ({
       }
     }
   };
+
   const className = classNames({
     "styled-text-component": true,
     "with-keyboard": isKeyboardOpen && expanded,
   });
+
   const buttonClassName = classNames({
     button: true,
     simple: true,
   });
+
+  useEffect(() => {
+    if (expanded) {
+      textAreaRef.current.focus();
+      textAreaRef.current.selectionStart = value.length;
+      textAreaRef.current.selectionEnd = value.length;
+    }
+  }, [expanded]);
+
+  const onChange = (e) => {
+    const payload = quote
+      ? `${QUOTE_STRING}${quote}${QUOTE_STRING}${e.target.value}`
+      : e.target.value;
+    setValue(payload);
+  };
+
+  const quote = getQuote(value);
+  const parsedValue = getValueWithoutQuote(quote, value);
+  const removeQuote = () => {
+    setValue(parsedValue);
+  };
+
   return (
     <StyledText className={className}>
+      {quote && expanded ? (
+        <div className="quote-container">
+          <Quote text={quote} />
+          <button className="close-btn" onClick={removeQuote}>
+            <div>X</div>
+          </button>
+        </div>
+      ) : null}
       <div className="text-controls">
         <div>
           <button className="button simple">
@@ -82,8 +122,9 @@ const Text = ({
       {expanded && (
         <div className="send-text">
           <textarea
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            ref={textAreaRef}
+            value={parsedValue}
+            onChange={onChange}
             rows={rows}
           ></textarea>
           <div className="send-btn">
@@ -148,6 +189,33 @@ const StyledText = styled.div`
     }
   }
 
+  .quote-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(
+      ${4} * ${({ theme }) => theme.fontSize} + 2 *
+        ${({ theme }) => theme.buttonHeight} + 8 *
+        ${({ theme }) => theme.paddingSM} + 3 *
+        ${({ theme }) => theme.paddingST} + 7 *
+        ${({ theme }) => theme.borderWidth}
+    );
+    border-top: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
+    background-color: ${({ theme }) => theme.backgroundColor};
+
+    .text-quote {
+      padding: ${({ theme }) => theme.paddingST};
+      padding-right: ${({ theme }) => theme.buttonHeight};
+    }
+
+    .close-btn {
+      position: absolute;
+      right: ${({ theme }) => theme.paddingST};
+      top: ${({ theme }) => theme.paddingST};
+    }
+  }
+
   &.with-keyboard {
     position: fixed;
     bottom: 0;
@@ -166,6 +234,15 @@ const StyledText = styled.div`
           }
         }
       }
+    }
+
+    .quote-container {
+      bottom: calc(
+        ${4} * ${({ theme }) => theme.fontSize} + 2 *
+          ${({ theme }) => theme.paddingLG} + 4 *
+          ${({ theme }) => theme.borderWidth} +
+          ${({ theme }) => theme.paddingSM}
+      );
     }
   }
 `;

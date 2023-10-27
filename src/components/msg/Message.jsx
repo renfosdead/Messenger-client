@@ -5,8 +5,10 @@ import EVENT_TYPES from "shared/src/event_types";
 import store from "@/utils/store";
 import { getDateFormatted } from "@/utils/date_time";
 import TouchProvider from "../../utils/TouchProvider";
+import { getQuote, getValueWithoutQuote } from "../../utils/data";
+import Quote from "./Quote";
 
-const Message = ({ data, userName, refresh }) => {
+const Message = ({ data, userName, onAnswer, refresh }) => {
   const userId = store.userId.get();
 
   const onSwipeRight = () => {
@@ -14,7 +16,11 @@ const Message = ({ data, userName, refresh }) => {
   };
 
   const onSwipeLeft = () => {
-    setShowLeftPanel(false);
+    if (showLeftPanel) {
+      setShowLeftPanel(false);
+    } else {
+      onAnswer(data.body.message);
+    }
   };
 
   const removeMessage = () => {
@@ -69,6 +75,9 @@ const Message = ({ data, userName, refresh }) => {
   });
 
   const messageStatus = getMessageStatus();
+
+  const quote = getQuote(data.body.message);
+  const parsedMessage = getValueWithoutQuote(quote, data.body.message);
   return (
     <StyledMessage
       onSwipeRight={onSwipeRight}
@@ -86,12 +95,15 @@ const Message = ({ data, userName, refresh }) => {
         <div>
           <img className="img-icon" src={`/icons/${messageStatus}.png`} />
           <div className={messageStatus}>
-            {getMessageTitle()}{" "}
+            {getMessageTitle()}
             <span>{`(${getDateFormatted(data.date)})`}</span>
           </div>
         </div>
       </div>
-      <div className="message-text">{`${data.body.message}`}</div>
+      <div className="message-text">
+        {quote ? <Quote text={quote} /> : null}
+        {`${parsedMessage}`}
+      </div>
     </StyledMessage>
   );
 };

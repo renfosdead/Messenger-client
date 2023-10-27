@@ -145,6 +145,14 @@ const StyledApp = styled.div`
     color: ${({ theme }) => theme.activeColor};
   }
 
+  .close-btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+  }
+
   input,
   textarea {
     font-family: "Nunito";

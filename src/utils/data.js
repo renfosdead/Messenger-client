@@ -139,3 +139,17 @@ export const isNewMessage = (oldData, newData) => {
   const newMessages = getMessages(newData);
   return oldMessages.length !== newMessages.length;
 };
+
+export const QUOTE_STRING = "|||";
+
+export const getQuote = (message = "") => {
+  const quotes = message.split(QUOTE_STRING);
+  if (quotes.length % 2 === 1) {
+    return quotes.slice(1, quotes.length - 1).join(QUOTE_STRING);
+  }
+  return "";
+};
+
+export const getValueWithoutQuote = (quote, value) => {
+  return quote ? value.slice(quote.length + 2 * QUOTE_STRING.length) : value;
+};

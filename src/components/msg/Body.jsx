@@ -3,7 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import TouchProvider from "../../utils/TouchProvider";
 
-const MessageBody = ({ expanded, data, userName, events, refresh }) => {
+const MessageBody = ({
+  expanded,
+  data,
+  userName,
+  events,
+  refresh,
+  onAnswer,
+}) => {
   const bodyRef = useRef(null);
 
   useEffect(() => {
@@ -43,6 +50,7 @@ const MessageBody = ({ expanded, data, userName, events, refresh }) => {
             data={mes}
             userName={userName}
             refresh={refresh}
+            onAnswer={onAnswer}
           />
         ))}
       </div>

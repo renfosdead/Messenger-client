@@ -9,6 +9,7 @@ import { useCustomStatus } from "@/hooks/useCustomStatus";
 import { useMessages } from "@/hooks/useMessages";
 import { useName } from "../../hooks/useName";
 import { useKeyboard } from "../../hooks/useKeyboard";
+import { QUOTE_STRING, getQuote, getValueWithoutQuote } from "../../utils/data";
 
 const rows = 4;
 
@@ -35,6 +36,16 @@ const MessageTab = ({
   const name = useName(userId, events);
 
   const { data } = useMessages(events, chatId);
+
+  const [message, setMessage] = useState("");
+
+  const onAnswer = (text) => {
+    setShowText(true);
+    const textQuote = getQuote(text);
+    const parsedText = getValueWithoutQuote(textQuote, text);
+    setMessage(`${QUOTE_STRING}${parsedText}${QUOTE_STRING}`);
+  };
+
   return (
     <StyledMessageTab className={className}>
       <Header
@@ -54,8 +65,11 @@ const MessageTab = ({
         events={events}
         refresh={refresh}
         isKeyboardOpen={isKeyboardOpen}
+        onAnswer={onAnswer}
       />
       <Text
+        value={message}
+        setValue={setMessage}
         expanded={showText}
         toggleExpanded={setShowText}
         rows={rows}

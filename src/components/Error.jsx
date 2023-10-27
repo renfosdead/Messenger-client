@@ -26,7 +26,7 @@ const ErrorComponent = ({ err, onClose }) => {
       <div>
         <div className="error-title">
           {err.code}
-          <button onClick={onClose}>
+          <button className="close-btn" onClick={onClose}>
             <div>X</div>
           </button>
         </div>
@@ -58,13 +58,6 @@ const StyledErrorComponent = styled.div`
     justify-content: space-between;
     border-bottom: 1px solid #fd6557;
     padding: 3px 6px 3px 30px;
-    button {
-      border: none;
-      outline: none;
-      background-color: transparent;
-      padding: 0;
-      margin: 0;
-    }
   }
   .error-text {
     padding: 6px;
