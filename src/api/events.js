@@ -7,4 +7,7 @@ export default {
   sendMessage(message) {
     return axiosInstance.post("/events/message", { message });
   },
+  sendImage(image, onUploadProgress) {
+    return axiosInstance.post("/events/image", { image }, { onUploadProgress });
+  },
 };

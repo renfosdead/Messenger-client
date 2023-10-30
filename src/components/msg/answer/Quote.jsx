@@ -21,7 +21,7 @@ const StyledQuote = styled.div`
 
   > div {
     padding-left: ${({ theme }) => theme.paddingST};
-    border-left: 10px solid #999999;
+    border-left: 10px solid ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     font-style: italic;
     font-size: ${({ theme }) => theme.fontSizeXS};

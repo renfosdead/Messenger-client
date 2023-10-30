@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Header from "./Header";
 import Body from "./Body";
-import Text from "./Text";
+import Text from "./answer/Text";
 import { useState } from "react";
 import classNames from "classnames";
 import { useStatus } from "@/hooks/useStatus";

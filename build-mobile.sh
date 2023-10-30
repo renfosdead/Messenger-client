@@ -13,6 +13,5 @@ echo "Install dependencies..."
 yarn install
 
 cd ../
-cordova build android --release -- --packageType=apk
 echo "Run!"
 cordova run android

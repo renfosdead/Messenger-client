@@ -9,9 +9,10 @@ import {
   getQuote,
   getValueWithoutQuote,
   isOffline,
-} from "../../utils/data";
-import { useSounds } from "../../hooks/useSounds";
+} from "../../../utils/data";
+import { useSounds } from "../../../hooks/useSounds";
 import Quote from "./Quote";
+import ImageUpload from "./ImageUpload";
 
 const Text = ({
   expanded,
@@ -103,9 +104,7 @@ const Text = ({
             <img src="/icons/smiles.png" />
           </button>
 
-          <button className="button simple">
-            <img src="/icons/folder.png" />
-          </button>
+          <ImageUpload />
         </div>
 
         <button

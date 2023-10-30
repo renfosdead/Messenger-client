@@ -128,7 +128,8 @@ export const mergeEvents = (oldData, newData) => {
 const getMessages = (data) => {
   const result = data.filter(
     (item) =>
-      item.type === EVENT_TYPES.sendMessage &&
+      (item.type === EVENT_TYPES.sendMessage ||
+        item.type === EVENT_TYPES.sendImage) &&
       item.userId !== store.userId.get()
   );
   return result;
@@ -152,4 +153,19 @@ export const getQuote = (message = "") => {
 
 export const getValueWithoutQuote = (quote, value) => {
   return quote ? value.slice(quote.length + 2 * QUOTE_STRING.length) : value;
+};
+
+export const convertBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
 };

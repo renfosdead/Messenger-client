@@ -9,7 +9,8 @@ export const useMessages = (events, chatId) => {
     const messageEvents = evts.filter(
       (e) =>
         (e.type === EVENT_TYPES.changeCustomStatus ||
-          e.type === EVENT_TYPES.sendMessage) &&
+          e.type === EVENT_TYPES.sendMessage ||
+          e.type === EVENT_TYPES.sendImage) &&
         e.chatId === chatId
     );
     setData([...messageEvents]);

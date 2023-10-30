@@ -6,7 +6,7 @@ import store from "@/utils/store";
 import { getDateFormatted } from "@/utils/date_time";
 import TouchProvider from "../../utils/TouchProvider";
 import { getQuote, getValueWithoutQuote } from "../../utils/data";
-import Quote from "./Quote";
+import Quote from "./answer/Quote";
 
 const Message = ({ data, userName, onAnswer, refresh }) => {
   const userId = store.userId.get();
@@ -19,7 +19,9 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
     if (showLeftPanel) {
       setShowLeftPanel(false);
     } else {
-      onAnswer(data.body.message);
+      if (data.type === EVENT_TYPES.sendMessage) {
+        onAnswer(data.body.message);
+      }
     }
   };
 
@@ -100,10 +102,17 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
           </div>
         </div>
       </div>
-      <div className="message-text">
-        {quote ? <Quote text={quote} /> : null}
-        {`${parsedMessage}`}
-      </div>
+      {data.type === EVENT_TYPES.sendImage && (
+        <div className="message-text">
+          <img src={data.body.image} />
+        </div>
+      )}
+      {data.type === EVENT_TYPES.sendMessage && (
+        <div className="message-text">
+          {quote ? <Quote text={quote} /> : null}
+          {`${parsedMessage}`}
+        </div>
+      )}
     </StyledMessage>
   );
 };
@@ -165,6 +174,9 @@ const StyledMessage = styled(TouchProvider)`
   .message-text {
     white-space: break-spaces;
     word-break: break-word;
+    img {
+      max-width: 100%;
+    }
   }
   &.with-left-panel {
     padding-left: calc(${({ theme }) => theme.paddingLG} * 4);
