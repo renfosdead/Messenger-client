@@ -4,9 +4,10 @@ import classNames from "classnames";
 import EVENT_TYPES from "shared/src/event_types";
 import store from "@/utils/store";
 import { getDateFormatted } from "@/utils/date_time";
-import TouchProvider from "../../utils/TouchProvider";
-import { getQuote, getValueWithoutQuote } from "../../utils/data";
+import TouchProvider from "@/utils/TouchProvider";
+import { getQuote, getValueWithoutQuote } from "@/utils/data";
 import Quote from "./answer/Quote";
+import ImageLightBox from "./ImageLightBox";
 
 const Message = ({ data, userName, onAnswer, refresh }) => {
   const userId = store.userId.get();
@@ -48,6 +49,8 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
   };
 
   const [showLeftPanel, setShowLeftPanel] = useState(false);
+
+  const [isImageOpen, setImageOpen] = useState(null);
 
   if (data.type === EVENT_TYPES.changeCustomStatus) {
     const payload = data.body.customStatus;
@@ -104,7 +107,17 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
       </div>
       {data.type === EVENT_TYPES.sendImage && (
         <div className="message-text">
-          <img src={data.body.image} />
+          <img src={data.body.image} onClick={() => setImageOpen(data.date)} />
+
+          <ImageLightBox
+            isOpen={isImageOpen}
+            onHide={() => setImageOpen(null)}
+            slides={[
+              {
+                src: data.body.image,
+              },
+            ]}
+          />
         </div>
       )}
       {data.type === EVENT_TYPES.sendMessage && (

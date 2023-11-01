@@ -10,30 +10,37 @@ import Key from "./Key";
 import Info from "./Info";
 import History from "./History";
 
-const Settings = ({ refresh, theme }) => {
-  const [enabled, setEnabled] = useState(false);
-
+const Settings = ({
+  isOpen,
+  toggleOpen,
+  refresh,
+  theme,
+  toggleImageViewer,
+}) => {
   const className = classNames({
-    enabled: enabled,
-    disabled: !enabled,
+    enabled: isOpen,
+    disabled: !isOpen,
     button: true,
   });
 
   return (
     <StyledSettings>
-      <button className={className} onClick={() => setEnabled(!enabled)}>
+      <button className={className} onClick={() => toggleOpen(!isOpen)}>
         <img src={"/icons/settings.png"} />
       </button>
 
-      {enabled && (
+      {isOpen && (
         <ClickOutside
           className="dropdown-menu"
-          onClickOutside={() => setEnabled(false)}
+          onClickOutside={() => toggleOpen(false)}
         >
           <Sound />
           <Info refresh={refresh} />
           <History />
-          <Files />
+          <Files
+            toggleImageViewer={toggleImageViewer}
+            toggleSettings={toggleOpen}
+          />
           <Theme {...theme} />
           <Key />
           <ClearCaches />
@@ -48,7 +55,7 @@ export default Settings;
 const StyledSettings = styled.div`
   display: flex;
   align-items: center;
-  z-index: 6;
+  z-index: 11;
   position: relative;
   > .dropdown-menu {
     position: absolute;

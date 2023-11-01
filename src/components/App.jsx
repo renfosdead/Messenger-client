@@ -10,12 +10,17 @@ import Settings from "./settings/Settings";
 import MainStyles from "@/theme/MainStyles";
 import ThemeProvider from "@/theme/ThemeProvider";
 import { useTheme } from "@/hooks/useTheme";
+import ImagesViewer from "./ImagesViewer";
 
 function App() {
   const { events, isLoading, loadEvents } = useEvents();
 
   const status = store.status.get() || "offline";
   const [statusState, setStatusState] = useState(status);
+
+  const [isOpenImageViewer, setIsOpenImageViewer] = useState(false);
+  const [isSettingsExpanded, setIsSettingsExpanded] = useState(false);
+
   const theme = useTheme();
 
   return (
@@ -30,7 +35,13 @@ function App() {
               disabled={statusState === "offline"}
               isLoading={isLoading}
             />
-            <Settings refresh={loadEvents} theme={theme} />
+            <Settings
+              isOpen={isSettingsExpanded}
+              toggleOpen={setIsSettingsExpanded}
+              refresh={loadEvents}
+              theme={theme}
+              toggleImageViewer={setIsOpenImageViewer}
+            />
           </div>
           <MessageTabs events={events} refresh={loadEvents} />
 
@@ -42,6 +53,12 @@ function App() {
             />
             <StatusesCustom refresh={loadEvents} />
           </div>
+
+          <ImagesViewer
+            isOpen={isOpenImageViewer}
+            toggle={setIsOpenImageViewer}
+            events={events}
+          />
         </StyledApp>
       </ThemeProvider>
     </>
@@ -176,7 +193,7 @@ const StyledApp = styled.div`
       ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     padding: ${({ theme }) => theme.paddingST};
-    z-index: 6;
+    z-index: 11;
   }
 
   .img-icon {
