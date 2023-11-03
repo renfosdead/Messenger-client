@@ -2,9 +2,12 @@ import { useRef, useState } from "react";
 import EventsApi from "@/api/events";
 import styled from "styled-components";
 import { convertBase64 } from "@/utils/data";
+import { useSounds } from "../../../hooks/useSounds";
+import UploadProgress from "./UploadProgress";
 
-const ImageUpload = () => {
+const ImageUpload = ({ refresh }) => {
   const imageUploadRef = useRef();
+  const { playSound } = useSounds();
 
   const openFiles = () => {
     imageUploadRef.current.click();
@@ -15,19 +18,37 @@ const ImageUpload = () => {
   };
 
   const sendFile = async (e) => {
-    const image = e.target.files[0];
-    const base64Image = await convertBase64(image);
-    EventsApi.sendImage(base64Image, onProgress);
+    const images = e.target.files;
+    const promises = [];
+    let i = 0;
+    for (let img of images) {
+      progressValues.current.push(0);
+      promises.push(sendImage(img, i));
+      i++;
+    }
+    await Promise.all(promises);
+
+    playSound("SendMsg");
+    setProgress(0);
+    progressValues.current = [];
+    skipFiles();
+    refresh();
+  };
+
+  const sendImage = async (img, index) => {
+    const base64Image = await convertBase64(img);
+    await EventsApi.sendImage(base64Image, (e) => onProgress(e, index));
   };
 
   const [progress, setProgress] = useState(0);
-  const onProgress = (e) => {
+  const progressValues = useRef([]);
+
+  const onProgress = (e, i) => {
+    const imagesNumber = imageUploadRef.current.files.length;
     const percent = (e.loaded / e.total) * 100;
-    setProgress(percent);
-    if (percent === 100) {
-      setProgress(0);
-      skipFiles();
-    }
+    progressValues.current[i] = percent / imagesNumber;
+    const newProgress = progressValues.current.reduce((acc, a) => acc + a, 0);
+    setProgress(newProgress);
   };
 
   return (
@@ -39,14 +60,11 @@ const ImageUpload = () => {
       <input
         ref={imageUploadRef}
         type="file"
+        multiple
         accept="image/*"
         onChange={sendFile}
       />
-      {progress ? (
-        <div className="progress">
-          <div style={{ width: `${progress}%` }}></div>
-        </div>
-      ) : null}
+      <UploadProgress value={progress} />
     </StyledImageUpload>
   );
 };
@@ -58,18 +76,5 @@ const StyledImageUpload = styled.div`
 
   input {
     display: none;
-  }
-
-  .progress {
-    display: flex;
-    align-items: center;
-    width: calc(100vw - 3 * ${({ theme }) => theme.buttonHeight});
-    > div {
-      height: ${({ theme }) => theme.buttonImageHeight};
-      border: ${({ theme }) => theme.borderWidth} solid
-        ${({ theme }) => theme.borderColor};
-      border-radius: ${({ theme }) => theme.borderRadius};
-      background-color: ${({ theme }) => theme.borderColor};
-    }
   }
 `;

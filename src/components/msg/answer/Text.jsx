@@ -104,7 +104,7 @@ const Text = ({
             <img src="/icons/smiles.png" />
           </button>
 
-          <ImageUpload />
+          <ImageUpload refresh={refresh} />
         </div>
 
         <button

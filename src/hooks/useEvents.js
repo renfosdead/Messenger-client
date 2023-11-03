@@ -29,7 +29,6 @@ export const useEvents = () => {
         const events = await EventsApi.get();
         if (!events.data.error) {
           saveNewData(events.data);
-
           if (events.data.length) {
             reduceRefreshTimeToMin();
           } else {
