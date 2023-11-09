@@ -35,9 +35,15 @@ const ImageUpload = ({ refresh }) => {
     refresh();
   };
 
+  const [isSending, setIsSending] = useState(false);
+
   const sendImage = async (img, index) => {
+    setIsSending(true);
+
     const base64Image = await convertBase64(img);
     await EventsApi.sendImage(base64Image, (e) => onProgress(e, index));
+
+    setIsSending(false);
   };
 
   const [progress, setProgress] = useState(0);
@@ -64,7 +70,7 @@ const ImageUpload = ({ refresh }) => {
         accept="image/*"
         onChange={sendFile}
       />
-      <UploadProgress value={progress} />
+      <UploadProgress value={progress} isSending={isSending} />
     </StyledImageUpload>
   );
 };

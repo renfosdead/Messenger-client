@@ -28,8 +28,12 @@ const Text = ({
   const textAreaRef = useRef();
   const { playSound } = useSounds();
 
+  const [isSending, setIsSending] = useState(false);
+
   const onSubmit = async () => {
     if (value) {
+      setIsSending(true);
+
       if (userId) {
         if (!isOffline()) {
           const result = await EventsApi.sendMessage(value);
@@ -54,6 +58,8 @@ const Text = ({
         setValue("");
         refresh();
       }
+
+      setIsSending(false);
     }
   };
 
@@ -127,7 +133,7 @@ const Text = ({
             rows={rows}
           ></textarea>
           <div className="send-btn">
-            <button className="button" onClick={onSubmit}>
+            <button className="button" onClick={onSubmit} disabled={isSending}>
               <img src="/icons/unread.png" />
               {isKeyboardOpen ? "" : "Отправить"}
             </button>

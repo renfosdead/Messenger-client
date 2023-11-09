@@ -14,20 +14,29 @@ const CustomStatuses = ({ refresh }) => {
 
   const [visible, setVisible] = useState(false);
 
-  const [balloon, setBalloon] = useState(false);
+  const statusCustom = store.customStatus.get() || {
+    status: undefined,
+    balloon: false,
+    title: "",
+    subtitle: "",
+  };
+
+  const [balloon, setBalloon] = useState(statusCustom.balloon);
   const changeBaloon = (e) => {
     setBalloon(e.target.checked);
   };
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState(statusCustom.title);
   const changeComment = (e) => {
     setComment(e.target.value);
   };
-  const [additionalComment, setAdditionalComment] = useState("");
+  const [additionalComment, setAdditionalComment] = useState(
+    statusCustom.subtitle
+  );
   const changeAdditionalComment = (e) => {
     setAdditionalComment(e.target.value);
   };
 
-  const [status, setStatus] = useState(-1);
+  const [status, setStatus] = useState(statusCustom.status);
 
   const className = classNames({
     enabled: visible,
@@ -43,7 +52,7 @@ const CustomStatuses = ({ refresh }) => {
 
   const onSubmit = async () => {
     const customStatus = {
-      status: status !== -1 ? statusesCustom[status] : undefined,
+      status: status || undefined,
       balloon,
       title: comment,
       subtitle: additionalComment,
@@ -71,11 +80,7 @@ const CustomStatuses = ({ refresh }) => {
           </div>
         )}
         <div className="custom-status-btn__picture">
-          <img
-            src={`/statuses_custom/${
-              statusesCustom[status] || "no_status"
-            }.png`}
-          />
+          <img src={`/statuses_custom/${status || "no_status"}.png`} />
         </div>
         {balloon && <Balloon />}
       </button>
@@ -88,34 +93,32 @@ const CustomStatuses = ({ refresh }) => {
           <div className="custom-status__comment">
             <img
               className="img-icon"
-              src={`/statuses_custom/${
-                statusesCustom[status] || "no_status"
-              }.png`}
+              src={`/statuses_custom/${status || "no_status"}.png`}
             />
             <input
               className="custom-status-submenu__input"
               value={comment}
               onChange={changeComment}
-              disabled={status === -1}
+              disabled={!status}
             />
           </div>
           <input
             className="custom-status-submenu__input"
             value={additionalComment}
             onChange={changeAdditionalComment}
-            disabled={status === -1}
+            disabled={!status}
           />
           <div className="custom-status-submenu__container dropdown-menu">
             {statusesCustom.map((st, i) => {
               const className = classNames({
                 "custom-status-submenu__item": true,
-                selected: status === i,
+                selected: status === st,
               });
               return (
                 <div
                   className={className}
                   key={st}
-                  onClick={() => setStatus(i || -1)}
+                  onClick={() => setStatus(st || undefined)}
                 >
                   <img
                     className="img-icon"

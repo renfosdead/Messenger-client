@@ -91,8 +91,8 @@ export default {
       const evts = [...this.get(), ...value];
       window.localStorage.setItem("events", JSON.stringify(evts));
     },
-    add(value) {
-      const evts = mergeEvents(this.get(), value);
+    async add(value) {
+      const evts = await mergeEvents(this.get(), value);
       window.localStorage.setItem("events", JSON.stringify(evts));
     },
     removeMessage(id) {

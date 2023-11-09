@@ -1,5 +1,6 @@
 import EVENT_TYPES from "shared/src/event_types";
 import store from "./store";
+import { saveFilesFromEvents } from "./file_saver";
 
 export const statusesDescription = {
   ready: {
@@ -99,7 +100,7 @@ export const isOffline = () => {
   return status === "offline" || !status;
 };
 
-export const mergeEvents = (oldData, newData) => {
+export const mergeEvents = async (oldData, newData) => {
   let payload = [];
 
   oldData.forEach((oldEvt) => {
@@ -120,7 +121,9 @@ export const mergeEvents = (oldData, newData) => {
     }
   });
 
-  payload = [...payload, ...newData];
+  const newDataWithFiles = await saveFilesFromEvents(newData);
+
+  payload = [...payload, ...newDataWithFiles];
 
   return payload;
 };
@@ -139,6 +142,11 @@ export const isNewMessage = (oldData, newData) => {
   const oldMessages = getMessages(oldData);
   const newMessages = getMessages(newData);
   return oldMessages.length !== newMessages.length;
+};
+
+export const isMyMessage = (message) => {
+  const userId = store.userId.get();
+  return message.userId === userId;
 };
 
 export const QUOTE_STRING = "|||";
@@ -169,3 +177,5 @@ export const convertBase64 = (file) => {
     };
   });
 };
+
+export const EMPTY_PROMISE = () => Promise.resolve();
