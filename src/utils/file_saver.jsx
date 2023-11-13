@@ -121,12 +121,10 @@ const cordovaGetRootDirectory = () =>
       resolve("");
     };
 
-    window.requestFileSystem(
+    window.resolveLocalFileSystemURL(
       window.cordova.file.dataDirectory,
-      0,
-      function (fs) {
-        console.log("file system open: " + fs.name);
-        fs.root.getDirectory(
+      function (rootEntry) {
+        rootEntry.getDirectory(
           ROOT_DIR_NAME,
           { create: true },
           callback,
