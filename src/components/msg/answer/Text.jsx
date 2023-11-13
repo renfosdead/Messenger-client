@@ -200,12 +200,14 @@ const StyledText = styled.div`
     right: 0;
     bottom: calc(
       ${4} * ${({ theme }) => theme.fontSize} + 2 *
-        ${({ theme }) => theme.buttonHeight} + 8 *
+        ${({ theme }) => theme.buttonHeight} + 7 *
         ${({ theme }) => theme.paddingSM} + 3 *
-        ${({ theme }) => theme.paddingST} + 7 *
+        ${({ theme }) => theme.paddingST} + 5 *
         ${({ theme }) => theme.borderWidth}
     );
     border-top: ${({ theme }) => theme.borderWidth} solid
+      ${({ theme }) => theme.borderColor};
+    border-bottom: ${({ theme }) => theme.borderWidth} solid
       ${({ theme }) => theme.borderColor};
     background-color: ${({ theme }) => theme.backgroundColor};
 
@@ -244,9 +246,10 @@ const StyledText = styled.div`
     .quote-container {
       bottom: calc(
         ${4} * ${({ theme }) => theme.fontSize} + 2 *
-          ${({ theme }) => theme.paddingLG} + 4 *
-          ${({ theme }) => theme.borderWidth} +
-          ${({ theme }) => theme.paddingSM}
+          ${({ theme }) => theme.paddingLG} + 5 *
+          ${({ theme }) => theme.borderWidth} + 2 *
+          ${({ theme }) => theme.paddingSM} +
+          ${({ theme }) => theme.buttonHeight}
       );
     }
   }
