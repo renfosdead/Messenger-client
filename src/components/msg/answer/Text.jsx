@@ -120,7 +120,7 @@ const Text = ({
           {expanded ? (
             <img src="/icons/close.png" />
           ) : (
-            <img src="/icons/message.png" />
+            <img src="/icons/unread.png" />
           )}
         </button>
       </div>

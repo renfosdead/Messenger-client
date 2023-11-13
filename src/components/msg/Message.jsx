@@ -7,7 +7,7 @@ import { getDateFormatted } from "@/utils/date_time";
 import TouchProvider from "@/utils/TouchProvider";
 import { getQuote, getValueWithoutQuote } from "@/utils/data";
 import Quote from "./answer/Quote";
-import ImageLightBox from "./ImageLightBox";
+import ImageWithError from "./ImageWithError";
 
 const Message = ({ data, userName, onAnswer, refresh }) => {
   const userId = store.userId.get();
@@ -50,8 +50,6 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
 
   const [showLeftPanel, setShowLeftPanel] = useState(false);
 
-  const [isImageOpen, setImageOpen] = useState(null);
-
   if (data.type === EVENT_TYPES.changeCustomStatus) {
     const payload = data.body.customStatus;
 
@@ -67,8 +65,8 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
               className="img-icon"
               src={`/statuses_custom/${payload.status}.png`}
             />
-            <div className="status-title">{`${payload.title} `}</div>
-            <div>{payload.subtitle}</div>
+            <div className="status-title">{`${payload.title || ""} `}</div>
+            <div>{payload.subtitle || ""}</div>
           </div>
         </div>
       </StyledMessage>
@@ -105,21 +103,7 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
           </div>
         </div>
       </div>
-      {data.type === EVENT_TYPES.sendImage && (
-        <div className="message-text">
-          <img src={data.body.image} onClick={() => setImageOpen(data.date)} />
-
-          <ImageLightBox
-            isOpen={isImageOpen}
-            onHide={() => setImageOpen(null)}
-            slides={[
-              {
-                src: data.body.image,
-              },
-            ]}
-          />
-        </div>
-      )}
+      {data.type === EVENT_TYPES.sendImage && <ImageWithError data={data} />}
       {data.type === EVENT_TYPES.sendMessage && (
         <div className="message-text">
           {quote ? <Quote text={quote} /> : null}

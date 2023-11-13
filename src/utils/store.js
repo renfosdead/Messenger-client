@@ -1,4 +1,5 @@
 import { mergeEvents } from "./data";
+import { renderError } from "@/utils/error";
 
 export default {
   userId: {
@@ -93,7 +94,11 @@ export default {
     },
     async add(value) {
       const evts = await mergeEvents(this.get(), value);
-      window.localStorage.setItem("events", JSON.stringify(evts));
+      try {
+        window.localStorage.setItem("events", JSON.stringify(evts));
+      } catch (err) {
+        renderError("Кэш переполнен");
+      }
     },
     removeMessage(id) {
       const evts = [...this.get()].filter((evt) => evt.id !== id);
