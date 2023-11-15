@@ -78,7 +78,8 @@ const StyledApp = styled.div`
     position: fixed;
     width: 0px;
     height: 0px;
-    z-index: 15;
+    z-index: 10000;
+    color: #000;
   }
 
   .top {

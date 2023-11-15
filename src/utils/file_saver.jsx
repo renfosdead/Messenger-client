@@ -133,3 +133,47 @@ const cordovaGetRootDirectory = () =>
       }
     );
   });
+
+export const cordovaSaveImageToGallery = async (imageSrc) => {
+  const imageNativeUrl = await fileUrlToNativePath(imageSrc);
+
+  return new Promise((resolve) => {
+    if (window.cordova) {
+      window.cordova.plugins.imagesaver.saveImageToGallery(
+        imageNativeUrl,
+        onSaveImageSuccess,
+        onSaveImageError
+      );
+    } else {
+      resolve(false);
+    }
+
+    function onSaveImageSuccess() {
+      console.log("image save success ", imageSrc);
+      resolve(true);
+    }
+
+    function onSaveImageError(error) {
+      console.log("image save error: ", error, imageSrc);
+      onError(error);
+      resolve(false);
+    }
+  });
+};
+
+const fileUrlToNativePath = (fileUrl) =>
+  new Promise((resolve) => {
+    const callback = (resultEntry) => {
+      resolve(resultEntry.nativeURL);
+    };
+
+    const errorCallback = (err) => {
+      onError(err);
+      resolve("");
+    };
+    if (window.resolveLocalFileSystemURL) {
+      window.resolveLocalFileSystemURL(fileUrl, callback, errorCallback);
+    } else {
+      resolve("");
+    }
+  });
