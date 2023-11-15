@@ -122,7 +122,7 @@ const cordovaGetRootDirectory = () =>
     };
 
     window.resolveLocalFileSystemURL(
-      window.cordova.file.dataDirectory,
+      window.cordova.file.cacheDirectory,
       function (rootEntry) {
         rootEntry.getDirectory(
           ROOT_DIR_NAME,
