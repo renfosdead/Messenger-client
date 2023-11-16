@@ -169,6 +169,7 @@ const StyledApp = styled.div`
     background-color: transparent;
     padding: 0;
     margin: 0;
+    color: ${({ theme }) => theme.textColor};
   }
 
   input,

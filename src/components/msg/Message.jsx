@@ -53,7 +53,7 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
   if (data.type === EVENT_TYPES.changeCustomStatus) {
     const payload = data.body.customStatus;
 
-    if (!payload.status) {
+    if (!payload.status || payload.status === "no") {
       return null;
     }
 

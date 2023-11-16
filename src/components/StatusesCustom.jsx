@@ -79,8 +79,15 @@ const CustomStatuses = ({ refresh }) => {
             <img src={"/statuses_custom/comment.png"} />
           </div>
         )}
+
         <div className="custom-status-btn__picture">
-          <img src={`/statuses_custom/${status || "no_status"}.png`} />
+          {status !== "no" && status ? (
+            <img src={`/statuses_custom/${status || "no_status"}.png`} />
+          ) : (
+            <button className="img-icon close-btn">
+              <div>X</div>
+            </button>
+          )}
         </div>
         {balloon && <Balloon />}
       </button>
@@ -91,10 +98,16 @@ const CustomStatuses = ({ refresh }) => {
           onClickOutside={() => setVisible(false)}
         >
           <div className="custom-status__comment">
-            <img
-              className="img-icon"
-              src={`/statuses_custom/${status || "no_status"}.png`}
-            />
+            {status !== "no" && !!status ? (
+              <img
+                className="img-icon"
+                src={`/statuses_custom/${status || "no_status"}.png`}
+              />
+            ) : (
+              <button className="img-icon close-btn">
+                <div>X</div>
+              </button>
+            )}
             <input
               className="custom-status-submenu__input"
               value={comment}
@@ -120,10 +133,16 @@ const CustomStatuses = ({ refresh }) => {
                   key={st}
                   onClick={() => setStatus(st || undefined)}
                 >
-                  <img
-                    className="img-icon"
-                    src={`/statuses_custom/${st}.png`}
-                  />
+                  {st !== "no" ? (
+                    <img
+                      className="img-icon"
+                      src={`/statuses_custom/${st}.png`}
+                    />
+                  ) : (
+                    <button className="img-icon close-btn">
+                      <div>X</div>
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -274,6 +293,21 @@ const StyledCustomStatuses = styled.div`
     gap: ${({ theme }) => theme.paddingST};
     input {
       width: calc(100% - ${({ theme }) => theme.paddingST});
+    }
+  }
+
+  .close-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(${({ theme }) => theme.buttonImageHeight} / 2);
+  }
+
+  .custom-status__comment,
+  .custom-status-btn__picture {
+    .close-btn {
+      width: ${({ theme }) => theme.buttonImageHeight};
     }
   }
 `;
