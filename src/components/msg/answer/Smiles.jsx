@@ -112,6 +112,10 @@ const StyledSmiles = styled.div`
       }
     }
 
+    .EmojiPickerReact {
+      border-radius: ${({ theme }) => theme.borderRadius};
+    }
+
     &.text-expanded {
       bottom: calc(
         ${4} * ${({ theme }) => theme.fontSize} + 3 *

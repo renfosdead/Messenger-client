@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { ClickOutside } from "@/utils/ClickOutside";
 import SliderField from "./SliderField";
@@ -31,9 +31,22 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
     preview: isPreview,
   });
 
+  const themeBtn = useRef(null);
+  const getMaxHeight = () => {
+    if (themeBtn.current) {
+      const { y } = themeBtn.current.getBoundingClientRect();
+      return `calc(100vh - ${y}px - ${themeState.buttonHeight})`;
+    }
+    return `auto`;
+  };
+
   return (
     <StyledTheme onClick={isPreview ? hideTheme : undefined}>
-      <button className={className} onClick={() => setEnabled(!enabled)}>
+      <button
+        className={className}
+        ref={themeBtn}
+        onClick={() => setEnabled(!enabled)}
+      >
         <img src={"/icons/theme.png"} />
       </button>
 
@@ -41,6 +54,7 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
         <ClickOutside
           className={dropdownClassName}
           onClickOutside={() => setEnabled(false)}
+          style={{ maxHeight: getMaxHeight() }}
         >
           <div className="theme__confirm">
             <button className="flat-btn" onClick={resetTheme}>
@@ -297,6 +311,7 @@ const StyledTheme = styled.div`
     display: flex;
     flex-direction: column;
     width: auto;
+    overflow-y: auto;
     &.preview {
       opacity: 0.1;
     }

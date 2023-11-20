@@ -1,6 +1,11 @@
 import { useRef, useEffect } from "react";
 
-export const ClickOutside = ({ className, onClickOutside, children }) => {
+export const ClickOutside = ({
+  className,
+  onClickOutside,
+  style = {},
+  children,
+}) => {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
@@ -17,7 +22,7 @@ export const ClickOutside = ({ className, onClickOutside, children }) => {
   }, [wrapperRef]);
 
   return (
-    <div className={className} ref={wrapperRef}>
+    <div className={className} style={style} ref={wrapperRef}>
       {children}
     </div>
   );

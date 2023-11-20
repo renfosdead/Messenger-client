@@ -66,12 +66,27 @@ const StyledMessageBody = styled(TouchProvider)`
   font-size: ${({ theme }) => theme.fontSize};
   overflow: hidden;
   position: relative;
+  border: ${({ theme }) => theme.borderWidth} solid
+    ${({ theme }) => theme.borderColor};
+  border-radius: ${({ theme }) => theme.borderRadius};
   > div {
     position: absolute;
-    left: ${({ theme }) => theme.paddingST};
-    right: ${({ theme }) => theme.paddingSM};
-    top: ${({ theme }) => theme.paddingST};
-    bottom: ${({ theme }) => theme.paddingST};
+    left: calc(
+      ${({ theme }) => theme.paddingST} + ${({ theme }) => theme.borderRadius} /
+        3
+    );
+    right: calc(
+      ${({ theme }) => theme.paddingSM} + ${({ theme }) => theme.borderRadius} /
+        3
+    );
+    top: calc(
+      ${({ theme }) => theme.paddingST} + ${({ theme }) => theme.borderRadius} /
+        3
+    );
+    bottom: calc(
+      ${({ theme }) => theme.paddingST} + ${({ theme }) => theme.borderRadius} /
+        3
+    );
     overflow-y: auto;
   }
 `;

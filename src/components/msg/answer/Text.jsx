@@ -173,7 +173,8 @@ const StyledText = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
   border-top: ${({ theme }) => theme.borderWidth} solid
-    ${({ theme }) => theme.borderColor};
+    ${({ theme }) => theme.backgroundColor};
+  border-radius: ${({ theme }) => theme.borderRadius};
   background: ${({ theme }) => theme.backgroundColor};
   button {
     font-size: ${({ theme }) => theme.fontSize};
@@ -184,17 +185,20 @@ const StyledText = styled.div`
   textarea {
     width: calc(
       100% - 2 * ${({ theme }) => theme.paddingST} - 2 *
-        ${({ theme }) => theme.borderWidth}
+        ${({ theme }) => theme.borderWidth} - 2 *
+        calc(${({ theme }) => theme.borderRadius} / 3)
     );
     resize: none;
     font-size: ${({ theme }) => theme.fontSize}!important;
     line-height: 1.5;
+    padding: calc(${({ theme }) => theme.borderRadius} / 3);
   }
   .text-controls {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0 calc(${({ theme }) => theme.borderRadius} / 3);
     > div {
       display: flex;
     }
@@ -209,8 +213,10 @@ const StyledText = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 0;
+
     button {
       color: ${({ theme }) => theme.activeColor};
+
       img {
         margin-right: ${({ theme }) => theme.paddingST};
       }
@@ -259,11 +265,19 @@ const StyledText = styled.div`
         padding: 0;
         button {
           height: auto;
+          border-radius: 0 ${({ theme }) => theme.borderRadius}
+            ${({ theme }) => theme.borderRadius} 0 !important;
+          border-left: none;
           img {
             margin-right: 0;
           }
         }
       }
+    }
+
+    textarea {
+      border-radius: ${({ theme }) => theme.borderRadius} 0 0
+        ${({ theme }) => theme.borderRadius} !important;
     }
 
     .quote-container {

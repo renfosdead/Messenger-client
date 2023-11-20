@@ -93,8 +93,8 @@ const StyledMessageTab = styled.div`
       ${({ theme }) => theme.borderWidth}
   );
   border: ${({ theme }) => theme.borderWidth} solid
-    ${({ theme }) => theme.borderColor};
-  border-radius: ${({ theme }) => theme.borderRadius};
+    ${({ theme }) => theme.backgroundColor};
+  border-top: 0;
   font-size: ${({ theme }) => theme.fontSize};
   display: grid;
   grid-template-rows: 1fr calc(
@@ -117,9 +117,16 @@ const StyledMessageTab = styled.div`
         );
     }
   }
+  .styled-message-body,
+  .styled-text-component {
+    display: none;
+    z-index: -1;
+  }
+
   &.active {
     .styled-message-body,
     .styled-text-component {
+      display: block;
       z-index: 5;
     }
   }

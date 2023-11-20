@@ -71,7 +71,7 @@ const CustomStatuses = ({ refresh }) => {
   };
 
   return (
-    <StyledCustomStatuses>
+    <StyledCustomStatuses className="app-custom-status">
       <button onClick={() => setVisible(true)} className={className}>
         {comment && (
           <div className="custom-status-btn__comment">

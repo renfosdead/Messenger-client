@@ -11,6 +11,8 @@ import MainStyles from "@/theme/MainStyles";
 import ThemeProvider from "@/theme/ThemeProvider";
 import { useTheme } from "@/hooks/useTheme";
 import ImagesViewer from "./ImagesViewer";
+import { useKeyboard } from "../hooks/useKeyboard.js";
+import classNames from "classnames";
 
 function App() {
   const { events, isLoading, loadEvents } = useEvents();
@@ -20,6 +22,12 @@ function App() {
 
   const [isOpenImageViewer, setIsOpenImageViewer] = useState(false);
   const [isSettingsExpanded, setIsSettingsExpanded] = useState(false);
+  const { isKeyboardOpen } = useKeyboard();
+
+  const bottomClassNames = classNames({
+    bottom: true,
+    "with-keyboard": isKeyboardOpen,
+  });
 
   const theme = useTheme();
 
@@ -49,7 +57,7 @@ function App() {
             theme={theme.themeState}
           />
 
-          <div className="bottom">
+          <div className={bottomClassNames}>
             <Statuses
               value={statusState}
               onChange={setStatusState}
@@ -98,6 +106,25 @@ const StyledApp = styled.div`
   .bottom {
     display: flex;
     justify-content: space-between;
+  }
+
+  .bottom {
+    .app-status {
+      button {
+        border-radius: ${({ theme }) => theme.borderRadius} 0 0
+          ${({ theme }) => theme.borderRadius};
+      }
+    }
+    .app-custom-status {
+      button {
+        border-radius: 0 ${({ theme }) => theme.borderRadius}
+          ${({ theme }) => theme.borderRadius} 0;
+        border-left: none;
+      }
+    }
+    &.with-keyboard {
+      opacity: 0;
+    }
   }
 
   .top-left,
@@ -155,7 +182,7 @@ const StyledApp = styled.div`
       border-right: ${({ theme }) => theme.borderWidth} solid
         ${({ theme }) => theme.borderColor}!important;
       border-bottom: 1px solid ${({ theme }) => theme.backgroundColor}!important;
-      z-index: 3;
+      z-index: 6;
     }
   }
 
@@ -184,9 +211,17 @@ const StyledApp = styled.div`
       ${({ theme }) => theme.borderColor};
     border-radius: ${({ theme }) => theme.borderRadius};
     font-size: ${({ theme }) => theme.fontSizeSM};
-    padding: 0 ${({ theme }) => theme.paddingST};
+    padding: 0
+      calc(
+        ${({ theme }) => theme.paddingST} + ${({ theme }) => theme.borderRadius} /
+          3
+      );
     background: ${({ theme }) => theme.backgroundColor};
     color: ${({ theme }) => theme.textColor};
+  }
+
+  input[type="range"] {
+    padding: 0 ${({ theme }) => theme.paddingST};
   }
 
   label {

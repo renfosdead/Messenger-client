@@ -71,7 +71,7 @@ const Statuses = ({ value, onChange, refresh }) => {
   };
 
   return (
-    <StyledStatuses>
+    <StyledStatuses className="app-status">
       <button onClick={() => setVisible(true)} className={className}>
         <div className="status-btn">
           <img src={statusesDescription[value].picture} />

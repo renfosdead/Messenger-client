@@ -80,11 +80,9 @@ export default Header;
 
 const StyledHeader = styled.div`
   position: absolute;
-  left: -1px !important;
+  left: calc(${({ theme }) => theme.borderRadius} / 1.5) !important;
   right: auto !important;
-  top: calc(
-    -${({ theme }) => theme.buttonHeight} - ${({ theme }) => theme.borderWidth}
-  ) !important;
+  top: calc(-${({ theme }) => theme.buttonHeight}) !important;
   justify-content: start !important;
   padding-left: ${({ theme }) => theme.paddingST}!important;
   padding-right: ${({ theme }) => theme.paddingST}!important;
