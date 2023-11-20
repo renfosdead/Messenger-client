@@ -14,6 +14,7 @@ import { QUOTE_STRING, getQuote, getValueWithoutQuote } from "../../utils/data";
 const rows = 4;
 
 const MessageTab = ({
+  theme,
   isActive,
   onClickTab,
   right,
@@ -68,6 +69,7 @@ const MessageTab = ({
         onAnswer={onAnswer}
       />
       <Text
+        theme={theme}
         value={message}
         setValue={setMessage}
         expanded={showText}
@@ -109,7 +111,7 @@ const StyledMessageTab = styled.div`
 
     &.with-keyboard {
       grid-template-rows: 1fr calc(
-          ${rows} * ${({ theme }) => theme.fontSize} + 2 *
+          ${rows} * ${({ theme }) => theme.fontSize} + 3 *
             ${({ theme }) => theme.paddingLG} + 4 *
             ${({ theme }) => theme.borderWidth}
         );

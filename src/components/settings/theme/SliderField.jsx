@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
-const SliderField = ({ label, value, unit = "px", name, data, onChange }) => {
+const SliderField = ({
+  label,
+  value,
+  unit = "px",
+  min = 1,
+  max = 50,
+  name,
+  data,
+  onChange,
+}) => {
   const srcValue = value || data[name] || "";
 
   const getParsedValue = () => {
@@ -20,8 +29,8 @@ const SliderField = ({ label, value, unit = "px", name, data, onChange }) => {
       </div>
       <input
         type="range"
-        min={1}
-        max={50}
+        min={min}
+        max={max}
         value={getParsedValue()}
         onChange={changeSlider}
       />

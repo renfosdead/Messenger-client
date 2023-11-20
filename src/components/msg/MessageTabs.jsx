@@ -3,7 +3,7 @@ import MessageTab from "./MessageTab";
 import styled from "styled-components";
 import store from "../../utils/store";
 
-const MessageTabs = ({ events, refresh }) => {
+const MessageTabs = ({ theme, events, refresh }) => {
   const [activeTab, setActiveTab] = useState("chat");
 
   const changeActiveTab = (key) => {
@@ -23,6 +23,7 @@ const MessageTabs = ({ events, refresh }) => {
           onClickTab={() => changeActiveTab("chat")}
           events={events}
           refresh={refresh}
+          theme={theme}
         />
       </div>
       <div className={activeTab === "notes" ? "active" : "disabled"}>
@@ -34,6 +35,7 @@ const MessageTabs = ({ events, refresh }) => {
           onClickTab={() => changeActiveTab("notes")}
           events={events}
           refresh={refresh}
+          theme={theme}
         />
       </div>
     </StyledMessageTabs>

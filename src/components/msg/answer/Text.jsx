@@ -13,14 +13,15 @@ import {
 import { useSounds } from "../../../hooks/useSounds";
 import Quote from "./Quote";
 import ImageUpload from "./ImageUpload";
+import Smiles from "./Smiles";
 
 const Text = ({
+  theme,
   expanded,
   toggleExpanded,
   isKeyboardOpen,
   rows,
   userId,
-  chatId,
   refresh,
   value = "",
   setValue,
@@ -36,10 +37,14 @@ const Text = ({
 
       if (userId) {
         if (!isOffline()) {
-          const result = await EventsApi.sendMessage(value);
+          const result = await EventsApi.sendMessage({
+            message: value,
+            isSmile: !!smile,
+          });
           if (result.data) {
             playSound("SendMsg");
             setValue("");
+            setSmile("");
             refresh();
           }
         }
@@ -51,11 +56,12 @@ const Text = ({
             date: Date.now(),
             userId: "",
             chatId: "notes",
-            body: { message: value },
+            body: { message: value, isSmile: !!smile },
           },
         ]);
         playSound("SendMsg");
         setValue("");
+        setSmile("");
         refresh();
       }
 
@@ -81,10 +87,10 @@ const Text = ({
     }
   }, [expanded]);
 
-  const onChange = (e) => {
+  const onChange = (val) => {
     const payload = quote
-      ? `${QUOTE_STRING}${quote}${QUOTE_STRING}${e.target.value}`
-      : e.target.value;
+      ? `${QUOTE_STRING}${quote}${QUOTE_STRING}${val}`
+      : val;
     setValue(payload);
   };
 
@@ -92,6 +98,19 @@ const Text = ({
   const parsedValue = getValueWithoutQuote(quote, value);
   const removeQuote = () => {
     setValue(parsedValue);
+  };
+
+  const [smile, setSmile] = useState("");
+  const changeSmile = (val) => {
+    const res = val ? smile + val : "";
+    if (expanded) {
+      if (val) {
+        onChange(parsedValue + val);
+      }
+    } else {
+      setSmile(res);
+      onChange(res);
+    }
   };
 
   return (
@@ -106,11 +125,15 @@ const Text = ({
       ) : null}
       <div className="text-controls">
         <div>
-          <button className="button simple">
-            <img src="/icons/smiles.png" />
-          </button>
-
           <ImageUpload refresh={refresh} />
+          <Smiles
+            theme={theme}
+            textExpanded={expanded}
+            isKeyboardOpen={isKeyboardOpen}
+            value={smile}
+            onChange={changeSmile}
+            onSend={onSubmit}
+          />
         </div>
 
         <button
@@ -129,7 +152,7 @@ const Text = ({
           <textarea
             ref={textAreaRef}
             value={parsedValue}
-            onChange={onChange}
+            onChange={(e) => onChange(e.target.value)}
             rows={rows}
           ></textarea>
           <div className="send-btn">

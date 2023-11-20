@@ -75,6 +75,7 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
 
   const className = classNames({
     "with-left-panel": showLeftPanel,
+    "big-smile": data.body.isSmile,
   });
 
   const messageStatus = getMessageStatus();
@@ -182,6 +183,12 @@ const StyledMessage = styled(TouchProvider)`
       position: absolute;
       left: 0;
       top: ${({ theme }) => theme.paddingSM};
+    }
+  }
+
+  &.big-smile {
+    .message-text {
+      font-size: ${({ theme }) => theme.smileSize};
     }
   }
 `;

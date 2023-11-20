@@ -5,6 +5,7 @@ import { ClickOutside } from "@/utils/ClickOutside";
 import SliderField from "./SliderField";
 import ColorField from "./ColorField";
 import ExpandableGroup from "./ExpandableGroup";
+import CheckboxField from "./Checkbox";
 
 const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
   const [enabled, setEnabled] = useState(false);
@@ -55,24 +56,32 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
             index={0}
             expandedGroup={expandedGroup}
             setExpanded={setExpanded}
+            min={7}
+            max={30}
           >
             <SliderField
               onChange={changeTheme}
-              label="Основной"
-              name="fontSize"
+              label="Очень маленький"
+              name="fontSizeXS"
               data={themeState}
+              min={7}
+              max={30}
             />
             <SliderField
               onChange={changeTheme}
               label="Маленький"
               name="fontSizeSM"
               data={themeState}
+              min={7}
+              max={30}
             />
             <SliderField
               onChange={changeTheme}
-              label="Очень маленький"
-              name="fontSizeXS"
+              label="Основной"
+              name="fontSize"
               data={themeState}
+              min={7}
+              max={30}
             />
           </ExpandableGroup>
 
@@ -113,12 +122,16 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
               label="Высота"
               name="buttonHeight"
               data={themeState}
+              min={15}
+              max={70}
             />
             <SliderField
               onChange={changeTheme}
               label="Иконки"
               name="buttonImageHeight"
               data={themeState}
+              min={0}
+              max={70}
             />
           </ExpandableGroup>
 
@@ -189,12 +202,16 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
               label="Толщина"
               name="borderWidth"
               data={themeState}
+              min={0}
+              max={5}
             />
             <SliderField
               onChange={changeTheme}
               label="Закругление"
               name="borderRadius"
               data={themeState}
+              min={0}
+              max={50}
             />
           </ExpandableGroup>
 
@@ -215,6 +232,32 @@ const Theme = ({ themeState, changeTheme, saveTheme, resetTheme }) => {
               label="Размер"
               name="shadowWidth"
               data={themeState}
+              min={0}
+              max={15}
+            />
+          </ExpandableGroup>
+
+          <ExpandableGroup
+            label="Смайлики"
+            index={5}
+            expandedGroup={expandedGroup}
+            setExpanded={setExpanded}
+          >
+            <CheckboxField
+              checkedValue="dark"
+              uncheckedValue="light"
+              onChange={changeTheme}
+              label="Тёмная тема пикера"
+              name="smileTheme"
+              data={themeState}
+            />
+            <SliderField
+              onChange={changeTheme}
+              label="Размер"
+              name="smileSize"
+              data={themeState}
+              min={10}
+              max={250}
             />
           </ExpandableGroup>
 

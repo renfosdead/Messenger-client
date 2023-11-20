@@ -8,6 +8,7 @@ import UserApi from "@/api/user";
 import store from "@/utils/store";
 import { isOffline } from "../utils/data";
 import { useKeyboard } from "../hooks/useKeyboard";
+import Checkbox from "./Checkbox";
 
 const CustomStatuses = ({ refresh }) => {
   const { isKeyboardOpen } = useKeyboard();
@@ -22,9 +23,7 @@ const CustomStatuses = ({ refresh }) => {
   };
 
   const [balloon, setBalloon] = useState(statusCustom.balloon);
-  const changeBaloon = (e) => {
-    setBalloon(e.target.checked);
-  };
+
   const [comment, setComment] = useState(statusCustom.title);
   const changeComment = (e) => {
     setComment(e.target.value);
@@ -149,17 +148,12 @@ const CustomStatuses = ({ refresh }) => {
           </div>
           <div className="custom-status-submenu__balloon-checkbox">
             {balloon && <Balloon />}
-            <div>
-              <input
-                className="checkbox"
-                type="checkbox"
-                id="ball"
-                name="ball"
-                checked={balloon}
-                onChange={changeBaloon}
-              />
-              <label htmlFor="ball"> Шарик дня рождения</label>
-            </div>
+            <Checkbox
+              label="Шарик дня рождения"
+              name="ball"
+              checked={balloon}
+              onChange={setBalloon}
+            />
           </div>
           <div className="custom-statuses__confirm">
             <button className="flat-btn" onClick={onSubmit}>
@@ -224,6 +218,11 @@ const StyledCustomStatuses = styled.div`
       align-items: center;
       gap: ${({ theme }) => theme.paddingSM};
       font-size: ${({ theme }) => theme.fontSize};
+      .app-checkbox {
+        flex-direction: row-reverse;
+        justify-content: start;
+        gap: ${({ theme }) => theme.paddingSM};
+      }
     }
 
     .custom-status-submenu__container {

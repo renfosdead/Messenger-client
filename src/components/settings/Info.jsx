@@ -49,7 +49,7 @@ const Info = ({ refresh }) => {
           <input value={value} onChange={(e) => setValue(e.target.value)} />
           <div className="username__confirm">
             <button className="flat-btn" onClick={() => setEnabled(false)}>
-              Cancel
+              Отмена
             </button>
             <button className="flat-btn" onClick={saveValue}>
               OK
