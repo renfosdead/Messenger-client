@@ -67,6 +67,7 @@ const MessageTab = ({
         refresh={refresh}
         isKeyboardOpen={isKeyboardOpen}
         onAnswer={onAnswer}
+        theme={theme}
       />
       <Text
         theme={theme}

@@ -8,8 +8,9 @@ import TouchProvider from "@/utils/TouchProvider";
 import { getQuote, getValueWithoutQuote } from "@/utils/data";
 import Quote from "./answer/Quote";
 import ImageWithError from "./ImageWithError";
+import Emojis from "./answer/Emojis";
 
-const Message = ({ data, userName, onAnswer, refresh }) => {
+const Message = ({ theme, data, userName, onAnswer, refresh }) => {
   const userId = store.userId.get();
 
   const onSwipeRight = () => {
@@ -108,7 +109,11 @@ const Message = ({ data, userName, onAnswer, refresh }) => {
       {data.type === EVENT_TYPES.sendMessage && (
         <div className="message-text">
           {quote ? <Quote text={quote} /> : null}
-          {`${parsedMessage}`}
+          {data.body.isSmile ? (
+            <Emojis data={parsedMessage} theme={theme} />
+          ) : (
+            `${parsedMessage}`
+          )}
         </div>
       )}
     </StyledMessage>
@@ -183,12 +188,6 @@ const StyledMessage = styled(TouchProvider)`
       position: absolute;
       left: 0;
       top: ${({ theme }) => theme.paddingSM};
-    }
-  }
-
-  &.big-smile {
-    .message-text {
-      font-size: ${({ theme }) => theme.smileSize};
     }
   }
 `;

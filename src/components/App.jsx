@@ -116,14 +116,11 @@ const StyledApp = styled.div`
       }
     }
     .app-custom-status {
-      button {
+      .status-toggler-btn {
         border-radius: 0 ${({ theme }) => theme.borderRadius}
           ${({ theme }) => theme.borderRadius} 0;
         border-left: none;
       }
-    }
-    &.with-keyboard {
-      opacity: 0;
     }
   }
 

@@ -10,6 +10,7 @@ const MessageBody = ({
   events,
   refresh,
   onAnswer,
+  theme,
 }) => {
   const bodyRef = useRef(null);
 
@@ -51,6 +52,7 @@ const MessageBody = ({
             userName={userName}
             refresh={refresh}
             onAnswer={onAnswer}
+            theme={theme}
           />
         ))}
       </div>

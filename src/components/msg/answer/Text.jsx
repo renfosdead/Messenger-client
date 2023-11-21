@@ -172,8 +172,6 @@ export default Text;
 const StyledText = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize};
-  border-top: ${({ theme }) => theme.borderWidth} solid
-    ${({ theme }) => theme.backgroundColor};
   border-radius: ${({ theme }) => theme.borderRadius};
   background: ${({ theme }) => theme.backgroundColor};
   button {
@@ -208,6 +206,7 @@ const StyledText = styled.div`
     flex-direction: column;
     justify-content: flex-end;
     gap: ${({ theme }) => theme.paddingST};
+    background-color: ${({ theme }) => theme.backgroundColor};
   }
   .send-btn {
     display: flex;
