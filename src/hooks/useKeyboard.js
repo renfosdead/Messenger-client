@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const MIN_KEYBOARD_HEIGHT = 300;
+const MIN_KEYBOARD_HEIGHT = 250;
 
 export const useKeyboard = () => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
